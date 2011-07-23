@@ -1,0 +1,9 @@
+name: MobDisguise
+main: me.desmin88.mobdisguise.MobDisguise
+version: 1.0
+authors: [desmin88]
+commands:
+    md:
+        description: Allows player to disguise as mob
+        usage: /md mobtype
+    
