@@ -24,12 +24,13 @@ public class MDCommand implements CommandExecutor {
                 plugin.disList.remove(s);
                 plugin.playerMobId.put(s, null);
                 plugin.playerEntIds.remove(Integer.valueOf(s.getEntityId()));
+                return true;
             }
 
             
             if (args[0].equalsIgnoreCase("types")) {
                 for (String key : MobIdEnum.map.keySet()) {
-                    s.sendMessage("[MobDisguise]" + key);
+                    s.sendMessage("[MobDisguise] " + key);
                 }
             }
 
