@@ -14,6 +14,7 @@ public class MDPlayerListener extends PlayerListener {
         this.plugin = instance;
     }
 
+    
     public void onPlayerAnimation(PlayerAnimationEvent event) {
         if (plugin.disList.contains(event.getPlayer())) {
             // event.setCancelled(true);

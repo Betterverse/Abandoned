@@ -41,9 +41,9 @@ public class PacketUtils {
             }
             CraftPlayer p22 = (CraftPlayer) p1;
             Packet24MobSpawn p24 = packetMaker(p1, plugin.playerMobId.get(p1));
-            Packet29DestroyEntity p29 = new Packet29DestroyEntity(p22.getEntityId());
+            //Packet29DestroyEntity p29 = new Packet29DestroyEntity(p22.getEntityId());
             // Premake packets, important.
-            ((CraftPlayer) p2).getHandle().netServerHandler.sendPacket(p29);
+            //((CraftPlayer) p2).getHandle().netServerHandler.sendPacket(p29);
             ((CraftPlayer) p2).getHandle().netServerHandler.sendPacket(p24);
         }
     }
