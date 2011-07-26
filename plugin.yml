@@ -1,7 +1,8 @@
 name: MobDisguise
 main: me.desmin88.mobdisguise.MobDisguise
-version: 1.0
+version: 1.1
 authors: [desmin88]
+depends: [BukkitContrib]
 commands:
     md:
         description: Allows player to disguise as mob

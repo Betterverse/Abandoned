@@ -26,7 +26,7 @@ public class MobDisguise extends JavaPlugin {
 
     @Override
     public void onDisable() {
-        System.out.println("[MobDisguise] version 1.0 disabled");
+        System.out.println("[MobDisguise] version 1.1 DEV disabled");
 
     }
 
@@ -41,7 +41,7 @@ public class MobDisguise extends JavaPlugin {
         // Register packet listeners
         org.bukkitcontrib.packet.listener.Listeners.addListener(17, packetlistener);
         org.bukkitcontrib.packet.listener.Listeners.addListener(18, packetlistener);
-        System.out.println("[MobDisguise] version 1.0 enabled");
+        System.out.println("[MobDisguise] version 1.1 DEV enabled");
 
     }
 

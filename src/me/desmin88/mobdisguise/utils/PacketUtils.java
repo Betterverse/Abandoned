@@ -4,11 +4,13 @@ import java.lang.reflect.Field;
 
 import me.desmin88.mobdisguise.MobDisguise;
 import net.minecraft.server.DataWatcher;
+import net.minecraft.server.MathHelper;
 import net.minecraft.server.Packet20NamedEntitySpawn;
 import net.minecraft.server.Packet24MobSpawn;
 import net.minecraft.server.Packet29DestroyEntity;
 
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.craftbukkit.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 
@@ -20,6 +22,7 @@ public class PacketUtils {
     }
 
     public void undisguiseToAll(Player p1) {
+
         for (Player p2 : Bukkit.getServer().getOnlinePlayers()) {
             if (p2 == p1) {
                 continue;
@@ -49,6 +52,7 @@ public class PacketUtils {
     }
 
     public Packet24MobSpawn packetMaker(Player p1, Byte id) {
+        Location loc = p1.getLocation();
         Packet24MobSpawn packet = new Packet24MobSpawn();
         packet.a = ((CraftPlayer) p1).getEntityId();
         if (id == null || id == 0) {
@@ -56,11 +60,11 @@ public class PacketUtils {
         } else {
             packet.b = id.byteValue();
         }
-        packet.c = (int) p1.getLocation().getX();
-        packet.d = (int) p1.getLocation().getY();
-        packet.e = (int) p1.getLocation().getZ();
-        packet.f = (byte) p1.getLocation().getYaw();
-        packet.g = (byte) p1.getLocation().getPitch();
+        packet.c = MathHelper.floor(loc.getX() * 32.0D);
+        packet.d = MathHelper.floor(loc.getY() * 32.0D);
+        packet.e = MathHelper.floor(loc.getZ() * 32.0D);
+        packet.f = (byte) ((int) loc.getYaw() * 256.0F / 360.0F);
+        packet.g = (byte) ((int) (loc.getPitch() * 256.0F / 360.0F));
         Field datawatcher;
         try {
             datawatcher = packet.getClass().getDeclaredField("h");
