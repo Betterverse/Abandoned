@@ -14,7 +14,6 @@ public class PacketListener implements Listener {
         this.plugin = instance;
     }
 
-    //
     @Override
     public boolean checkPacket(Packet packet) {
         if (packet instanceof Packet18ArmAnimation) {
@@ -29,7 +28,6 @@ public class PacketListener implements Listener {
                 return false;
             }
         }
-
         return true;
     }
 

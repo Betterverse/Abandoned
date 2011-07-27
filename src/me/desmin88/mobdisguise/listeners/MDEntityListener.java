@@ -12,15 +12,14 @@ public class MDEntityListener extends EntityListener{
     public MDEntityListener(MobDisguise instance) {
         this.plugin = instance;
     }
+    
     public void onEntityDeath(EntityDeathEvent event) {
         if(event.getEntity() instanceof Player) {
             Player p = (Player) event.getEntity();
             if(plugin.disList.contains(p)) {
-                p.sendMessage("[MobDisguise] You haven been disguised");
+                p.sendMessage("[MobDisguise] You have been disguised");
                 plugin.pu.disguiseToAll(p);
             }
-        
-        
         }
     }
 }

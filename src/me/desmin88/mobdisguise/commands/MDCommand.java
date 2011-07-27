@@ -18,32 +18,38 @@ public class MDCommand implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command command, String commandLabel, String[] args) {
         if (sender instanceof Player) {
             Player s = (Player) sender;
+            if(args.length == 0) {
+                s.sendMessage(MobDisguise.pref + "You can't have zero arguments!");
+                return true;
+            }
             
             if (args[0].equalsIgnoreCase("undisguise")) {
                 plugin.pu.undisguiseToAll(s);
                 plugin.disList.remove(s);
                 plugin.playerMobId.put(s, null);
                 plugin.playerEntIds.remove(Integer.valueOf(s.getEntityId()));
+                s.sendMessage(MobDisguise.pref + "You have been changed back!");
                 return true;
             }
 
             
             if (args[0].equalsIgnoreCase("types")) {
                 for (String key : MobIdEnum.map.keySet()) {
-                    s.sendMessage("[MobDisguise] " + key);
+                    s.sendMessage(MobDisguise.pref + key);
                 }
             }
 
             if (args[0].equalsIgnoreCase("disguise")) {
                 String mobtype = args[1].toLowerCase();
                 if (!MobIdEnum.map.containsKey(mobtype)) {
-                    s.sendMessage("[MobDisguise] Invalid mob type!");
+                    s.sendMessage(MobDisguise.pref + "Invalid mob type!");
                     return true;
                 }
                 plugin.disList.add(s);
                 plugin.playerMobId.put(s, (byte) MobIdEnum.map.get(mobtype).intValue());
                 plugin.playerEntIds.add(Integer.valueOf(s.getEntityId()));
                 plugin.pu.disguiseToAll(s);
+                s.sendMessage(MobDisguise.pref + "You have been disguised as a " + args[1].toLowerCase() + "!");
                 return true;
             }
 

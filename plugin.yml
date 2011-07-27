@@ -6,5 +6,8 @@ depends: [BukkitContrib]
 commands:
     md:
         description: Allows player to disguise as mob
-        usage: /md mobtype
+        usage: /md [disguise,undisguise,types]
+permissions:
+    mobdisguise.use
+        description: Allows a player to disguise as a mob
     
