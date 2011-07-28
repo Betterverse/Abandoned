@@ -18,13 +18,13 @@ public class PacketListener implements Listener {
     public boolean checkPacket(Packet packet) {
         if (packet instanceof Packet18ArmAnimation) {
             Packet18ArmAnimation p18 = (Packet18ArmAnimation) packet;
-            if (p18.b != 2 && plugin.playerEntIds.contains(p18.a)) {
+            if (p18.b != 2 && MobDisguise.playerEntIds.contains(p18.a)) {
                 return false;
             }
         }
         if (packet instanceof Packet17) {
             Packet17 p17 = (Packet17) packet;
-            if (plugin.playerEntIds.contains(p17.a)) {
+            if (MobDisguise.playerEntIds.contains(p17.a)) {
                 return false;
             }
         }

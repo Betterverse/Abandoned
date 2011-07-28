@@ -18,10 +18,11 @@ import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class MobDisguise extends JavaPlugin {
-    public List<Player> disList = new ArrayList<Player>();
-    public Map<Player, Byte> playerMobId = new HashMap<Player, Byte>();
-    public Set<Integer> playerEntIds = new HashSet<Integer>();
-    public PacketUtils pu = new PacketUtils(this);
+    public static List<Player> disList = new ArrayList<Player>();
+    public static List<Player> apiList = new ArrayList<Player>();
+    public static Map<Player, Byte> playerMobId = new HashMap<Player, Byte>();
+    public static Set<Integer> playerEntIds = new HashSet<Integer>();
+    public static PacketUtils pu = new PacketUtils();
     public final PacketListener packetlistener = new PacketListener(this);
     public final MDPlayerListener playerlistener = new MDPlayerListener(this);
     public final MDEntityListener entitylistener = new MDEntityListener(this);

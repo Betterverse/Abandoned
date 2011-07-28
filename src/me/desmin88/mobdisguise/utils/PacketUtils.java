@@ -17,9 +17,7 @@ import org.bukkit.entity.Player;
 public class PacketUtils {
     public MobDisguise plugin;
 
-    public PacketUtils(MobDisguise instance) {
-        plugin = instance;
-    }
+    public PacketUtils() {}
 
     public void undisguiseToAll(Player p1) {
         //Make packets out of loop!
