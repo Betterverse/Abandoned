@@ -26,7 +26,7 @@ public class MobDisguise extends JavaPlugin {
     public final MDPlayerListener playerlistener = new MDPlayerListener(this);
     public final MDEntityListener entitylistener = new MDEntityListener(this);
     public static final String pref = "[MobDisguise] ";
-    public final PluginManager pm = getServer().getPluginManager();
+    
     @Override
     public void onDisable() {
         this.getServer().getScheduler().cancelTasks(this);
@@ -35,6 +35,7 @@ public class MobDisguise extends JavaPlugin {
 
     @Override
     public void onEnable() {
+        PluginManager pm = getServer().getPluginManager();
         this.getCommand("md").setExecutor(new MDCommand(this));
         pm.registerEvent(Event.Type.PLAYER_JOIN, playerlistener, Priority.Normal, this);
         pm.registerEvent(Event.Type.PLAYER_RESPAWN, playerlistener, Priority.Normal, this);
