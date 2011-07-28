@@ -8,6 +8,6 @@ commands:
         description: Allows player to disguise as mob
         usage: /md [disguise,undisguise,types]
 permissions:
-    mobdisguise.use
+    mobdisguise.use:
         description: Allows a player to disguise as a mob
     
