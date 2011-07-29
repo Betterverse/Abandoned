@@ -7,15 +7,20 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import me.desmin88.mobdisguise.commands.*;
-import me.desmin88.mobdisguise.listeners.*;
-import me.desmin88.mobdisguise.utils.*;
+import me.desmin88.mobdisguise.commands.MDCommand;
+import me.desmin88.mobdisguise.listeners.MDEntityListener;
+import me.desmin88.mobdisguise.listeners.MDPlayerListener;
+import me.desmin88.mobdisguise.listeners.PacketListener;
+import me.desmin88.mobdisguise.utils.DisguiseTask;
+import me.desmin88.mobdisguise.utils.MobIdEnum;
+import me.desmin88.mobdisguise.utils.PacketUtils;
 
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.Event.Priority;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.util.config.Configuration;
 
 public class MobDisguise extends JavaPlugin {
     public static List<Player> disList = new ArrayList<Player>();
@@ -27,26 +32,37 @@ public class MobDisguise extends JavaPlugin {
     public final MDPlayerListener playerlistener = new MDPlayerListener(this);
     public final MDEntityListener entitylistener = new MDEntityListener(this);
     public static final String pref = "[MobDisguise] ";
-    
+    public static Configuration cfg;
+
     @Override
     public void onDisable() {
         this.getServer().getScheduler().cancelTasks(this);
-        System.out.println("[MobDisguise] version 1.3 DEV disabled");
+        System.out.println(pref + "version 1.4 DEV disabled");
     }
 
     @Override
     public void onEnable() {
+        // Begin config code
+        cfg = this.getConfiguration(); // Get config
+        if (cfg.getKeys() == null) { // Config hasn't been made
+            for (String mobtype : MobIdEnum.map.keySet()) {
+                cfg.setProperty("Blacklist." + mobtype, true); // Just making
+            }
+            cfg.save();
+        }
+
         PluginManager pm = getServer().getPluginManager();
         this.getCommand("md").setExecutor(new MDCommand(this));
         pm.registerEvent(Event.Type.PLAYER_JOIN, playerlistener, Priority.Normal, this);
         pm.registerEvent(Event.Type.PLAYER_RESPAWN, playerlistener, Priority.Normal, this);
         pm.registerEvent(Event.Type.ENTITY_DEATH, entitylistener, Priority.Normal, this);
-        // this.getServer().getPluginManager().registerEvent(Event.Type.PLAYER_ANIMATION, new MDPlayerListener(this), Priority.Normal, this);
+        // this.getServer().getPluginManager().registerEvent(Event.Type.PLAYER_ANIMATION,
+        // new MDPlayerListener(this), Priority.Normal, this);
         getServer().getScheduler().scheduleAsyncRepeatingTask(this, new DisguiseTask(this), 1200, 1200);
         // Register packet listeners
         org.bukkitcontrib.packet.listener.Listeners.addListener(17, packetlistener);
         org.bukkitcontrib.packet.listener.Listeners.addListener(18, packetlistener);
-        System.out.println("[MobDisguise] version 1.3 DEV enabled");
+        System.out.println(pref + "version 1.4 DEV enabled");
 
     }
 

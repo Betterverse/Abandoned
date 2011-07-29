@@ -1,6 +1,6 @@
 name: MobDisguise
 main: me.desmin88.mobdisguise.MobDisguise
-version: 1.1
+version: 1.4
 authors: [desmin88]
 depend: [BukkitContrib]
 commands:
