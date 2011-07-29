@@ -1,5 +1,6 @@
 package me.desmin88.mobdisguise;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -43,9 +44,15 @@ public class MobDisguise extends JavaPlugin {
     @Override
     public void onEnable() {
         // Begin config code
+        if (!new File(getDataFolder(), "config.yml").exists()) {
+            try {new File(getDataFolder(), "config.yml").createNewFile();} catch(Exception e) {}
+        }
         cfg = this.getConfiguration(); // Get config
-        if (cfg.getKeys() == null) { // Config hasn't been made
+        if (cfg.getKeys().isEmpty()) { // Config hasn't been made
+            System.out.println(pref + "config.yml not found, making with default values");
+            cfg.setProperty("RealDrops.enabled", false);
             for (String mobtype : MobIdEnum.map.keySet()) {
+                cfg.setHeader("Setting a mobtype to false will not allow a player to disguise as that type");
                 cfg.setProperty("Blacklist." + mobtype, true); // Just making
             }
             cfg.save();
