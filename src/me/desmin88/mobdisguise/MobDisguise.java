@@ -34,7 +34,7 @@ public class MobDisguise extends JavaPlugin {
     public final MDEntityListener entitylistener = new MDEntityListener(this);
     public static final String pref = "[MobDisguise] ";
     public static Configuration cfg;
-
+    public static boolean perm;
     @Override
     public void onDisable() {
         this.getServer().getScheduler().cancelTasks(this);
@@ -51,13 +51,14 @@ public class MobDisguise extends JavaPlugin {
         if (cfg.getKeys().isEmpty()) { // Config hasn't been made
             System.out.println(pref + "config.yml not found, making with default values");
             cfg.setProperty("RealDrops.enabled", false);
+            cfg.setProperty("Permissions.enabled", true);
             for (String mobtype : MobIdEnum.map.keySet()) {
                 cfg.setHeader("Setting a mobtype to false will not allow a player to disguise as that type");
                 cfg.setProperty("Blacklist." + mobtype, true); // Just making
             }
             cfg.save();
         }
-
+        perm = cfg.getBoolean("Permissions.enabled", true);
         PluginManager pm = getServer().getPluginManager();
         this.getCommand("md").setExecutor(new MDCommand(this));
         pm.registerEvent(Event.Type.PLAYER_JOIN, playerlistener, Priority.Normal, this);
