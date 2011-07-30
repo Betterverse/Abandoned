@@ -23,6 +23,7 @@ public class MDPlayerListener extends PlayerListener {
     public void onPlayerQuit(final PlayerQuitEvent event) {
         System.out.println("quits");
         if(MobDisguise.disList.contains(event.getPlayer())) {
+            MobDisguise.playerEntIds.remove(event.getPlayer().getEntityId());
             //Should fix the "carcass" mob when disguised
            Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
                public void run() {
@@ -43,6 +44,11 @@ public class MDPlayerListener extends PlayerListener {
     }
 
     public void onPlayerTeleport(PlayerTeleportEvent event) {
+        if(MobDisguise.telelist.contains(event.getPlayer())) {
+            System.out.println("Block the tele");
+            MobDisguise.telelist.remove(event.getPlayer());
+            return;
+        }
         if (!MobDisguise.disList.contains(event.getPlayer())) {
             Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new DisguiseTask(plugin), 8);
         }
@@ -68,14 +74,19 @@ public class MDPlayerListener extends PlayerListener {
     }
 
     public void onPlayerJoin(PlayerJoinEvent event) {
-        if(!MobDisguise.disList.contains(event.getPlayer())) {
-            Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new DisguiseTask(plugin), 8 );
-        }
         if (MobDisguise.disList.contains(event.getPlayer())) {
-            event.getPlayer().sendMessage(MobDisguise.pref + "You have been disguised because you relogged");
+            System.out.println("Adding to telelist");
+            MobDisguise.telelist.add(event.getPlayer());
+            MobDisguise.playerEntIds.add(Integer.valueOf(event.getPlayer().getEntityId()));
+            Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new DisguiseTask(plugin), 20);
             if(!MobDisguise.apiList.contains(event.getPlayer())) {
-                Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new DisguiseTask(plugin), 8 );
+               
+                event.getPlayer().sendMessage(MobDisguise.pref + "You have been disguised because you relogged");
             }
         }
+        if(!MobDisguise.disList.contains(event.getPlayer())) {
+            Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new DisguiseTask(plugin), 15 );
+        }
+        
     }
 }

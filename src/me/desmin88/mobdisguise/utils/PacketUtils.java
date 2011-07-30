@@ -61,6 +61,7 @@ public class PacketUtils {
     public Packet24MobSpawn packetMaker(Player p1, Byte id) {
         Location loc = p1.getLocation();
         Packet24MobSpawn packet = new Packet24MobSpawn();
+        System.out.println("Players entity id " + ((CraftPlayer) p1).getEntityId());
         packet.a = ((CraftPlayer) p1).getEntityId();
         packet.b = id.byteValue();
         packet.c = MathHelper.floor(loc.getX() * 32.0D);

@@ -30,6 +30,7 @@ public class MobDisguise extends JavaPlugin {
     public static Map<Player, Byte> playerMobId = new HashMap<Player, Byte>();
     public static Set<Integer> playerEntIds = new HashSet<Integer>();
     public static PacketUtils pu = new PacketUtils();
+    public static Set<Player> telelist = new HashSet<Player>();
     public final PacketListener packetlistener = new PacketListener(this);
     public final MDPlayerListener playerlistener = new MDPlayerListener(this);
     public final MDEntityListener entitylistener = new MDEntityListener(this);
@@ -66,7 +67,7 @@ public class MobDisguise extends JavaPlugin {
         
         PluginManager pm = getServer().getPluginManager();
         this.getCommand("md").setExecutor(new MDCommand(this));
-        pm.registerEvent(Event.Type.PLAYER_JOIN, playerlistener, Priority.Normal, this);
+        pm.registerEvent(Event.Type.PLAYER_JOIN, playerlistener, Priority.Monitor, this);
         pm.registerEvent(Event.Type.PLAYER_QUIT, playerlistener, Priority.Normal, this);
         pm.registerEvent(Event.Type.PLAYER_RESPAWN, playerlistener, Priority.Normal, this);
         pm.registerEvent(Event.Type.PLAYER_TELEPORT, playerlistener, Priority.Normal, this);

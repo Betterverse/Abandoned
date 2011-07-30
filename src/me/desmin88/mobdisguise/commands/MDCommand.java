@@ -40,6 +40,10 @@ public class MDCommand implements CommandExecutor {
             }
 
             if (args[0].equalsIgnoreCase("disguise")) {
+                if(args.length != 2) {
+                    s.sendMessage(MobDisguise.pref + "No mobtype specified!");
+                    return true;
+                }
                 String mobtype = args[1].toLowerCase();
                 if (!MobIdEnum.map.containsKey(mobtype)) {
                     s.sendMessage(MobDisguise.pref + "Invalid mob type!");
