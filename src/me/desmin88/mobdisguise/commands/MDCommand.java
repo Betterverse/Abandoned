@@ -60,6 +60,7 @@ public class MDCommand implements CommandExecutor {
                     s.sendMessage(MobDisguise.pref + "This mob type has been restricted!");
                     return true;
                 }
+                MobDisguise.disList.add(s);
                 MobDisguise.playerMobId.put(s, (byte) MobIdEnum.map.get(mobtype).intValue());
                 MobDisguise.playerEntIds.add(Integer.valueOf(s.getEntityId()));
                 MobDisguise.pu.disguiseToAll(s);

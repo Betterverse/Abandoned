@@ -18,6 +18,20 @@ public class PacketUtils {
     
     public PacketUtils() {}
 
+    
+    public void killCarcass(Player p1) {
+        //Make packets out of loop!
+        CraftPlayer p22 = (CraftPlayer) p1;
+        Packet29DestroyEntity p29 = new Packet29DestroyEntity(p22.getEntityId());
+        for (Player p2 : Bukkit.getServer().getOnlinePlayers()) {
+            if (p2 == p1) {
+                continue;
+            }
+            ((CraftPlayer) p2).getHandle().netServerHandler.sendPacket(p29);
+            
+        }
+    }
+    
     public void undisguiseToAll(Player p1) {
         //Make packets out of loop!
         CraftPlayer p22 = (CraftPlayer) p1;

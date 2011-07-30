@@ -20,10 +20,17 @@ public class MDPlayerListener extends PlayerListener {
         this.plugin = instance;
     }
 
-    public void onPlayerQuit(PlayerQuitEvent event) {
+    public void onPlayerQuit(final PlayerQuitEvent event) {
+        System.out.println("quits");
         if(MobDisguise.disList.contains(event.getPlayer())) {
             //Should fix the "carcass" mob when disguised
-            MobDisguise.pu.undisguiseToAll(event.getPlayer());
+           Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
+               public void run() {
+                   System.out.println("killcarcass");
+                   MobDisguise.pu.killCarcass(event.getPlayer());
+                }
+            }, 5);
+            
         }
     }
     
@@ -67,7 +74,7 @@ public class MDPlayerListener extends PlayerListener {
         if (MobDisguise.disList.contains(event.getPlayer())) {
             event.getPlayer().sendMessage(MobDisguise.pref + "You have been disguised because you relogged");
             if(!MobDisguise.apiList.contains(event.getPlayer())) {
-                MobDisguise.pu.disguiseToAll(event.getPlayer());
+                Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new DisguiseTask(plugin), 8 );
             }
         }
     }

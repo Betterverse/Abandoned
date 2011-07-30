@@ -67,6 +67,7 @@ public class MobDisguise extends JavaPlugin {
         PluginManager pm = getServer().getPluginManager();
         this.getCommand("md").setExecutor(new MDCommand(this));
         pm.registerEvent(Event.Type.PLAYER_JOIN, playerlistener, Priority.Normal, this);
+        pm.registerEvent(Event.Type.PLAYER_QUIT, playerlistener, Priority.Normal, this);
         pm.registerEvent(Event.Type.PLAYER_RESPAWN, playerlistener, Priority.Normal, this);
         pm.registerEvent(Event.Type.PLAYER_TELEPORT, playerlistener, Priority.Normal, this);
         pm.registerEvent(Event.Type.ENTITY_DEATH, entitylistener, Priority.Normal, this);
