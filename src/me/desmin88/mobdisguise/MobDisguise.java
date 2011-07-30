@@ -19,13 +19,10 @@ import me.desmin88.mobdisguise.utils.PacketUtils;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.Event.Priority;
-import org.bukkit.plugin.Plugin;
+import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.util.config.Configuration;
-import org.bukkitcontrib.BukkitContrib;
-import org.bukkitcontrib.packet.listener.Listener;
-import org.bukkitcontrib.packet.listener.Listeners;
 
 public class MobDisguise extends JavaPlugin {
     public static List<Player> disList = new ArrayList<Player>();
@@ -39,14 +36,17 @@ public class MobDisguise extends JavaPlugin {
     public static final String pref = "[MobDisguise] ";
     public static Configuration cfg;
     public static boolean perm;
+    public static PluginDescriptionFile pdf;
     @Override
     public void onDisable() {
         this.getServer().getScheduler().cancelTasks(this);
-        System.out.println(pref + "version 1.01 disabled");
+        System.out.println("[" + pdf.getName()+ "]" + " by " + pdf.getAuthors().get(0) + " version " + pdf.getVersion() + " disabled.");
+    
     }
 
     @Override
     public void onEnable() {
+        pdf=this.getDescription();
         // Begin config code
         if (!new File(getDataFolder(), "config.yml").exists()) {
             try {new File(getDataFolder(), "config.yml").createNewFile();} catch(Exception e) {}
@@ -63,10 +63,12 @@ public class MobDisguise extends JavaPlugin {
             cfg.save();
         }
         perm = cfg.getBoolean("Permissions.enabled", false);
+        
         PluginManager pm = getServer().getPluginManager();
         this.getCommand("md").setExecutor(new MDCommand(this));
         pm.registerEvent(Event.Type.PLAYER_JOIN, playerlistener, Priority.Normal, this);
         pm.registerEvent(Event.Type.PLAYER_RESPAWN, playerlistener, Priority.Normal, this);
+        pm.registerEvent(Event.Type.PLAYER_TELEPORT, playerlistener, Priority.Normal, this);
         pm.registerEvent(Event.Type.ENTITY_DEATH, entitylistener, Priority.Normal, this);
         // this.getServer().getPluginManager().registerEvent(Event.Type.PLAYER_ANIMATION,
         // new MDPlayerListener(this), Priority.Normal, this);
@@ -74,7 +76,7 @@ public class MobDisguise extends JavaPlugin {
         // Register packet listeners
         org.bukkitcontrib.packet.listener.Listeners.addListener(17, packetlistener);
         org.bukkitcontrib.packet.listener.Listeners.addListener(18, packetlistener);
-        System.out.println(pref + "version 1.01 enabled");
+        System.out.println("[" + pdf.getName() + "]"  + " by " + pdf.getAuthors().get(0) + " version " + pdf.getVersion() + " enabled.");
 
     }
 

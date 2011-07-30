@@ -7,6 +7,7 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerListener;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
+import org.bukkit.event.player.PlayerTeleportEvent;
 
 public class MDPlayerListener extends PlayerListener {
     @SuppressWarnings("unused")
@@ -31,9 +32,17 @@ public class MDPlayerListener extends PlayerListener {
         }
     }
 
+    public void onPlayerTeleport(PlayerTeleportEvent event) {
+        if (MobDisguise.disList.contains(event.getPlayer()) && !MobDisguise.apiList.contains(event.getPlayer())) {
+            event.getPlayer().sendMessage(MobDisguise.pref + "You have been disguised because you teleported");
+            MobDisguise.pu.disguiseToAll(event.getPlayer());
+        }
+    }
+    
+    
     public void onPlayerRespawn(PlayerRespawnEvent event) {
         if (MobDisguise.disList.contains(event.getPlayer()) && !MobDisguise.apiList.contains(event.getPlayer())) {
-            event.getPlayer().sendMessage(MobDisguise.pref + "You haven been disguised because you died");
+            event.getPlayer().sendMessage(MobDisguise.pref + "You have been disguised because you died");
             MobDisguise.pu.disguiseToAll(event.getPlayer());
         }
     }

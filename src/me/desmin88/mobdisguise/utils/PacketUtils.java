@@ -59,6 +59,7 @@ public class PacketUtils {
             datawatcher = packet.getClass().getDeclaredField("h");
             datawatcher.setAccessible(true);
             datawatcher.set(packet, new DataWatcher());
+            datawatcher.setAccessible(false);
         } catch (Exception e) {
             System.out.println(MobDisguise.pref + "Error making packet?!");
             return null;
