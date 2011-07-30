@@ -53,7 +53,7 @@ public class MobDisguise extends JavaPlugin {
             cfg.setProperty("RealDrops.enabled", false);
             cfg.setProperty("Permissions.enabled", true);
             for (String mobtype : MobIdEnum.map.keySet()) {
-                cfg.setHeader("Setting a mobtype to false will not allow a player to disguise as that type");
+                cfg.setHeader("#Setting a mobtype to false will not allow a player to disguise as that type");
                 cfg.setProperty("Blacklist." + mobtype, true); // Just making
             }
             cfg.save();
