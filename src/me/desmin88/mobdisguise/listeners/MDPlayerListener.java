@@ -36,6 +36,9 @@ public class MDPlayerListener extends PlayerListener {
     }
 
     public void onPlayerTeleport(PlayerTeleportEvent event) {
+        if (!MobDisguise.disList.contains(event.getPlayer())) {
+            Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new DisguiseTask(plugin), 8);
+        }
         if (MobDisguise.disList.contains(event.getPlayer())) {
             Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new DisguiseTask(plugin), 8);
             if(!MobDisguise.apiList.contains(event.getPlayer())) {
@@ -46,6 +49,9 @@ public class MDPlayerListener extends PlayerListener {
     
     
     public void onPlayerRespawn(PlayerRespawnEvent event) {
+        if (!MobDisguise.disList.contains(event.getPlayer())) {
+            Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new DisguiseTask(plugin), 8 );
+        }
         if (MobDisguise.disList.contains(event.getPlayer())) {
             if(!MobDisguise.apiList.contains(event.getPlayer())) {
                 event.getPlayer().sendMessage(MobDisguise.pref + "You have been disguised because you died");
