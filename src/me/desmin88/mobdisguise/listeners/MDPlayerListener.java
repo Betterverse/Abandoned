@@ -2,6 +2,7 @@ package me.desmin88.mobdisguise.listeners;
 
 import me.desmin88.mobdisguise.MobDisguise;
 
+import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerAnimationEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerListener;
@@ -37,6 +38,12 @@ public class MDPlayerListener extends PlayerListener {
             event.getPlayer().sendMessage(MobDisguise.pref + "You have been disguised because you teleported");
             MobDisguise.pu.disguiseToAll(event.getPlayer());
         }
+        if (!MobDisguise.disList.contains(event.getPlayer())) {
+            for (Player p : MobDisguise.disList) {
+                MobDisguise.pu.disguiseToAll(p);
+            }
+        }
+    
     }
     
     
