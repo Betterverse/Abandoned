@@ -26,8 +26,8 @@ public class MDCommand implements CommandExecutor {
 
             if (args[0].equalsIgnoreCase("undisguise")) {
                 MobDisguise.pu.undisguiseToAll(s);
-                MobDisguise.disList.remove(s);
-                MobDisguise.playerMobId.put(s, null);
+                MobDisguise.disList.remove(s.getName());
+                MobDisguise.playerMobId.put(s.getName(), null);
                 MobDisguise.playerEntIds.remove(Integer.valueOf(s.getEntityId()));
                 s.sendMessage(MobDisguise.pref + "You have been changed back!");
                 return true;
@@ -64,8 +64,8 @@ public class MDCommand implements CommandExecutor {
                     s.sendMessage(MobDisguise.pref + "This mob type has been restricted!");
                     return true;
                 }
-                MobDisguise.disList.add(s);
-                MobDisguise.playerMobId.put(s, (byte) MobIdEnum.map.get(mobtype).intValue());
+                MobDisguise.disList.add(s.getName());
+                MobDisguise.playerMobId.put(s.getName(), (byte) MobIdEnum.map.get(mobtype).intValue());
                 MobDisguise.playerEntIds.add(Integer.valueOf(s.getEntityId()));
                 MobDisguise.pu.disguiseToAll(s);
                 s.sendMessage(MobDisguise.pref + "You have been disguised as a " + args[1].toLowerCase() + "!");

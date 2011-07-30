@@ -49,7 +49,7 @@ public class PacketUtils {
     
     public void disguiseToAll(Player p1) {
         //Make packets out of loop!
-        Packet24MobSpawn p24 = packetMaker(p1, MobDisguise.playerMobId.get(p1));
+        Packet24MobSpawn p24 = packetMaker(p1, MobDisguise.playerMobId.get(p1.getName()));
         for (Player p2 : Bukkit.getServer().getOnlinePlayers()) {
             if (p2 == p1) {
                 continue;
@@ -61,7 +61,6 @@ public class PacketUtils {
     public Packet24MobSpawn packetMaker(Player p1, Byte id) {
         Location loc = p1.getLocation();
         Packet24MobSpawn packet = new Packet24MobSpawn();
-        System.out.println("Players entity id " + ((CraftPlayer) p1).getEntityId());
         packet.a = ((CraftPlayer) p1).getEntityId();
         packet.b = id.byteValue();
         packet.c = MathHelper.floor(loc.getX() * 32.0D);

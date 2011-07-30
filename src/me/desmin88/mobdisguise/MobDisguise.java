@@ -25,12 +25,12 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.util.config.Configuration;
 
 public class MobDisguise extends JavaPlugin {
-    public static List<Player> disList = new ArrayList<Player>();
-    public static List<Player> apiList = new ArrayList<Player>();
-    public static Map<Player, Byte> playerMobId = new HashMap<Player, Byte>();
+    public static List<String> disList = new ArrayList<String>();
+    public static List<String> apiList = new ArrayList<String>();
+    public static Map<String, Byte> playerMobId = new HashMap<String, Byte>();
     public static Set<Integer> playerEntIds = new HashSet<Integer>();
     public static PacketUtils pu = new PacketUtils();
-    public static Set<Player> telelist = new HashSet<Player>();
+    public static List<String> telelist = new ArrayList<String>();
     public final PacketListener packetlistener = new PacketListener(this);
     public final MDPlayerListener playerlistener = new MDPlayerListener(this);
     public final MDEntityListener entitylistener = new MDEntityListener(this);
@@ -67,10 +67,10 @@ public class MobDisguise extends JavaPlugin {
         
         PluginManager pm = getServer().getPluginManager();
         this.getCommand("md").setExecutor(new MDCommand(this));
-        pm.registerEvent(Event.Type.PLAYER_JOIN, playerlistener, Priority.Monitor, this);
+        pm.registerEvent(Event.Type.PLAYER_JOIN, playerlistener, Priority.Lowest, this);
         pm.registerEvent(Event.Type.PLAYER_QUIT, playerlistener, Priority.Normal, this);
         pm.registerEvent(Event.Type.PLAYER_RESPAWN, playerlistener, Priority.Normal, this);
-        pm.registerEvent(Event.Type.PLAYER_TELEPORT, playerlistener, Priority.Normal, this);
+        pm.registerEvent(Event.Type.PLAYER_TELEPORT, playerlistener, Priority.Monitor, this);
         pm.registerEvent(Event.Type.ENTITY_DEATH, entitylistener, Priority.Normal, this);
         // this.getServer().getPluginManager().registerEvent(Event.Type.PLAYER_ANIMATION,
         // new MDPlayerListener(this), Priority.Normal, this);
