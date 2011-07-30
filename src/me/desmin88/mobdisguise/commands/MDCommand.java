@@ -45,8 +45,15 @@ public class MDCommand implements CommandExecutor {
                     s.sendMessage(MobDisguise.pref + "Invalid mob type!");
                     return true;
                 }
-                if(MobDisguise.perm && !s.hasPermission("mobdisguise.*") || !s.hasPermission("mobdisguise." + mobtype)) {
-                    s.sendMessage(MobDisguise.pref + "You don't have permission for this mob!");
+                
+                if(MobDisguise.perm && !s.isOp()){
+                    if(!s.hasPermission("mobdisguise." + mobtype) ) {
+                        s.sendMessage(MobDisguise.pref + "You don't have permission for this mob!");
+                        return true;
+                    }
+                }
+                if(!MobDisguise.perm && !s.isOp()) {
+                    s.sendMessage(MobDisguise.pref + "You are not an OP and perms are disabled!");
                     return true;
                 }
                 if (!MobDisguise.cfg.getBoolean("BlackList." + mobtype, true)) {

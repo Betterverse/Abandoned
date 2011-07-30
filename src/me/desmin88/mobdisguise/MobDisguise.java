@@ -19,9 +19,13 @@ import me.desmin88.mobdisguise.utils.PacketUtils;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.Event.Priority;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.util.config.Configuration;
+import org.bukkitcontrib.BukkitContrib;
+import org.bukkitcontrib.packet.listener.Listener;
+import org.bukkitcontrib.packet.listener.Listeners;
 
 public class MobDisguise extends JavaPlugin {
     public static List<Player> disList = new ArrayList<Player>();
@@ -38,7 +42,7 @@ public class MobDisguise extends JavaPlugin {
     @Override
     public void onDisable() {
         this.getServer().getScheduler().cancelTasks(this);
-        System.out.println(pref + "version 1.0 disabled");
+        System.out.println(pref + "version 1.01 disabled");
     }
 
     @Override
@@ -70,7 +74,7 @@ public class MobDisguise extends JavaPlugin {
         // Register packet listeners
         org.bukkitcontrib.packet.listener.Listeners.addListener(17, packetlistener);
         org.bukkitcontrib.packet.listener.Listeners.addListener(18, packetlistener);
-        System.out.println(pref + "version 1.0 enabled");
+        System.out.println(pref + "version 1.01 enabled");
 
     }
 

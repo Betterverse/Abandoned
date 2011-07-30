@@ -5,6 +5,7 @@ import net.minecraft.server.Packet;
 import net.minecraft.server.Packet17;
 import net.minecraft.server.Packet18ArmAnimation;
 
+import org.bukkit.entity.Player;
 import org.bukkitcontrib.packet.listener.Listener;
 
 public class PacketListener implements Listener {
@@ -16,7 +17,7 @@ public class PacketListener implements Listener {
     }
 
     @Override
-    public boolean checkPacket(Packet packet) {
+    public boolean checkPacket(Player p, Packet packet) {
         if (packet instanceof Packet18ArmAnimation) {
             Packet18ArmAnimation p18 = (Packet18ArmAnimation) packet;
             if (p18.b != 2 && MobDisguise.playerEntIds.contains(p18.a)) {
