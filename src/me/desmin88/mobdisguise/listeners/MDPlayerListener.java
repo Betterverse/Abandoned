@@ -55,6 +55,9 @@ public class MDPlayerListener extends PlayerListener {
     }
 
     public void onPlayerJoin(PlayerJoinEvent event) {
+        if(!MobDisguise.disList.contains(event.getPlayer())) {
+            Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new DisguiseTask(plugin), 8 );
+        }
         if (MobDisguise.disList.contains(event.getPlayer())) {
             event.getPlayer().sendMessage(MobDisguise.pref + "You have been disguised because you relogged");
             if(!MobDisguise.apiList.contains(event.getPlayer())) {
