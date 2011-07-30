@@ -1,7 +1,9 @@
 package me.desmin88.mobdisguise.listeners;
 
 import me.desmin88.mobdisguise.MobDisguise;
+import me.desmin88.mobdisguise.utils.DisguiseTask;
 
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerAnimationEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
@@ -19,7 +21,7 @@ public class MDPlayerListener extends PlayerListener {
     }
 
     public void onPlayerQuit(PlayerQuitEvent event) {
-        if(MobDisguise.disList.contains(event.getPlayer()) && !MobDisguise.apiList.contains(event.getPlayer())) {
+        if(MobDisguise.disList.contains(event.getPlayer())) {
             //Should fix the "carcass" mob when disguised
             MobDisguise.pu.undisguiseToAll(event.getPlayer());
         }
@@ -34,30 +36,30 @@ public class MDPlayerListener extends PlayerListener {
     }
 
     public void onPlayerTeleport(PlayerTeleportEvent event) {
-        if (MobDisguise.disList.contains(event.getPlayer()) && !MobDisguise.apiList.contains(event.getPlayer())) {
-            event.getPlayer().sendMessage(MobDisguise.pref + "You have been disguised because you teleported");
-            MobDisguise.pu.disguiseToAll(event.getPlayer());
-        }
-        if (!MobDisguise.disList.contains(event.getPlayer())) {
-            for (Player p : MobDisguise.disList) {
-                MobDisguise.pu.disguiseToAll(p);
+        if (MobDisguise.disList.contains(event.getPlayer())) {
+            Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new DisguiseTask(plugin), 8);
+            if(!MobDisguise.apiList.contains(event.getPlayer())) {
+                event.getPlayer().sendMessage(MobDisguise.pref + "You have been disguised because you teleported");
             }
         }
-    
     }
     
     
     public void onPlayerRespawn(PlayerRespawnEvent event) {
-        if (MobDisguise.disList.contains(event.getPlayer()) && !MobDisguise.apiList.contains(event.getPlayer())) {
-            event.getPlayer().sendMessage(MobDisguise.pref + "You have been disguised because you died");
+        if (MobDisguise.disList.contains(event.getPlayer())) {
+            if(!MobDisguise.apiList.contains(event.getPlayer())) {
+                event.getPlayer().sendMessage(MobDisguise.pref + "You have been disguised because you died");
+            }
             MobDisguise.pu.disguiseToAll(event.getPlayer());
         }
     }
 
     public void onPlayerJoin(PlayerJoinEvent event) {
-        if (MobDisguise.disList.contains(event.getPlayer()) && !MobDisguise.apiList.contains(event.getPlayer())) {
+        if (MobDisguise.disList.contains(event.getPlayer())) {
             event.getPlayer().sendMessage(MobDisguise.pref + "You have been disguised because you relogged");
-            MobDisguise.pu.disguiseToAll(event.getPlayer());
+            if(!MobDisguise.apiList.contains(event.getPlayer())) {
+                MobDisguise.pu.disguiseToAll(event.getPlayer());
+            }
         }
     }
 }
