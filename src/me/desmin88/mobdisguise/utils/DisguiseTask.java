@@ -13,8 +13,8 @@ public class DisguiseTask implements Runnable {
 
     @Override
     public void run() {
-        for (Player p1 : plugin.disList) {
-            plugin.pu.disguiseToAll(p1);
+        for (Player p1 : MobDisguise.disList) {
+            MobDisguise.pu.disguiseToAll(p1);
         }
     }
 }

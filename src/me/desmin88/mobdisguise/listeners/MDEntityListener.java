@@ -9,6 +9,7 @@ import org.bukkit.event.entity.EntityListener;
 
 
 public class MDEntityListener extends EntityListener{
+    @SuppressWarnings("unused")
     private final MobDisguise plugin;
     public MDEntityListener(MobDisguise instance) {
         this.plugin = instance;

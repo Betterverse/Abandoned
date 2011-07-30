@@ -15,8 +15,7 @@ import org.bukkit.craftbukkit.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 
 public class PacketUtils {
-    public MobDisguise plugin;
-
+    
     public PacketUtils() {}
 
     public void undisguiseToAll(Player p1) {
@@ -36,7 +35,7 @@ public class PacketUtils {
     
     public void disguiseToAll(Player p1) {
         //Make packets out of loop!
-        Packet24MobSpawn p24 = packetMaker(p1, plugin.playerMobId.get(p1));
+        Packet24MobSpawn p24 = packetMaker(p1, MobDisguise.playerMobId.get(p1));
         for (Player p2 : Bukkit.getServer().getOnlinePlayers()) {
             if (p2 == p1) {
                 continue;

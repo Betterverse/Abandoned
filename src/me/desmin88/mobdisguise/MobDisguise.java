@@ -38,7 +38,7 @@ public class MobDisguise extends JavaPlugin {
     @Override
     public void onDisable() {
         this.getServer().getScheduler().cancelTasks(this);
-        System.out.println(pref + "version 1.4 DEV disabled");
+        System.out.println(pref + "version 1.0 disabled");
     }
 
     @Override
@@ -58,7 +58,7 @@ public class MobDisguise extends JavaPlugin {
             }
             cfg.save();
         }
-        perm = cfg.getBoolean("Permissions.enabled", true);
+        perm = cfg.getBoolean("Permissions.enabled", false);
         PluginManager pm = getServer().getPluginManager();
         this.getCommand("md").setExecutor(new MDCommand(this));
         pm.registerEvent(Event.Type.PLAYER_JOIN, playerlistener, Priority.Normal, this);
@@ -66,11 +66,11 @@ public class MobDisguise extends JavaPlugin {
         pm.registerEvent(Event.Type.ENTITY_DEATH, entitylistener, Priority.Normal, this);
         // this.getServer().getPluginManager().registerEvent(Event.Type.PLAYER_ANIMATION,
         // new MDPlayerListener(this), Priority.Normal, this);
-        getServer().getScheduler().scheduleAsyncRepeatingTask(this, new DisguiseTask(this), 1200, 1200);
+        getServer().getScheduler().scheduleSyncRepeatingTask(this, new DisguiseTask(this), 1200, 1200);
         // Register packet listeners
         org.bukkitcontrib.packet.listener.Listeners.addListener(17, packetlistener);
         org.bukkitcontrib.packet.listener.Listeners.addListener(18, packetlistener);
-        System.out.println(pref + "version 1.4 DEV enabled");
+        System.out.println(pref + "version 1.0 enabled");
 
     }
 

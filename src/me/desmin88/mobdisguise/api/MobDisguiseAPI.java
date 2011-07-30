@@ -5,7 +5,7 @@ import me.desmin88.mobdisguise.utils.MobIdEnum;
 
 import org.bukkit.entity.Player;
 
-public class MobDisguiseAPI {
+public class MobDisguiseAPI { //Basic api to allow for other plugins to disguise/undisguise players
     private MobDisguiseAPI() {}
    
     public static boolean disguisePlayer(Player p, String mobtype) {

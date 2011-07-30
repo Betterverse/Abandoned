@@ -9,6 +9,7 @@ import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
 
 public class MDPlayerListener extends PlayerListener {
+    @SuppressWarnings("unused")
     private final MobDisguise plugin;
 
     public MDPlayerListener(MobDisguise instance) {
@@ -16,31 +17,31 @@ public class MDPlayerListener extends PlayerListener {
     }
 
     public void onPlayerQuit(PlayerQuitEvent event) {
-        if(plugin.disList.contains(event.getPlayer()) && !plugin.apiList.contains(event.getPlayer())) {
+        if(MobDisguise.disList.contains(event.getPlayer()) && !MobDisguise.apiList.contains(event.getPlayer())) {
             //Should fix the "carcass" mob when disguised
-            plugin.pu.undisguiseToAll(event.getPlayer());
+            MobDisguise.pu.undisguiseToAll(event.getPlayer());
         }
     }
     
     //Waiting for my stinking pull.
     public void onPlayerAnimation(PlayerAnimationEvent event) {
-        if (plugin.disList.contains(event.getPlayer())) {
+        if (MobDisguise.disList.contains(event.getPlayer())) {
             // event.setCancelled(true);
             return;
         }
     }
 
     public void onPlayerRespawn(PlayerRespawnEvent event) {
-        if (plugin.disList.contains(event.getPlayer()) && !plugin.apiList.contains(event.getPlayer())) {
+        if (MobDisguise.disList.contains(event.getPlayer()) && !MobDisguise.apiList.contains(event.getPlayer())) {
             event.getPlayer().sendMessage(MobDisguise.pref + "You haven been disguised because you died");
-            plugin.pu.disguiseToAll(event.getPlayer());
+            MobDisguise.pu.disguiseToAll(event.getPlayer());
         }
     }
 
     public void onPlayerJoin(PlayerJoinEvent event) {
-        if (plugin.disList.contains(event.getPlayer()) && !plugin.apiList.contains(event.getPlayer())) {
+        if (MobDisguise.disList.contains(event.getPlayer()) && !MobDisguise.apiList.contains(event.getPlayer())) {
             event.getPlayer().sendMessage(MobDisguise.pref + "You have been disguised because you relogged");
-            plugin.pu.disguiseToAll(event.getPlayer());
+            MobDisguise.pu.disguiseToAll(event.getPlayer());
         }
     }
 }

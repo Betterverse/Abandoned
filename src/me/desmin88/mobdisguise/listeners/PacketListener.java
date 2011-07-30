@@ -8,6 +8,7 @@ import net.minecraft.server.Packet18ArmAnimation;
 import org.bukkitcontrib.packet.listener.Listener;
 
 public class PacketListener implements Listener {
+    @SuppressWarnings("unused")
     private final MobDisguise plugin;
 
     public PacketListener(MobDisguise instance) {

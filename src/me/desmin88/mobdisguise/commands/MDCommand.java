@@ -9,6 +9,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 public class MDCommand implements CommandExecutor {
+    @SuppressWarnings("unused")
     private final MobDisguise plugin;
 
     public MDCommand(MobDisguise instance) {
@@ -24,10 +25,10 @@ public class MDCommand implements CommandExecutor {
             }
 
             if (args[0].equalsIgnoreCase("undisguise")) {
-                plugin.pu.undisguiseToAll(s);
-                plugin.disList.remove(s);
-                plugin.playerMobId.put(s, null);
-                plugin.playerEntIds.remove(Integer.valueOf(s.getEntityId()));
+                MobDisguise.pu.undisguiseToAll(s);
+                MobDisguise.disList.remove(s);
+                MobDisguise.playerMobId.put(s, null);
+                MobDisguise.playerEntIds.remove(Integer.valueOf(s.getEntityId()));
                 s.sendMessage(MobDisguise.pref + "You have been changed back!");
                 return true;
             }
@@ -44,7 +45,7 @@ public class MDCommand implements CommandExecutor {
                     s.sendMessage(MobDisguise.pref + "Invalid mob type!");
                     return true;
                 }
-                if(!MobDisguise.perm && !s.hasPermission("mobdisguise.*") || !s.hasPermission("mobdisguise." + mobtype)) {
+                if(MobDisguise.perm && !s.hasPermission("mobdisguise.*") || !s.hasPermission("mobdisguise." + mobtype)) {
                     s.sendMessage(MobDisguise.pref + "You don't have permission for this mob!");
                     return true;
                 }
@@ -52,10 +53,9 @@ public class MDCommand implements CommandExecutor {
                     s.sendMessage(MobDisguise.pref + "This mob type has been restricted!");
                     return true;
                 }
-                plugin.disList.add(s);
-                plugin.playerMobId.put(s, (byte) MobIdEnum.map.get(mobtype).intValue());
-                plugin.playerEntIds.add(Integer.valueOf(s.getEntityId()));
-                plugin.pu.disguiseToAll(s);
+                MobDisguise.playerMobId.put(s, (byte) MobIdEnum.map.get(mobtype).intValue());
+                MobDisguise.playerEntIds.add(Integer.valueOf(s.getEntityId()));
+                MobDisguise.pu.disguiseToAll(s);
                 s.sendMessage(MobDisguise.pref + "You have been disguised as a " + args[1].toLowerCase() + "!");
                 return true;
             }
