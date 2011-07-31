@@ -44,7 +44,6 @@ public class MDPlayerListener extends PlayerListener {
     }
 
     public void onPlayerTeleport(PlayerTeleportEvent event) {
-        System.out.println("Teleport");
         if(MobDisguise.telelist.contains(event.getPlayer().getName())) {
             MobDisguise.telelist.remove(event.getPlayer().getName());
             return;
