@@ -8,7 +8,7 @@ commands:
         description: Allows player to disguise as mob
         usage: /md [disguise,undisguise,types]
 permissions:
-    mobdisguise.use:
+    mobdisguise.*:
         description: Allows a player to disguise as any mob
         children:
             mobdisguise.creeper: true

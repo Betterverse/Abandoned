@@ -25,12 +25,12 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.util.config.Configuration;
 
 public class MobDisguise extends JavaPlugin {
-    public static List<String> disList = new ArrayList<String>();
-    public static List<String> apiList = new ArrayList<String>();
+    public static Set<String> disList = new HashSet<String>();
+    public static Set<String> apiList = new HashSet<String>();
     public static Map<String, Byte> playerMobId = new HashMap<String, Byte>();
     public static Set<Integer> playerEntIds = new HashSet<Integer>();
     public static PacketUtils pu = new PacketUtils();
-    public static List<String> telelist = new ArrayList<String>();
+    public static Set<String> telelist = new HashSet<String>();
     public final PacketListener packetlistener = new PacketListener(this);
     public final MDPlayerListener playerlistener = new MDPlayerListener(this);
     public final MDEntityListener entitylistener = new MDEntityListener(this);
@@ -57,6 +57,7 @@ public class MobDisguise extends JavaPlugin {
             System.out.println(pref + "config.yml not found, making with default values");
             cfg.setProperty("RealDrops.enabled", false);
             cfg.setProperty("Permissions.enabled", true);
+            cfg.setProperty("M.enabled", true);
             for (String mobtype : MobIdEnum.map.keySet()) {
                 cfg.setHeader("#Setting a mobtype to false will not allow a player to disguise as that type");
                 cfg.setProperty("Blacklist." + mobtype, true); // Just making
