@@ -10,6 +10,7 @@ import org.bukkit.event.player.PlayerAnimationEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerListener;
 import org.bukkit.event.player.PlayerLoginEvent;
+import org.bukkit.event.player.PlayerPickupItemEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.event.player.PlayerTeleportEvent;
@@ -22,6 +23,13 @@ public class MDPlayerListener extends PlayerListener {
         this.plugin = instance;
     }
 
+    public void onPlayerPickupItem(PlayerPickupItemEvent event){
+        if(MobDisguise.disList.contains(event.getPlayer().getName()) && MobDisguise.cfg.getBoolean("DisableItemPickup.enabled", true)) {
+            event.setCancelled(true);
+        }
+    }
+    
+    
     public void onPlayerQuit(final PlayerQuitEvent event) {
         if(MobDisguise.disList.contains(event.getPlayer().getName())) {
             MobDisguise.playerEntIds.remove(event.getPlayer().getEntityId());

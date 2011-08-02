@@ -6,7 +6,7 @@ import net.minecraft.server.Packet17;
 import net.minecraft.server.Packet18ArmAnimation;
 
 import org.bukkit.entity.Player;
-import org.bukkitcontrib.packet.listener.Listener;
+import org.getspout.spoutapi.packet.listener.*;
 
 public class PacketListener implements Listener {
     @SuppressWarnings("unused")

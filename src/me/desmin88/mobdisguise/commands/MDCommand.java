@@ -51,7 +51,12 @@ public class MDCommand implements CommandExecutor {
                 }
                 
             }
-
+             
+            if(args[0].equalsIgnoreCase("p") && args.length == 2) {
+                
+                s.sendMessage(MobDisguise.pref + "You have disguised as player " + args[1]);
+                return true;
+            }
             
             if(args.length == 1) { // Means they're trying to disguise
                 String mobtype = args[0].toLowerCase();
