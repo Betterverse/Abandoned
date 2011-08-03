@@ -1,12 +1,12 @@
 name: MobDisguise
 main: me.desmin88.mobdisguise.MobDisguise
-version: 1.11
+version: 1.31
 authors: [desmin88]
 depend: [Spout]
 commands:
     md:
         description: Allows player to disguise as mob
-        usage: /md [disguise,undisguise,types]
+        usage: /md [mobtype], stats
 permissions:
     mobdisguise.*:
         description: Allows a player to disguise as any mob
