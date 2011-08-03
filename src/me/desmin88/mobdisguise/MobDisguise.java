@@ -50,7 +50,12 @@ public class MobDisguise extends JavaPlugin {
         pdf=this.getDescription();
         // Begin config code
         if (!new File(getDataFolder(), "config.yml").exists()) {
-            try {new File(getDataFolder(), "config.yml").createNewFile();} catch(Exception e) {
+            try {
+                getDataFolder().mkdir();
+                new File(getDataFolder(),"config.yml").createNewFile();
+            } 
+            catch(Exception e) {
+                e.printStackTrace();
                 System.out.println(MobDisguise.pref + "Error making config.yml?!");
                 getServer().getPluginManager().disablePlugin(this); //Cleanup
                 return;
