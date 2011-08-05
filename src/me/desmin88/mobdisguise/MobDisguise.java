@@ -1,10 +1,8 @@
 package me.desmin88.mobdisguise;
 
 import java.io.File;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -16,7 +14,6 @@ import me.desmin88.mobdisguise.utils.DisguiseTask;
 import me.desmin88.mobdisguise.utils.MobIdEnum;
 import me.desmin88.mobdisguise.utils.PacketUtils;
 
-import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.Event.Priority;
 import org.bukkit.plugin.PluginDescriptionFile;
@@ -28,6 +25,10 @@ public class MobDisguise extends JavaPlugin {
     public static Set<String> disList = new HashSet<String>();
     public static Set<String> apiList = new HashSet<String>();
     public static Map<String, Byte> playerMobId = new HashMap<String, Byte>();
+    //Player disguising -> player disguised as
+    public static Map<String, String> p2p = new HashMap<String, String>();
+    public static Set<String> playerdislist = new HashSet<String>();
+    //end
     public static Set<Integer> playerEntIds = new HashSet<Integer>();
     public static PacketUtils pu = new PacketUtils();
     public static Set<String> telelist = new HashSet<String>();
@@ -56,7 +57,7 @@ public class MobDisguise extends JavaPlugin {
             } 
             catch(Exception e) {
                 e.printStackTrace();
-                System.out.println(MobDisguise.pref + "Error making config.yml?!");
+                System.out.println(pref + "Error making config.yml?!");
                 getServer().getPluginManager().disablePlugin(this); //Cleanup
                 return;
             }

@@ -1,6 +1,6 @@
 name: MobDisguise
 main: me.desmin88.mobdisguise.MobDisguise
-version: 1.31
+version: 1.4
 authors: [desmin88]
 depend: [Spout]
 commands:
@@ -25,6 +25,8 @@ permissions:
             mobdisguise.chicken: true
             mobdisguise.squid: true
             mobdisguise.wolf: true
+            mobdisguise.steve: true
+            mobdisugise.player: true
     mobdisguise.creeper:
         description: Allows a player to disguise as a creeper
     mobdisguise.skeleton:
@@ -53,4 +55,8 @@ permissions:
         description: Allows a player to disguise as a squid
     mobdisguise.wolf:
         description: Allows a player to disguise as a wolf
+    mobdisguise.steve:
+        description: Allows a player to disguise as Steve
+    mobdisguise.player:
+        description: Allows a player to disguise as any player
                     

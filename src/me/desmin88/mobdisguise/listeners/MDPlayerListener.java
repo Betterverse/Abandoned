@@ -4,19 +4,16 @@ import me.desmin88.mobdisguise.MobDisguise;
 import me.desmin88.mobdisguise.utils.DisguiseTask;
 
 import org.bukkit.Bukkit;
-import org.bukkit.craftbukkit.entity.CraftPlayer;
-import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerAnimationEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerListener;
-import org.bukkit.event.player.PlayerLoginEvent;
 import org.bukkit.event.player.PlayerPickupItemEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.event.player.PlayerTeleportEvent;
 
 public class MDPlayerListener extends PlayerListener {
-    @SuppressWarnings("unused")
+    
     private final MobDisguise plugin;
 
     public MDPlayerListener(MobDisguise instance) {
@@ -24,7 +21,7 @@ public class MDPlayerListener extends PlayerListener {
     }
 
     public void onPlayerPickupItem(PlayerPickupItemEvent event){
-        if(MobDisguise.disList.contains(event.getPlayer().getName()) && MobDisguise.cfg.getBoolean("DisableItemPickup.enabled", true)) {
+        if(MobDisguise.disList.contains(event.getPlayer().getName()) && MobDisguise.cfg.getBoolean("DisableItemPickup.enabled", true) && !MobDisguise.playerdislist.contains(event.getPlayer().getName())) {
             event.setCancelled(true);
         }
     }

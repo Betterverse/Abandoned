@@ -28,6 +28,7 @@ public class PacketUtils {
                 continue;
             }
             ((CraftPlayer) p2).getHandle().netServerHandler.sendPacket(p29);
+            ((CraftPlayer) p2).getHandle().netServerHandler.sendPacket(p29);
             
         }
     }
@@ -58,6 +59,50 @@ public class PacketUtils {
         }
     }
 
+    //Begin code for p2p disguising
+    public void disguisep2pToAll(Player p, String name) {
+        Packet20NamedEntitySpawn p20 = packetMaker(p, name);
+        Packet29DestroyEntity p29 = new Packet29DestroyEntity(p.getEntityId()); //Must destroy, don't want doubles lololololol
+        p.setDisplayName(name);
+        for (Player p1 : Bukkit.getServer().getOnlinePlayers()) {
+            if (p1 == p) {
+                continue;
+            }
+            ((CraftPlayer) p1).getHandle().netServerHandler.sendPacket(p29);
+            ((CraftPlayer) p1).getHandle().netServerHandler.sendPacket(p20);
+        }
+    }
+    
+    public void undisguisep2pToAll(Player p) {
+        p.setDisplayName(p.getName());
+        Packet20NamedEntitySpawn p20 = packetMaker(p, p.getName());
+        Packet29DestroyEntity p29 = new Packet29DestroyEntity(p.getEntityId()); //Must destroy, don't want doubles lololololol
+        for (Player p1 : Bukkit.getServer().getOnlinePlayers()) {
+            if (p1 == p) {
+                continue;
+            }
+            ((CraftPlayer) p1).getHandle().netServerHandler.sendPacket(p29);
+            ((CraftPlayer) p1).getHandle().netServerHandler.sendPacket(p20);
+        }
+    }
+    
+    public Packet20NamedEntitySpawn packetMaker(Player p, String name) {
+        Location loc = p.getLocation();
+        Packet20NamedEntitySpawn packet = new Packet20NamedEntitySpawn();
+        packet.a = p.getEntityId();
+        packet.b = name; //Set the name of the player to the name they want.
+        packet.c = (int) loc.getX();
+        packet.c = MathHelper.floor(loc.getX() * 32.0D);
+        packet.d = MathHelper.floor(loc.getY() * 32.0D);
+        packet.e = MathHelper.floor(loc.getZ() * 32.0D);
+        packet.f = (byte) ((int) loc.getYaw() * 256.0F / 360.0F);
+        packet.g = (byte) ((int) (loc.getPitch() * 256.0F / 360.0F));
+        packet.h = p.getItemInHand().getTypeId();
+        return packet;
+        
+    }
+    
+    
     public Packet24MobSpawn packetMaker(Player p1, Byte id) {
         Location loc = p1.getLocation();
         Packet24MobSpawn packet = new Packet24MobSpawn();
