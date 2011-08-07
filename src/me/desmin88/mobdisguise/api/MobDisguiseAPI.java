@@ -30,15 +30,12 @@ public class MobDisguiseAPI {
 			return false;
 		}
 		if (name.length() > 16) {
-			System.out
-					.println(MobDisguise.pref
-							+ "Error, some other plugin is setting a name over 16 characters, truncating.");
+			System.out.println(MobDisguise.pref + "Error, some other plugin is setting a name over 16 characters, truncating.");
 			String tmp = name.substring(0, 16);
 			name = tmp;
 		}
 		/* Listener notify start */
-		DisguiseAsPlayerEvent e = new DisguiseAsPlayerEvent(
-				"DisguiseAsPlayerEvent", p, name);
+		DisguiseAsPlayerEvent e = new DisguiseAsPlayerEvent("DisguiseAsPlayerEvent", p, name);
 		Bukkit.getServer().getPluginManager().callEvent(e);
 		if(e.isCancelled()){
 			return false;
@@ -63,8 +60,7 @@ public class MobDisguiseAPI {
 			return false;
 		}
 		/* Listener notify start */
-		UnDisguiseEvent e = new UnDisguiseEvent(
-				"UnDisguiseEvent", p, false);
+		UnDisguiseEvent e = new UnDisguiseEvent("UnDisguiseEvent", p, false);
 		Bukkit.getServer().getPluginManager().callEvent(e);
 		if(e.isCancelled()){
 			return false;
@@ -94,8 +90,7 @@ public class MobDisguiseAPI {
 			return false;
 		}
 		/* Listener notify start */
-		DisguiseAsMobEvent e = new DisguiseAsMobEvent(
-				"DisguiseAsMobEvent", p, mobtype);
+		DisguiseAsMobEvent e = new DisguiseAsMobEvent("DisguiseAsMobEvent", p, mobtype);
 		Bukkit.getServer().getPluginManager().callEvent(e);
 		if(e.isCancelled()){
 			return false;
@@ -103,8 +98,7 @@ public class MobDisguiseAPI {
 		/* Listener notify end */
 		MobDisguise.apiList.add(p.getName());
 		MobDisguise.disList.add(p.getName());
-		MobDisguise.playerMobId.put(p.getName(),
-				(byte) MobIdEnum.map.get(mobtype).intValue());
+		MobDisguise.playerMobId.put(p.getName(), (byte) MobIdEnum.map.get(mobtype).intValue());
 		MobDisguise.playerEntIds.add(Integer.valueOf(p.getEntityId()));
 		MobDisguise.pu.disguiseToAll(p);
 		return true;
@@ -123,8 +117,7 @@ public class MobDisguiseAPI {
 			return false;
 		}
 		/* Listener notify start */
-		UnDisguiseEvent e = new UnDisguiseEvent(
-				"UnDisguiseEvent", p, true);
+		UnDisguiseEvent e = new UnDisguiseEvent("UnDisguiseEvent", p, true);
 		Bukkit.getServer().getPluginManager().callEvent(e);
 		if(e.isCancelled()){
 			return false;
