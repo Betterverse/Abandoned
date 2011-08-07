@@ -1,13 +1,23 @@
 package me.desmin88.mobdisguise.commands;
 
 import me.desmin88.mobdisguise.MobDisguise;
+import me.desmin88.mobdisguise.api.event.DisguiseAsMobEvent;
+import me.desmin88.mobdisguise.api.event.DisguiseAsPlayerEvent;
+import me.desmin88.mobdisguise.api.event.DisguiseCommandEvent;
+import me.desmin88.mobdisguise.api.event.UnDisguiseEvent;
 import me.desmin88.mobdisguise.utils.MobIdEnum;
 
+import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+/**
+ * @author desmin88
+ * @author iffa
+ *
+ */
 public class MDCommand implements CommandExecutor {
     @SuppressWarnings("unused")
     private final MobDisguise plugin;
@@ -17,6 +27,14 @@ public class MDCommand implements CommandExecutor {
     }
 
     public boolean onCommand(CommandSender sender, Command command, String commandLabel, String[] args) {
+    	/* Listener notify start */
+		DisguiseCommandEvent ev = new DisguiseCommandEvent(
+				"DisguiseCommandEvent", sender, args);
+		Bukkit.getServer().getPluginManager().callEvent(ev);
+		if(ev.isCancelled()){
+			return true;
+		}
+		/* Listener notify end */
         if (sender instanceof Player) {
             Player s = (Player) sender;
             
@@ -26,6 +44,14 @@ public class MDCommand implements CommandExecutor {
                     return true;
                 }
                 if(MobDisguise.playerdislist.contains(s.getName())) {
+            		/* Listener notify start */
+            		UnDisguiseEvent e = new UnDisguiseEvent(
+            				"UnDisguiseEvent", s, false);
+            		Bukkit.getServer().getPluginManager().callEvent(e);
+            		if(e.isCancelled()){
+            			return false;
+            		}
+            		/* Listener notify end */
                     MobDisguise.disList.remove(s.getName());
                     MobDisguise.playerdislist.remove(s.getName());
                     MobDisguise.pu.undisguisep2pToAll(s);
@@ -33,6 +59,14 @@ public class MDCommand implements CommandExecutor {
                     s.sendMessage(MobDisguise.pref + "You have undisguised as a different player and returned back to normal!");
                     return true;
                 }
+        		/* Listener notify start */
+        		UnDisguiseEvent e = new UnDisguiseEvent(
+        				"UnDisguiseEvent", s, true);
+        		Bukkit.getServer().getPluginManager().callEvent(e);
+        		if(e.isCancelled()){
+        			return false;
+        		}
+        		/* Listener notify end */
                 MobDisguise.pu.undisguiseToAll(s);
                 MobDisguise.disList.remove(s.getName());
                 MobDisguise.playerMobId.put(s.getName(), null);
@@ -93,6 +127,14 @@ public class MDCommand implements CommandExecutor {
                     s.sendMessage(MobDisguise.pref + "You are not an OP and perms are disabled!");
                     return true;
                 }
+				/* Listener notify start */
+				DisguiseAsPlayerEvent e = new DisguiseAsPlayerEvent(
+						"DisguiseAsPlayerEvent", s, args[1]);
+				Bukkit.getServer().getPluginManager().callEvent(e);
+				if(e.isCancelled()){
+					return true;
+				}
+				/* Listener notify end */
                 MobDisguise.disList.add(s.getName());
                 MobDisguise.playerdislist.add(s.getName());
                 MobDisguise.pu.disguisep2pToAll(s, args[1]);
@@ -125,6 +167,14 @@ public class MDCommand implements CommandExecutor {
                     s.sendMessage(MobDisguise.pref + "This mob type has been restricted!");
                     return true;
                 }
+				/* Listener notify start */
+				DisguiseAsMobEvent e = new DisguiseAsMobEvent(
+						"DisguiseAsMobEvent", s, mobtype);
+				Bukkit.getServer().getPluginManager().callEvent(e);
+				if(e.isCancelled()){
+					return true;
+				}
+				/* Listener notify end */
                 MobDisguise.disList.add(s.getName());
                 MobDisguise.playerMobId.put(s.getName(), (byte) MobIdEnum.map.get(mobtype).intValue());
                 MobDisguise.playerEntIds.add(Integer.valueOf(s.getEntityId()));
