@@ -13,6 +13,11 @@ public class MobDisguiseAPI { //Basic api to allow for other plugins to disguise
         if(isDisguised(p)) {
             return false;
         }
+        if(name.length() > 16) {
+            System.out.println(MobDisguise.pref + "Error, some other plugin is setting a name over 16 characters, truncating.");
+            String tmp = name.substring(0, 16);
+            name=tmp;
+        }
         MobDisguise.apiList.add(p.getName());
         MobDisguise.disList.add(p.getName());
         MobDisguise.playerdislist.add(p.getName());
@@ -61,7 +66,7 @@ public class MobDisguiseAPI { //Basic api to allow for other plugins to disguise
     }
 
     public static boolean isDisguised(Player p) {
-        return MobDisguise.disList.contains(p);
+        return MobDisguise.disList.contains(p.getName());
     }
 
 

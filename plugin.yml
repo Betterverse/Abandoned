@@ -1,6 +1,6 @@
 name: MobDisguise
 main: me.desmin88.mobdisguise.MobDisguise
-version: 1.4
+version: 1.5
 authors: [desmin88]
 depend: [Spout]
 commands:

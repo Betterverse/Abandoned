@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class MobIdEnum {
+    public static String types = "creeper,skeleton,spider,giant,zombie,slime,pigman,pig,sheep,cow,chicken,squid,wolf";
+    
     public static String getTypeFromByte(Integer in) {
         for(String s : map.keySet()) {
             if(map.get(s) == in) {

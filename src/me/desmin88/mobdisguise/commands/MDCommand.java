@@ -42,10 +42,17 @@ public class MDCommand implements CommandExecutor {
             }
             
             if (args[0].equalsIgnoreCase("types")) { // They want to know valid types of mobs
+                if(s.isOp() || s.hasPermission("mobdisguise.*")) {
+                    s.sendMessage(MobDisguise.pref + MobIdEnum.types);
+                    return true;
+                }
                 String available = new String("");
+                
                 for(String key: MobIdEnum.map.keySet()) {
+                    
                     if(s.hasPermission("mobdisguise." + key)) {
-                        available = available + ", " + key;
+                        available = available + key + ", ";
+                        
                     }
                 }
                 s.sendMessage(MobDisguise.pref + available);
