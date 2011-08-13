@@ -127,6 +127,10 @@ public class MDCommand implements CommandExecutor {
                     s.sendMessage(MobDisguise.pref + "You are not an OP and perms are disabled!");
                     return true;
                 }
+                if(args[1].length > 16) {
+                    s.sendMessage(MobDisguise.pref + "That username is too long!");
+                    return true;
+                }
 				/* Listener notify start */
 				DisguiseAsPlayerEvent e = new DisguiseAsPlayerEvent(
 						"DisguiseAsPlayerEvent", s, args[1]);
