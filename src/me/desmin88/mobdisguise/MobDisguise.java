@@ -9,10 +9,10 @@ import java.util.Set;
 import me.desmin88.mobdisguise.commands.MDCommand;
 import me.desmin88.mobdisguise.listeners.MDEntityListener;
 import me.desmin88.mobdisguise.listeners.MDPlayerListener;
-import me.desmin88.mobdisguise.listeners.PacketListener;
 import me.desmin88.mobdisguise.utils.DisguiseTask;
 import me.desmin88.mobdisguise.utils.MobIdEnum;
 import me.desmin88.mobdisguise.utils.PacketUtils;
+import net.minecraft.server.DataWatcher;
 
 import org.bukkit.event.Event;
 import org.bukkit.event.Event.Priority;
@@ -25,6 +25,9 @@ public class MobDisguise extends JavaPlugin {
     public static Set<String> disList = new HashSet<String>();
     public static Set<String> apiList = new HashSet<String>();
     public static Map<String, Byte> playerMobId = new HashMap<String, Byte>();
+    //Player -> Datawatcher
+    public static Map<String, DataWatcher> data = new HashMap<String, DataWatcher>();
+    
     //Player disguising -> player disguised as
     public static Map<String, String> p2p = new HashMap<String, String>();
     public static Set<String> playerdislist = new HashSet<String>();
@@ -32,7 +35,7 @@ public class MobDisguise extends JavaPlugin {
     public static Set<Integer> playerEntIds = new HashSet<Integer>();
     public static PacketUtils pu = new PacketUtils();
     public static Set<String> telelist = new HashSet<String>();
-    public final PacketListener packetlistener = new PacketListener(this);
+    //public final PacketListener packetlistener = new PacketListener(this);
     public final MDPlayerListener playerlistener = new MDPlayerListener(this);
     public final MDEntityListener entitylistener = new MDEntityListener(this);
     public static final String pref = "[MobDisguise] ";
@@ -94,14 +97,13 @@ public class MobDisguise extends JavaPlugin {
         pm.registerEvent(Event.Type.PLAYER_PICKUP_ITEM, playerlistener, Priority.Monitor, this);
         pm.registerEvent(Event.Type.ENTITY_DEATH, entitylistener, Priority.Normal, this);
         pm.registerEvent(Event.Type.ENTITY_TARGET, entitylistener, Priority.Normal, this);
-        
-        // this.getServer().getPluginManager().registerEvent(Event.Type.PLAYER_ANIMATION,pm.registerEvent(Event.Type.ENTITY_DEATH, entitylistener, Priority.Normal, this);
+        pm.registerEvent(Event.Type.PLAYER_ANIMATION, playerlistener, Priority.Normal, this);
         
         // new MDPlayerListener(this), Priority.Normal, this);
         getServer().getScheduler().scheduleSyncRepeatingTask(this, new DisguiseTask(this), 1200, 1200);
         // Register packet listeners
-        org.getspout.spoutapi.packet.listener.Listeners.addListener(17, packetlistener);
-        org.getspout.spoutapi.packet.listener.Listeners.addListener(18, packetlistener);
+        //org.getspout.spoutapi.packet.listener.Listeners.addListener(17, packetlistener);
+        //org.getspout.spoutapi.packet.listener.Listeners.addListener(18, packetlistener);
         System.out.println("[" + pdf.getName() + "]"  + " by " + pdf.getAuthors().get(0) + " version " + pdf.getVersion() + " enabled.");
 
     }

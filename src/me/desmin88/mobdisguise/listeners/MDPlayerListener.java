@@ -5,6 +5,7 @@ import me.desmin88.mobdisguise.utils.DisguiseTask;
 
 import org.bukkit.Bukkit;
 import org.bukkit.event.player.PlayerAnimationEvent;
+import org.bukkit.event.player.PlayerBedEnterEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerListener;
 import org.bukkit.event.player.PlayerPickupItemEvent;
@@ -43,11 +44,19 @@ public class MDPlayerListener extends PlayerListener {
     //Waiting for my stinking pull.
     public void onPlayerAnimation(PlayerAnimationEvent event) {
         if (MobDisguise.disList.contains(event.getPlayer().getName())) {
-            // event.setCancelled(true);
+            event.setCancelled(true);
             return;
         }
     }
 
+    public void onPlayerBedEnter(PlayerBedEnterEvent event) {
+        if (MobDisguise.disList.contains(event.getPlayer().getName())) {
+            event.setCancelled(true);
+            return;
+        }
+    }
+    
+    
     public void onPlayerTeleport(PlayerTeleportEvent event) {
         if(MobDisguise.telelist.contains(event.getPlayer().getName())) {
             MobDisguise.telelist.remove(event.getPlayer().getName());

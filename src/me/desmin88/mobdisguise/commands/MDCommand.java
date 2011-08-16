@@ -37,7 +37,6 @@ public class MDCommand implements CommandExecutor {
 		/* Listener notify end */
         if (sender instanceof Player) {
             Player s = (Player) sender;
-            
             if (args.length == 0) { // Undisguising, player types /md
                 if(!MobDisguise.disList.contains(s.getName())) {
                     s.sendMessage(MobDisguise.pref + "You are not disguised, so you can't undisguise!");
@@ -113,10 +112,6 @@ public class MDCommand implements CommandExecutor {
             }
              
             if(args[0].equalsIgnoreCase("p") && args.length == 2) {
-                if(MobDisguise.disList.contains(s.getName())) {
-                    s.sendMessage(MobDisguise.pref + "You are already disguised!");
-                    return true;
-                }
                 if(MobDisguise.perm && !s.isOp()){
                     if(!s.hasPermission("mobdisguise.player") ) {
                         s.sendMessage(MobDisguise.pref + "You don't have permission to change into other players!");
@@ -127,7 +122,7 @@ public class MDCommand implements CommandExecutor {
                     s.sendMessage(MobDisguise.pref + "You are not an OP and perms are disabled!");
                     return true;
                 }
-                if(args[1].length > 16) {
+                if(args[1].length() > 16) {
                     s.sendMessage(MobDisguise.pref + "That username is too long!");
                     return true;
                 }
@@ -149,10 +144,6 @@ public class MDCommand implements CommandExecutor {
             
             if(args.length == 1) { // Means they're trying to disguise
                 String mobtype = args[0].toLowerCase();
-                if(MobDisguise.disList.contains(s.getName())) {
-                    s.sendMessage(MobDisguise.pref + "You are already disguised!");
-                    return true;
-                }
                 if (!MobIdEnum.map.containsKey(mobtype)) {
                     s.sendMessage(MobDisguise.pref + "Invalid mob type!");
                     return true;
@@ -187,6 +178,7 @@ public class MDCommand implements CommandExecutor {
                 return true;
             
             }
+
         }
         return false;
     }

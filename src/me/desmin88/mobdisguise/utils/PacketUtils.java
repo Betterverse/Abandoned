@@ -104,6 +104,15 @@ public class PacketUtils {
     
     
     public Packet24MobSpawn packetMaker(Player p1, Byte id) {
+        
+        DataWatcher tmp = new DataWatcher();
+        MobDisguise.data.put(p1.getName(), tmp);
+        if(id == 55) {
+            tmp.a(16, (byte) 1);
+        }
+        if(id == 91) {
+            tmp.a(16, (byte) 3);
+        }
         Location loc = p1.getLocation();
         Packet24MobSpawn packet = new Packet24MobSpawn();
         packet.a = ((CraftPlayer) p1).getEntityId();
@@ -117,7 +126,7 @@ public class PacketUtils {
         try {
             datawatcher = packet.getClass().getDeclaredField("h");
             datawatcher.setAccessible(true);
-            datawatcher.set(packet, new DataWatcher());
+            datawatcher.set(packet, tmp);
             datawatcher.setAccessible(false);
         } catch (Exception e) {
             System.out.println(MobDisguise.pref + "Error making packet?!");
