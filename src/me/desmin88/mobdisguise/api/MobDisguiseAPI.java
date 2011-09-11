@@ -5,6 +5,7 @@ import me.desmin88.mobdisguise.api.event.DisguiseAsMobEvent;
 import me.desmin88.mobdisguise.api.event.DisguiseAsPlayerEvent;
 import me.desmin88.mobdisguise.api.event.UnDisguiseEvent;
 import me.desmin88.mobdisguise.utils.MobIdEnum;
+import net.minecraft.server.DataWatcher;
 
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -108,11 +109,10 @@ public class MobDisguiseAPI {
 	 * Undisguises a player who is disguised as a mob.
 	 * 
 	 * @param p Player to undisguise
-	 * @param mobtype ???
-	 * 
+	 *  
 	 * @return true if successful
 	 */
-	public static boolean undisguisePlayer(Player p, String mobtype) {
+	public static boolean undisguisePlayer(Player p) {
 		if (isDisguised(p)) {
 			return false;
 		}
@@ -124,7 +124,7 @@ public class MobDisguiseAPI {
 		}
 		/* Listener notify end */
 		MobDisguise.pu.undisguiseToAll(p);
-		MobDisguise.disList.remove(p);
+		MobDisguise.disList.remove(p.getName());
 		MobDisguise.apiList.remove(p.getName());
 		MobDisguise.playerMobId.put(p.getName(), null);
 		MobDisguise.playerEntIds.remove(Integer.valueOf(p.getEntityId()));
@@ -142,5 +142,21 @@ public class MobDisguiseAPI {
 	public static boolean isDisguised(Player p) {
 		return MobDisguise.disList.contains(p.getName());
 	}
+	
+	 /**
+     * Gets a Player's DataWatcher
+     * 
+     * @param p Player
+     * 
+     * @return Datawatcher 
+     */
+    public static DataWatcher getPlayerDataWatcher(Player p) {
+        if(MobDisguise.data.get(p.getName()) == null) {
+            return null;
+        }
+        else {
+            return MobDisguise.data.get(p.getName());
+        }
+    }
 
 }

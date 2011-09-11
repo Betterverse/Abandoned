@@ -104,15 +104,15 @@ public class PacketUtils {
     
     
     public Packet24MobSpawn packetMaker(Player p1, Byte id) {
-        
-        DataWatcher tmp = new DataWatcher();
-        MobDisguise.data.put(p1.getName(), tmp);
-        if(id == 55) {
-            tmp.a(16, (byte) 1);
+        DataWatcher tmp = null;
+        if(MobDisguise.data.get(p1.getName()) == null) {
+            tmp = new DataWatcher();
+            MobDisguise.data.put(p1.getName(), tmp);
         }
-        if(id == 91) {
-            tmp.a(16, (byte) 3);
+        else {
+            tmp = MobDisguise.data.get(p1.getName());
         }
+
         Location loc = p1.getLocation();
         Packet24MobSpawn packet = new Packet24MobSpawn();
         packet.a = ((CraftPlayer) p1).getEntityId();
