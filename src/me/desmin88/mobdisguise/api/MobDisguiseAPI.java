@@ -113,7 +113,7 @@ public class MobDisguiseAPI {
 	 * @return true if successful
 	 */
 	public static boolean undisguisePlayer(Player p) {
-		if (isDisguised(p)) {
+		if (!isDisguised(p)) {
 			return false;
 		}
 		/* Listener notify start */
