@@ -85,6 +85,13 @@ public class MobDisguise extends JavaPlugin {
            cfg.setProperty("DisableItemPickup.enabled", true);
            cfg.save();
        }
+       if(cfg.getProperty("Blacklist.enderman") == null) {
+           cfg.setProperty("Blacklist.enderman", true);
+           cfg.setProperty("Blacklist.silverfish", true);
+           cfg.setProperty("Blacklist.cavespider", true);
+       }
+       
+       
        cfg.save();
        perm = cfg.getBoolean("Permissions.enabled", true);
         
