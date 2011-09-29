@@ -24,6 +24,9 @@ public class PacketUtils {
         CraftPlayer p22 = (CraftPlayer) p1;
         Packet29DestroyEntity p29 = new Packet29DestroyEntity(p22.getEntityId());
         for (Player p2 : Bukkit.getServer().getOnlinePlayers()) {
+            if(!p1.getWorld().equals(p2.getWorld())) {
+                continue;
+            }
             if (p2.getName().equals(p1.getName())) {
                 continue;
             }
@@ -40,6 +43,9 @@ public class PacketUtils {
         Packet20NamedEntitySpawn p20 = new Packet20NamedEntitySpawn(p22.getHandle());
         
         for (Player p2 : Bukkit.getServer().getOnlinePlayers()) {
+            if(!p1.getWorld().equals(p2.getWorld())) {
+                continue;
+            }
             if (p2 == p1) {
                 continue;
             }
@@ -52,6 +58,9 @@ public class PacketUtils {
         //Make packets out of loop!
         Packet24MobSpawn p24 = packetMaker(p1, MobDisguise.playerMobId.get(p1.getName()));
         for (Player p2 : Bukkit.getServer().getOnlinePlayers()) {
+            if(!p1.getWorld().equals(p2.getWorld())) {
+                continue;
+            }
             if (p2 == p1) {
                 continue;
             }
@@ -65,6 +74,9 @@ public class PacketUtils {
         Packet29DestroyEntity p29 = new Packet29DestroyEntity(p.getEntityId()); //Must destroy, don't want doubles lololololol
         p.setDisplayName(name);
         for (Player p1 : Bukkit.getServer().getOnlinePlayers()) {
+            if(!p.getWorld().equals(p1.getWorld())) {
+                continue;
+            }
             if (p1 == p) {
                 continue;
             }

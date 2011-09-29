@@ -1,6 +1,6 @@
 name: MobDisguise
 main: me.desmin88.mobdisguise.MobDisguise
-version: 1.62
+version: 1.63
 authors: [desmin88]
 commands:
     md:
@@ -25,7 +25,10 @@ permissions:
             mobdisguise.squid: true
             mobdisguise.wolf: true
             mobdisguise.steve: true
-            mobdisugise.player: true
+            mobdisguise.player: true
+            mobdisguise.enderman: true
+            mobdisguise.cavespider: true
+            mobdisguise.silverfish: true
     mobdisguise.creeper:
         description: Allows a player to disguise as a creeper
     mobdisguise.skeleton:
@@ -58,4 +61,11 @@ permissions:
         description: Allows a player to disguise as Steve
     mobdisguise.player:
         description: Allows a player to disguise as any player
+    mobdisguise.enderman:
+        description: Allows a player to disguise as an enderman
+    mobdisguise.cavespider:
+        description: Allows a player to disguise as a cavespider
+    mobdisguise.silverfish:
+        description: Allows a player to disguise as a silverfish
+                    
                     
