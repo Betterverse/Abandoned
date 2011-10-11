@@ -66,7 +66,7 @@ public class MobDisguise extends JavaPlugin {
             }
         }
         cfg = this.getConfiguration(); // Get config
-
+        
         
        if (cfg.getKeys().isEmpty()) { // Config hasn't been made
             System.out.println(pref + "config.yml not found, making with default values");

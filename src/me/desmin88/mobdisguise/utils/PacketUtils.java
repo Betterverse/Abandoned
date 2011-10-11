@@ -73,6 +73,7 @@ public class PacketUtils {
         Packet20NamedEntitySpawn p20 = packetMaker(p, name);
         Packet29DestroyEntity p29 = new Packet29DestroyEntity(p.getEntityId()); //Must destroy, don't want doubles lololololol
         p.setDisplayName(name);
+        
         for (Player p1 : Bukkit.getServer().getOnlinePlayers()) {
             if(!p.getWorld().equals(p1.getWorld())) {
                 continue;
