@@ -1,6 +1,6 @@
 name: MobDisguise
 main: me.desmin88.mobdisguise.MobDisguise
-version: 1.63
+version: 1.65
 authors: [desmin88]
 commands:
     md:
@@ -29,6 +29,12 @@ permissions:
             mobdisguise.enderman: true
             mobdisguise.cavespider: true
             mobdisguise.silverfish: true
+            mobdisguise.villager: true
+            mobdisguise.snowgolem: true
+            mobdisguise.mooshroom: true
+            mobdisguise.blaze: true
+            mobdisguise.magmacube: true
+            mobdisguise.enderdragon: true
     mobdisguise.creeper:
         description: Allows a player to disguise as a creeper
     mobdisguise.skeleton:
@@ -67,5 +73,15 @@ permissions:
         description: Allows a player to disguise as a cavespider
     mobdisguise.silverfish:
         description: Allows a player to disguise as a silverfish
-                    
-                    
+    mobdisguise.villager: 
+        description: Allows a player to disguise as villager
+    mobdisguise.snowgolem: 
+        description: Allows a player to disguise as a snow golem
+    mobdisguise.mooshroom: 
+        description: Allows a player to disguise as a mooshroom
+    mobdisguise.blaze: 
+        description: Allows a player to disguise as a blaze
+    mobdisguise.magmacube: 
+        description: Allows a player to disguise as a magmacube
+    mobdisguise.enderdragon: 
+        description: Allows a player to disguise as an enderdragon

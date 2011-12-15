@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class MobIdEnum {
-    public static String types = "creeper,skeleton,spider,giant,zombie,slime,pigman,pig,sheep,cow,chicken,squid,wolf,enderman,cavespider,silverfish";
+    public static String types = "creeper,skeleton,spider,giant,zombie,slime,pigman,pig,sheep,cow,chicken,squid,wolf,enderman,cavespider,silverfish,villager,snowgolem,mooshroom,blaze,magmacube,enderdragon";
     
     public static String getTypeFromByte(Integer in) {
         for(String s : map.keySet()) {
@@ -17,7 +17,6 @@ public class MobIdEnum {
     
     public static Map<String, Integer> map = new HashMap<String, Integer>();
     static {
-        map.put("steve", 49);
         map.put("creeper", 50);
         map.put("skeleton", 51);
         map.put("spider", 52);
@@ -29,12 +28,18 @@ public class MobIdEnum {
         map.put("enderman", 58);
         map.put("cavespider", 59);
         map.put("silverfish", 60);
+        map.put("blaze", 61);
+        map.put("magmacube", 62);
+        map.put("enderdragon", 63);
         map.put("pig", 90);
         map.put("sheep", 91);
         map.put("cow", 92);
         map.put("chicken", 93);
         map.put("squid", 94);
         map.put("wolf", 95);
+        map.put("mooshroom", 96);
+        map.put("snowgolem", 97);
+        map.put("villager", 120);
 
     }
 }
