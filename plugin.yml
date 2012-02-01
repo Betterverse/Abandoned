@@ -1,6 +1,6 @@
 name: MobDisguise
 main: me.desmin88.mobdisguise.MobDisguise
-version: 1.66
+version: 1.7
 authors: [desmin88]
 commands:
     md:

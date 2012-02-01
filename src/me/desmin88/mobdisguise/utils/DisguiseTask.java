@@ -15,14 +15,13 @@ public class DisguiseTask implements Runnable {
     @Override
     public void run() {
         for (String s : MobDisguise.disList) {
-            if(Bukkit.getServer().getPlayer(s) == null) {
+            if (Bukkit.getServer().getPlayer(s) == null) {
                 continue;
             }
             Player temp = plugin.getServer().getPlayer(s);
-            if(MobDisguise.playerdislist.contains(temp.getName())) {
+            if (MobDisguise.playerdislist.contains(temp.getName())) {
                 MobDisguise.pu.disguisep2pToAll(temp, MobDisguise.p2p.get(temp.getName()));
-            }
-            else {
+            } else {
                 MobDisguise.pu.disguiseToAll(temp);
             }
         }

@@ -5,16 +5,16 @@ import java.util.Map;
 
 public class MobIdEnum {
     public static String types = "creeper,skeleton,spider,giant,zombie,slime,pigman,pig,sheep,cow,chicken,squid,wolf,enderman,cavespider,silverfish,villager,snowgolem,mooshroom,blaze,magmacube,enderdragon";
-    
+
     public static String getTypeFromByte(Integer in) {
-        for(String s : map.keySet()) {
-            if(map.get(s) == in) {
+        for (String s : map.keySet()) {
+            if (map.get(s) == in) {
                 return s;
             }
         }
         return null;
     }
-    
+
     public static Map<String, Integer> map = new HashMap<String, Integer>();
     static {
         map.put("creeper", 50);

@@ -15,16 +15,16 @@ import org.bukkit.craftbukkit.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 
 public class PacketUtils {
-    
-    public PacketUtils() {}
 
-    
+    public PacketUtils() {
+    }
+
     public void killCarcass(Player p1) {
-        //Make packets out of loop!
+        // Make packets out of loop!
         CraftPlayer p22 = (CraftPlayer) p1;
         Packet29DestroyEntity p29 = new Packet29DestroyEntity(p22.getEntityId());
         for (Player p2 : Bukkit.getServer().getOnlinePlayers()) {
-            if(!p1.getWorld().equals(p2.getWorld())) {
+            if (!p1.getWorld().equals(p2.getWorld())) {
                 continue;
             }
             if (p2.getName().equals(p1.getName())) {
@@ -32,18 +32,18 @@ public class PacketUtils {
             }
             ((CraftPlayer) p2).getHandle().netServerHandler.sendPacket(p29);
             ((CraftPlayer) p2).getHandle().netServerHandler.sendPacket(p29);
-            
+
         }
     }
-    
+
     public void undisguiseToAll(Player p1) {
-        //Make packets out of loop!
+        // Make packets out of loop!
         CraftPlayer p22 = (CraftPlayer) p1;
         Packet29DestroyEntity p29 = new Packet29DestroyEntity(p22.getEntityId());
         Packet20NamedEntitySpawn p20 = new Packet20NamedEntitySpawn(p22.getHandle());
-        
+
         for (Player p2 : Bukkit.getServer().getOnlinePlayers()) {
-            if(!p1.getWorld().equals(p2.getWorld())) {
+            if (!p1.getWorld().equals(p2.getWorld())) {
                 continue;
             }
             if (p2 == p1) {
@@ -53,12 +53,12 @@ public class PacketUtils {
             ((CraftPlayer) p2).getHandle().netServerHandler.sendPacket(p20);
         }
     }
-    
+
     public void disguiseToAll(Player p1) {
-        //Make packets out of loop!
+        // Make packets out of loop!
         Packet24MobSpawn p24 = packetMaker(p1, MobDisguise.playerMobId.get(p1.getName()));
         for (Player p2 : Bukkit.getServer().getOnlinePlayers()) {
-            if(!p1.getWorld().equals(p2.getWorld())) {
+            if (!p1.getWorld().equals(p2.getWorld())) {
                 continue;
             }
             if (p2 == p1) {
@@ -68,14 +68,19 @@ public class PacketUtils {
         }
     }
 
-    //Begin code for p2p disguising
+    // Begin code for p2p disguising
     public void disguisep2pToAll(Player p, String name) {
         Packet20NamedEntitySpawn p20 = packetMaker(p, name);
-        Packet29DestroyEntity p29 = new Packet29DestroyEntity(p.getEntityId()); //Must destroy, don't want doubles lololololol
+        Packet29DestroyEntity p29 = new Packet29DestroyEntity(p.getEntityId()); // Must
+                                                                                // destroy,
+                                                                                // don't
+                                                                                // want
+                                                                                // doubles
+                                                                                // lololololol
         p.setDisplayName(name);
-        
+
         for (Player p1 : Bukkit.getServer().getOnlinePlayers()) {
-            if(!p.getWorld().equals(p1.getWorld())) {
+            if (!p.getWorld().equals(p1.getWorld())) {
                 continue;
             }
             if (p1 == p) {
@@ -85,11 +90,16 @@ public class PacketUtils {
             ((CraftPlayer) p1).getHandle().netServerHandler.sendPacket(p20);
         }
     }
-    
+
     public void undisguisep2pToAll(Player p) {
         p.setDisplayName(p.getName());
         Packet20NamedEntitySpawn p20 = packetMaker(p, p.getName());
-        Packet29DestroyEntity p29 = new Packet29DestroyEntity(p.getEntityId()); //Must destroy, don't want doubles lololololol
+        Packet29DestroyEntity p29 = new Packet29DestroyEntity(p.getEntityId()); // Must
+                                                                                // destroy,
+                                                                                // don't
+                                                                                // want
+                                                                                // doubles
+                                                                                // lololololol
         for (Player p1 : Bukkit.getServer().getOnlinePlayers()) {
             if (p1 == p) {
                 continue;
@@ -98,12 +108,12 @@ public class PacketUtils {
             ((CraftPlayer) p1).getHandle().netServerHandler.sendPacket(p20);
         }
     }
-    
+
     public Packet20NamedEntitySpawn packetMaker(Player p, String name) {
         Location loc = p.getLocation();
         Packet20NamedEntitySpawn packet = new Packet20NamedEntitySpawn();
         packet.a = p.getEntityId();
-        packet.b = name; //Set the name of the player to the name they want.
+        packet.b = name; // Set the name of the player to the name they want.
         packet.c = (int) loc.getX();
         packet.c = MathHelper.floor(loc.getX() * 32.0D);
         packet.d = MathHelper.floor(loc.getY() * 32.0D);
@@ -112,17 +122,15 @@ public class PacketUtils {
         packet.g = (byte) ((int) (loc.getPitch() * 256.0F / 360.0F));
         packet.h = p.getItemInHand().getTypeId();
         return packet;
-        
+
     }
-    
-    
+
     public Packet24MobSpawn packetMaker(Player p1, Byte id) {
         DataWatcher tmp = null;
-        if(MobDisguise.data.get(p1.getName()) == null) {
+        if (MobDisguise.data.get(p1.getName()) == null) {
             tmp = new DataWatcher();
             MobDisguise.data.put(p1.getName(), tmp);
-        }
-        else {
+        } else {
             tmp = MobDisguise.data.get(p1.getName());
         }
 
@@ -144,7 +152,7 @@ public class PacketUtils {
         } catch (Exception e) {
             System.out.println(MobDisguise.pref + "Error making packet?!");
             return null;
-        } 
+        }
         return packet;
     }
 
