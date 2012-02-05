@@ -1,6 +1,7 @@
 package me.desmin88.mobdisguise;
 
 import java.io.File;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -10,7 +11,6 @@ import me.desmin88.mobdisguise.commands.MDCommand;
 import me.desmin88.mobdisguise.listeners.MDEntityListener;
 import me.desmin88.mobdisguise.listeners.MDPlayerListener;
 import me.desmin88.mobdisguise.utils.DisguiseTask;
-import me.desmin88.mobdisguise.utils.MobIdEnum;
 import me.desmin88.mobdisguise.utils.PacketUtils;
 import net.minecraft.server.DataWatcher;
 
@@ -72,7 +72,7 @@ public class MobDisguise extends JavaPlugin {
             cfg.setProperty("Permissions.enabled", true);
             cfg.setProperty("MobTarget.enabled", true);
             cfg.setProperty("DisableItemPickup", true);
-            for (String mobtype : MobIdEnum.map.keySet()) {
+            for (String mobtype : MobType.types) {
                 cfg.setHeader("#Setting a mobtype to false will not allow a player to disguise as that type");
                 cfg.setProperty("Blacklist." + mobtype, true); // Just making
             }
@@ -101,7 +101,74 @@ public class MobDisguise extends JavaPlugin {
         getServer().getScheduler().scheduleSyncRepeatingTask(this, new DisguiseTask(this), 1200, 1200);
 
         System.out.println("[" + pdf.getName() + "]" + " by " + pdf.getAuthors().get(0) + " version " + pdf.getVersion() + " enabled.");
-
     }
+    
+    // Mob Types Enums
+    public enum MobType {
+		CREEPER(50, "creeper"),
+		SKELETON(51, "skeleton"),
+		SPIDER(52, "spider"),
+		GIANT(53, "giant"),
+		ZOMBIE(54, "zombie"),
+		SLIME(55, "slime"),
+		GHAST(56, "ghast"),
+		PIGMAN(57, "zombie pigman"),
+		ENDERMAN(58, "enderman"),
+		CAVESPIDER(59, "cave spider"),
+		SILVERFISH(60, "silverfish"),
+		BLAZE(61, "blaze"),
+		MAGMACUBE(62, "magma cube"),
+		ENDERDRAGON(63, "Ender dragon"),
+		PIG(90, "pig"),
+		SHEEP(91, "sheep"),
+		COW(92, "cow"),
+		CHICKEN(93, "chicken"),
+		SQUID(94, "squid"),
+		WOLF(95, "wolf"),
+		MOOSHROOM(96, "mooshroom"),
+		SNOWGOLEM(97, "snow golem"),
+		VILLAGER(120, "villager");
+		
+		public final int id;
+		public final String name;
+		MobType(int i, String n) {
+			id = i;
+			name = n;
+		}
+		
+		public String toString() {
+			return super.toString().toLowerCase();
+			
+		}
+		
+		public static MobType getMobType(String name) {
+			return MobType.valueOf(name.toUpperCase());
+		}
+		
+		private static String[] enumsToArray() {
+			MobType[] vals = MobType.values();
+			int i = 0;
+			String[] output = new String[vals.length];
+			for (MobType mob : vals) {
+				output[i++] = mob.toString();
+			}
+			return output;
+		}
+		
+	    public static String[] types = enumsToArray();
+	    
+	    public static boolean isMob(String mobName) {
+	    	return (Arrays.asList(types).contains(mobName.toLowerCase()));
+	    }
+	    
+	    public static MobType getType(int id) {
+	    	for (MobType type : MobType.values()) {
+	    		if (type.id == id) {
+	    			return type;
+	    		}
+	    	}
+	    	return null;
+	    }
+	}
 
 }

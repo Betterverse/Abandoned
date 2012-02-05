@@ -1,11 +1,11 @@
 package me.desmin88.mobdisguise.commands;
 
 import me.desmin88.mobdisguise.MobDisguise;
+import me.desmin88.mobdisguise.MobDisguise.MobType;
 import me.desmin88.mobdisguise.api.event.DisguiseAsMobEvent;
 import me.desmin88.mobdisguise.api.event.DisguiseAsPlayerEvent;
 import me.desmin88.mobdisguise.api.event.DisguiseCommandEvent;
 import me.desmin88.mobdisguise.api.event.UnDisguiseEvent;
-import me.desmin88.mobdisguise.utils.MobIdEnum;
 
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
@@ -19,7 +19,6 @@ import org.bukkit.entity.Player;
  * 
  */
 public class MDCommand implements CommandExecutor {
-    @SuppressWarnings("unused")
     private final MobDisguise plugin;
 
     public MDCommand(MobDisguise instance) {
@@ -108,12 +107,12 @@ public class MDCommand implements CommandExecutor {
             if (args[0].equalsIgnoreCase("types")) { // They want to know valid
                                                      // types of mobs
                 if (s.isOp() || s.hasPermission("mobdisguise.*")) {
-                    s.sendMessage(MobDisguise.pref + MobIdEnum.types);
+                    s.sendMessage(MobDisguise.pref + MobType.types.toString().replace("\\[", "").replace("\\]", ""));
                     return true;
                 }
                 String available = new String("");
 
-                for (String key : MobIdEnum.map.keySet()) {
+                for (String key : MobType.types) {
 
                     if (s.hasPermission("mobdisguise." + key)) {
                         available = available + key + ", ";
@@ -136,8 +135,8 @@ public class MDCommand implements CommandExecutor {
                 } else {
 
                     Integer inte = (Integer) MobDisguise.playerMobId.get(s.getName()).intValue();
-                    String mobtype = MobIdEnum.getTypeFromByte(inte);
-                    s.sendMessage(MobDisguise.pref + "You are currently disguised as a " + mobtype);
+                    MobType mobtype = MobType.getType(inte);
+                    s.sendMessage(MobDisguise.pref + "You are currently disguised as a " + mobtype.name);
                     return true;
                 }
 
@@ -175,7 +174,7 @@ public class MDCommand implements CommandExecutor {
 
             if (args.length == 1) { // Means they're trying to disguise
                 String mobtype = args[0].toLowerCase();
-                if (!MobIdEnum.map.containsKey(mobtype)) {
+                if (!MobType.isMob(mobtype)) {
                     s.sendMessage(MobDisguise.pref + "Invalid mob type!");
                     return true;
                 }
@@ -201,7 +200,7 @@ public class MDCommand implements CommandExecutor {
                 }
                 /* Listener notify end */
                 MobDisguise.disList.add(s.getName());
-                MobDisguise.playerMobId.put(s.getName(), (byte) MobIdEnum.map.get(mobtype).intValue());
+                MobDisguise.playerMobId.put(s.getName(), (byte) MobType.getMobType(mobtype).id);
                 MobDisguise.playerEntIds.add(Integer.valueOf(s.getEntityId()));
                 MobDisguise.pu.disguiseToAll(s);
                 s.sendMessage(MobDisguise.pref + "You have been disguised as a " + args[0].toLowerCase() + "!");

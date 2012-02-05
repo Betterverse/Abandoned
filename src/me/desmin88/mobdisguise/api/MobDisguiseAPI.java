@@ -1,10 +1,10 @@
 package me.desmin88.mobdisguise.api;
 
 import me.desmin88.mobdisguise.MobDisguise;
+import me.desmin88.mobdisguise.MobDisguise.MobType;
 import me.desmin88.mobdisguise.api.event.DisguiseAsMobEvent;
 import me.desmin88.mobdisguise.api.event.DisguiseAsPlayerEvent;
 import me.desmin88.mobdisguise.api.event.UnDisguiseEvent;
-import me.desmin88.mobdisguise.utils.MobIdEnum;
 import net.minecraft.server.DataWatcher;
 
 import org.bukkit.Bukkit;
@@ -91,7 +91,7 @@ public class MobDisguiseAPI {
      * @return true if successful
      */
     public static boolean disguisePlayer(Player p, String mobtype) {
-        if (!MobIdEnum.map.containsKey(mobtype)) {
+        if (!MobType.isMob(mobtype)) {
             return false;
         }
         if (isDisguised(p)) {
@@ -106,7 +106,7 @@ public class MobDisguiseAPI {
         /* Listener notify end */
         MobDisguise.apiList.add(p.getName());
         MobDisguise.disList.add(p.getName());
-        MobDisguise.playerMobId.put(p.getName(), (byte) MobIdEnum.map.get(mobtype).intValue());
+        MobDisguise.playerMobId.put(p.getName(), (byte) MobType.getMobType(mobtype).id);
         MobDisguise.playerEntIds.add(Integer.valueOf(p.getEntityId()));
         MobDisguise.pu.disguiseToAll(p);
         return true;
