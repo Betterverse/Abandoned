@@ -26,6 +26,7 @@ public class MobDisguise extends JavaPlugin {
     // Player -> Datawatcher
     public static Map<String, DataWatcher> data = new HashMap<String, DataWatcher>();
 
+    public static Set<String> baby = new HashSet<String>();
     // Player disguising -> player disguised as
     public static Map<String, String> p2p = new HashMap<String, String>();
     public static Set<String> playerdislist = new HashSet<String>();

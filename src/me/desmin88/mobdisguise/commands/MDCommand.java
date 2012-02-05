@@ -71,6 +71,40 @@ public class MDCommand implements CommandExecutor {
                 return true;
             }
 
+            if (args[0].equalsIgnoreCase("baby")) {
+                if (!MobDisguise.disList.contains(s.getName())) {
+                    s.sendMessage(MobDisguise.pref + "You are not disguised, so you can't become a baby!");
+                    return true;
+                }
+                if (MobDisguise.playerdislist.contains(s.getName())) {
+                    s.sendMessage(MobDisguise.pref + "You are not disguised as an animal, so you can't become a baby!");
+                    return true;
+                }
+                if(MobDisguise.baby.contains(s.getName())) {
+                    MobDisguise.baby.remove(s.getName());
+                    MobDisguise.data.get(s.getName()).watch(12, 0);
+                    plugin.pu.disguiseToAll(s);
+                    s.sendMessage(MobDisguise.pref + "You are now a normal animal.");
+                    return true;
+                }
+                if(!MobDisguise.baby.contains(s.getName())) {
+                    MobDisguise.baby.add(s.getName());
+                    try {
+                        MobDisguise.data.get(s.getName()).getInt(12);
+                    } catch(NullPointerException npe) {
+                        MobDisguise.data.get(s.getName()).a(12, -23999);
+                    }
+
+                    MobDisguise.data.get(s.getName()).watch(12, -23999);
+                    
+                    plugin.pu.disguiseToAll(s);
+                    s.sendMessage(MobDisguise.pref + "You are now a baby animal.");
+                    return true;
+                }
+            
+            
+            }
+            
             if (args[0].equalsIgnoreCase("types")) { // They want to know valid
                                                      // types of mobs
                 if (s.isOp() || s.hasPermission("mobdisguise.*")) {

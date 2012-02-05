@@ -19,6 +19,8 @@ public class PacketUtils {
     public PacketUtils() {
     }
 
+    
+    
     public void killCarcass(Player p1) {
         // Make packets out of loop!
         CraftPlayer p22 = (CraftPlayer) p1;
@@ -133,7 +135,7 @@ public class PacketUtils {
         } else {
             tmp = MobDisguise.data.get(p1.getName());
         }
-
+        
         Location loc = p1.getLocation();
         Packet24MobSpawn packet = new Packet24MobSpawn();
         packet.a = ((CraftPlayer) p1).getEntityId();
