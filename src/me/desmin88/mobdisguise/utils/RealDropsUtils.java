@@ -12,7 +12,7 @@ public class RealDropsUtils {
     private static final Random r = new Random();
 
     public static ItemStack getDrop(Player p) {
-        switch (MobDisguise.playerMobId.get(p.getName())) {
+        switch (MobDisguise.playerMobDis.get(p.getName()).mob.id) {
         case 50: // Creeper
             return new ItemStack(Material.SULPHUR, r.nextInt(2));
         case 51: // Skeleton

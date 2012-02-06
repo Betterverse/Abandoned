@@ -10,10 +10,12 @@ import java.util.Set;
 import me.desmin88.mobdisguise.commands.MDCommand;
 import me.desmin88.mobdisguise.listeners.MDEntityListener;
 import me.desmin88.mobdisguise.listeners.MDPlayerListener;
+import me.desmin88.mobdisguise.utils.Disguise;
 import me.desmin88.mobdisguise.utils.DisguiseTask;
 import me.desmin88.mobdisguise.utils.PacketUtils;
 import net.minecraft.server.DataWatcher;
 
+import org.bukkit.entity.*;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -22,11 +24,11 @@ import org.bukkit.util.config.Configuration;
 public class MobDisguise extends JavaPlugin {
     public static Set<String> disList = new HashSet<String>();
     public static Set<String> apiList = new HashSet<String>();
-    public static Map<String, Byte> playerMobId = new HashMap<String, Byte>();
+    public static Map<String, Disguise> playerMobDis = new HashMap<String, Disguise>();
     // Player -> Datawatcher
     public static Map<String, DataWatcher> data = new HashMap<String, DataWatcher>();
 
-    public static Set<String> baby = new HashSet<String>();
+    //public static Set<String> baby = new HashSet<String>();
     // Player disguising -> player disguised as
     public static Map<String, String> p2p = new HashMap<String, String>();
     public static Set<String> playerdislist = new HashSet<String>();
@@ -105,35 +107,41 @@ public class MobDisguise extends JavaPlugin {
     
     // Mob Types Enums
     public enum MobType {
-		CREEPER(50, "creeper"),
-		SKELETON(51, "skeleton"),
-		SPIDER(52, "spider"),
-		GIANT(53, "giant"),
-		ZOMBIE(54, "zombie"),
-		SLIME(55, "slime"),
-		GHAST(56, "ghast"),
-		PIGMAN(57, "zombie pigman"),
-		ENDERMAN(58, "enderman"),
-		CAVESPIDER(59, "cave spider"),
-		SILVERFISH(60, "silverfish"),
-		BLAZE(61, "blaze"),
-		MAGMACUBE(62, "magma cube"),
-		ENDERDRAGON(63, "Ender dragon"),
-		PIG(90, "pig"),
-		SHEEP(91, "sheep"),
-		COW(92, "cow"),
-		CHICKEN(93, "chicken"),
-		SQUID(94, "squid"),
-		WOLF(95, "wolf"),
-		MOOSHROOM(96, "mooshroom"),
-		SNOWGOLEM(97, "snow golem"),
-		VILLAGER(120, "villager");
+		CREEPER(50, "creeper", "org.bukkit.entity.Creeper"),
+		SKELETON(51, "skeleton", "org.bukkit.entity.Skeleton"),
+		SPIDER(52, "spider", "org.bukkit.entity.Spider"),
+		GIANT(53, "giant", "org.bukkit.entity.Giant"),
+		ZOMBIE(54, "zombie", "org.bukkit.entity.Zombie"),
+		SLIME(55, "slime", "org.bukkit.entity.Slime"),
+		GHAST(56, "ghast", "org.bukkit.entity.Ghast"),
+		PIGMAN(57, "zombie pigman", "org.bukkit.entity.PigZombie"),
+		ENDERMAN(58, "enderman", "org.bukkit.entity.Enderman"),
+		CAVESPIDER(59, "cave spider", "org.bukkit.entity.CaveSpider"),
+		SILVERFISH(60, "silverfish", "org.bukkit.entity.Silverfish"),
+		BLAZE(61, "blaze", "org.bukkit.entity.Blaze"),
+		MAGMACUBE(62, "magma cube", "org.bukkit.entity.MagmaCube"),
+		ENDERDRAGON(63, "Ender dragon", "org.bukkit.entity.EnderDragon"),
+		PIG(90, "pig", "org.bukkit.entity.Pig"),
+		SHEEP(91, "sheep", "org.bukkit.entity.Sheep"),
+		COW(92, "cow", "org.bukkit.entity.Cow"),
+		CHICKEN(93, "chicken", "org.bukkit.entity.Chicken"),
+		SQUID(94, "squid", "org.bukkit.entity.Squid"),
+		WOLF(95, "wolf", "org.bukkit.entity.Wolf"),
+		MOOSHROOM(96, "mooshroom", "org.bukkit.entity.MushroomCow"),
+		SNOWGOLEM(97, "snow golem", "org.bukkit.entity.Snowman"),
+		VILLAGER(120, "villager", "org.bukkit.entity.Villager");
 		
-		public final int id;
+		public final byte id;
 		public final String name;
-		MobType(int i, String n) {
-			id = i;
+		public Class typeClass = null;
+		MobType(int i, String n, String className) {
+			id = (byte) i;
 			name = n;
+			try {
+				typeClass = Class.forName(className);
+			} catch (ClassNotFoundException e) {
+				e.printStackTrace();
+			}
 		}
 		
 		public String toString() {
