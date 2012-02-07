@@ -1,11 +1,11 @@
 package me.desmin88.mobdisguise.api;
 
 import me.desmin88.mobdisguise.MobDisguise;
-import me.desmin88.mobdisguise.MobDisguise.MobType;
 import me.desmin88.mobdisguise.api.event.DisguiseAsMobEvent;
 import me.desmin88.mobdisguise.api.event.DisguiseAsPlayerEvent;
 import me.desmin88.mobdisguise.api.event.UnDisguiseEvent;
 import me.desmin88.mobdisguise.utils.Disguise;
+import me.desmin88.mobdisguise.utils.Disguise.MobType;
 import net.minecraft.server.DataWatcher;
 
 import org.bukkit.Bukkit;
@@ -98,8 +98,9 @@ public class MobDisguiseAPI {
         if (isDisguised(p)) {
             return false;
         }
+        Disguise disguise = new Disguise(MobType.getMobType(mobtype), null);
         /* Listener notify start */
-        DisguiseAsMobEvent e = new DisguiseAsMobEvent("DisguiseAsMobEvent", p, mobtype);
+        DisguiseAsMobEvent e = new DisguiseAsMobEvent("DisguiseAsMobEvent", p, disguise);
         Bukkit.getServer().getPluginManager().callEvent(e);
         if (e.isCancelled()) {
             return false;
@@ -107,7 +108,7 @@ public class MobDisguiseAPI {
         /* Listener notify end */
         MobDisguise.apiList.add(p.getName());
         MobDisguise.disList.add(p.getName());
-        MobDisguise.playerMobDis.put(p.getName(), new Disguise(MobType.getMobType(mobtype), null));
+        MobDisguise.playerMobDis.put(p.getName(), disguise);
         MobDisguise.playerEntIds.add(Integer.valueOf(p.getEntityId()));
         MobDisguise.pu.disguiseToAll(p);
         return true;

@@ -1,7 +1,6 @@
 package me.desmin88.mobdisguise;
 
 import java.io.File;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -11,6 +10,7 @@ import me.desmin88.mobdisguise.commands.MDCommand;
 import me.desmin88.mobdisguise.listeners.MDEntityListener;
 import me.desmin88.mobdisguise.listeners.MDPlayerListener;
 import me.desmin88.mobdisguise.utils.Disguise;
+import me.desmin88.mobdisguise.utils.Disguise.MobType;
 import me.desmin88.mobdisguise.utils.DisguiseTask;
 import me.desmin88.mobdisguise.utils.PacketUtils;
 import net.minecraft.server.DataWatcher;
@@ -104,79 +104,4 @@ public class MobDisguise extends JavaPlugin {
 
         System.out.println("[" + pdf.getName() + "]" + " by " + pdf.getAuthors().get(0) + " version " + pdf.getVersion() + " enabled.");
     }
-    
-    // Mob Types Enums
-    public enum MobType {
-		CREEPER(50, "creeper", "org.bukkit.entity.Creeper"),
-		SKELETON(51, "skeleton", "org.bukkit.entity.Skeleton"),
-		SPIDER(52, "spider", "org.bukkit.entity.Spider"),
-		GIANT(53, "giant", "org.bukkit.entity.Giant"),
-		ZOMBIE(54, "zombie", "org.bukkit.entity.Zombie"),
-		SLIME(55, "slime", "org.bukkit.entity.Slime"),
-		GHAST(56, "ghast", "org.bukkit.entity.Ghast"),
-		PIGMAN(57, "zombie pigman", "org.bukkit.entity.PigZombie"),
-		ENDERMAN(58, "enderman", "org.bukkit.entity.Enderman"),
-		CAVESPIDER(59, "cave spider", "org.bukkit.entity.CaveSpider"),
-		SILVERFISH(60, "silverfish", "org.bukkit.entity.Silverfish"),
-		BLAZE(61, "blaze", "org.bukkit.entity.Blaze"),
-		MAGMACUBE(62, "magma cube", "org.bukkit.entity.MagmaCube"),
-		ENDERDRAGON(63, "Ender dragon", "org.bukkit.entity.EnderDragon"),
-		PIG(90, "pig", "org.bukkit.entity.Pig"),
-		SHEEP(91, "sheep", "org.bukkit.entity.Sheep"),
-		COW(92, "cow", "org.bukkit.entity.Cow"),
-		CHICKEN(93, "chicken", "org.bukkit.entity.Chicken"),
-		SQUID(94, "squid", "org.bukkit.entity.Squid"),
-		WOLF(95, "wolf", "org.bukkit.entity.Wolf"),
-		MOOSHROOM(96, "mooshroom", "org.bukkit.entity.MushroomCow"),
-		SNOWGOLEM(97, "snow golem", "org.bukkit.entity.Snowman"),
-		VILLAGER(120, "villager", "org.bukkit.entity.Villager");
-		
-		public final byte id;
-		public final String name;
-		public Class typeClass = null;
-		MobType(int i, String n, String className) {
-			id = (byte) i;
-			name = n;
-			try {
-				typeClass = Class.forName(className);
-			} catch (ClassNotFoundException e) {
-				e.printStackTrace();
-			}
-		}
-		
-		public String toString() {
-			return super.toString().toLowerCase();
-			
-		}
-		
-		public static MobType getMobType(String name) {
-			return MobType.valueOf(name.toUpperCase());
-		}
-		
-		private static String[] enumsToArray() {
-			MobType[] vals = MobType.values();
-			int i = 0;
-			String[] output = new String[vals.length];
-			for (MobType mob : vals) {
-				output[i++] = mob.toString();
-			}
-			return output;
-		}
-		
-	    public static String[] types = enumsToArray();
-	    
-	    public static boolean isMob(String mobName) {
-	    	return (Arrays.asList(types).contains(mobName.toLowerCase()));
-	    }
-	    
-	    public static MobType getType(int id) {
-	    	for (MobType type : MobType.values()) {
-	    		if (type.id == id) {
-	    			return type;
-	    		}
-	    	}
-	    	return null;
-	    }
-	}
-
 }
