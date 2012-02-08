@@ -9,11 +9,13 @@ import java.util.Set;
 import me.desmin88.mobdisguise.commands.MDCommand;
 import me.desmin88.mobdisguise.listeners.MDEntityListener;
 import me.desmin88.mobdisguise.listeners.MDPlayerListener;
+import me.desmin88.mobdisguise.utils.Disguise;
+import me.desmin88.mobdisguise.utils.Disguise.MobType;
 import me.desmin88.mobdisguise.utils.DisguiseTask;
-import me.desmin88.mobdisguise.utils.MobIdEnum;
 import me.desmin88.mobdisguise.utils.PacketUtils;
 import net.minecraft.server.DataWatcher;
 
+import org.bukkit.entity.*;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -22,11 +24,11 @@ import org.bukkit.util.config.Configuration;
 public class MobDisguise extends JavaPlugin {
     public static Set<String> disList = new HashSet<String>();
     public static Set<String> apiList = new HashSet<String>();
-    public static Map<String, Byte> playerMobId = new HashMap<String, Byte>();
+    public static Map<String, Disguise> playerMobDis = new HashMap<String, Disguise>();
     // Player -> Datawatcher
     public static Map<String, DataWatcher> data = new HashMap<String, DataWatcher>();
 
-    public static Set<String> baby = new HashSet<String>();
+    //public static Set<String> baby = new HashSet<String>();
     // Player disguising -> player disguised as
     public static Map<String, String> p2p = new HashMap<String, String>();
     public static Set<String> playerdislist = new HashSet<String>();
@@ -72,7 +74,7 @@ public class MobDisguise extends JavaPlugin {
             cfg.setProperty("Permissions.enabled", true);
             cfg.setProperty("MobTarget.enabled", true);
             cfg.setProperty("DisableItemPickup", true);
-            for (String mobtype : MobIdEnum.map.keySet()) {
+            for (String mobtype : MobType.types) {
                 cfg.setHeader("#Setting a mobtype to false will not allow a player to disguise as that type");
                 cfg.setProperty("Blacklist." + mobtype, true); // Just making
             }
@@ -101,7 +103,5 @@ public class MobDisguise extends JavaPlugin {
         getServer().getScheduler().scheduleSyncRepeatingTask(this, new DisguiseTask(this), 1200, 1200);
 
         System.out.println("[" + pdf.getName() + "]" + " by " + pdf.getAuthors().get(0) + " version " + pdf.getVersion() + " enabled.");
-
     }
-
 }

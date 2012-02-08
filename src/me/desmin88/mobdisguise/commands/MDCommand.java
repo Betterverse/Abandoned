@@ -5,13 +5,14 @@ import me.desmin88.mobdisguise.api.event.DisguiseAsMobEvent;
 import me.desmin88.mobdisguise.api.event.DisguiseAsPlayerEvent;
 import me.desmin88.mobdisguise.api.event.DisguiseCommandEvent;
 import me.desmin88.mobdisguise.api.event.UnDisguiseEvent;
-import me.desmin88.mobdisguise.utils.MobIdEnum;
+import me.desmin88.mobdisguise.utils.Disguise;
+import me.desmin88.mobdisguise.utils.Disguise.MobType;
 
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
+import org.bukkit.entity.*;
 
 /**
  * @author desmin88
@@ -19,7 +20,6 @@ import org.bukkit.entity.Player;
  * 
  */
 public class MDCommand implements CommandExecutor {
-    @SuppressWarnings("unused")
     private final MobDisguise plugin;
 
     public MDCommand(MobDisguise instance) {
@@ -65,14 +65,14 @@ public class MDCommand implements CommandExecutor {
                 /* Listener notify end */
                 MobDisguise.pu.undisguiseToAll(s);
                 MobDisguise.disList.remove(s.getName());
-                MobDisguise.playerMobId.put(s.getName(), null);
+                MobDisguise.playerMobDis.put(s.getName(), null);
                 MobDisguise.playerEntIds.remove(Integer.valueOf(s.getEntityId()));
                 s.sendMessage(MobDisguise.pref + "You have been changed back to human form!");
                 return true;
             }
 
             if (args[0].equalsIgnoreCase("baby")) {
-                if (!MobDisguise.disList.contains(s.getName())) {
+            	if (!MobDisguise.disList.contains(s.getName())) {
                     s.sendMessage(MobDisguise.pref + "You are not disguised, so you can't become a baby!");
                     return true;
                 }
@@ -80,15 +80,21 @@ public class MDCommand implements CommandExecutor {
                     s.sendMessage(MobDisguise.pref + "You are not disguised as an animal, so you can't become a baby!");
                     return true;
                 }
-                if(MobDisguise.baby.contains(s.getName())) {
-                    MobDisguise.baby.remove(s.getName());
-                    MobDisguise.data.get(s.getName()).watch(12, 0);
-                    plugin.pu.disguiseToAll(s);
-                    s.sendMessage(MobDisguise.pref + "You are now a normal animal.");
-                    return true;
-                }
-                if(!MobDisguise.baby.contains(s.getName())) {
-                    MobDisguise.baby.add(s.getName());
+                Disguise disguise = MobDisguise.playerMobDis.get(s.getName());
+                if (disguise.data == null) {
+                	if (!Animals.class.isAssignableFrom(disguise.mob.typeClass)) {
+                		s.sendMessage(MobDisguise.pref + "A " + disguise.mob.name + " has no baby form.");
+                		return true;
+                	}
+                    disguise.setData("baby");
+                    /* Listener notify start */
+                    DisguiseAsMobEvent e = new DisguiseAsMobEvent("DisguiseAsMobEvent", s, disguise);
+                    Bukkit.getServer().getPluginManager().callEvent(e);
+                    if (e.isCancelled()) {
+                    	disguise.setData(null);
+                        return true;
+                    }
+                    /* Listener notify end */
                     try {
                         MobDisguise.data.get(s.getName()).getInt(12);
                     } catch(NullPointerException npe) {
@@ -98,27 +104,29 @@ public class MDCommand implements CommandExecutor {
                     MobDisguise.data.get(s.getName()).watch(12, -23999);
                     
                     plugin.pu.disguiseToAll(s);
-                    s.sendMessage(MobDisguise.pref + "You are now a baby animal.");
+                    s.sendMessage(MobDisguise.pref + "You are now a baby " + disguise.mob.name + ".");
                     return true;
                 }
-            
-            
+                if (disguise.data.equals("baby")) {
+                    disguise.setData(null);
+                    MobDisguise.data.get(s.getName()).watch(12, 0);
+                    plugin.pu.disguiseToAll(s);
+                    s.sendMessage(MobDisguise.pref + "You are now an adult " + disguise.mob.name + ".");
+                    return true;
+                }
             }
             
             if (args[0].equalsIgnoreCase("types")) { // They want to know valid
                                                      // types of mobs
-                if (s.isOp() || s.hasPermission("mobdisguise.*")) {
-                    s.sendMessage(MobDisguise.pref + MobIdEnum.types);
-                    return true;
-                }
                 String available = new String("");
-
-                for (String key : MobIdEnum.map.keySet()) {
-
-                    if (s.hasPermission("mobdisguise." + key)) {
-                        available = available + key + ", ";
-
-                    }
+                for (String key : MobType.types) {
+                	if (s.hasPermission("mobdisguise.mob." + key)) {
+                		if (available.equals("")) {
+                			available = key;
+                		} else {
+                			available = available + ", " + key;
+                		}
+                	}
                 }
                 s.sendMessage(MobDisguise.pref + available);
                 return true;
@@ -129,17 +137,12 @@ public class MDCommand implements CommandExecutor {
 
                 if (!MobDisguise.disList.contains(s.getName())) {
                     s.sendMessage(MobDisguise.pref + "You are currently NOT disguised!");
-                    return true;
                 } else if (MobDisguise.playerdislist.contains(s.getName())) {
                     s.sendMessage(MobDisguise.pref + "You are currently disguised as player " + MobDisguise.p2p.get(s.getName()));
-                    return true;
                 } else {
-
-                    Integer inte = (Integer) MobDisguise.playerMobId.get(s.getName()).intValue();
-                    String mobtype = MobIdEnum.getTypeFromByte(inte);
-                    s.sendMessage(MobDisguise.pref + "You are currently disguised as a " + mobtype);
-                    return true;
+                	s.sendMessage(MobDisguise.pref + "You are currently disguised as a " + MobDisguise.playerMobDis.get(s.getName()).mob.name);
                 }
+                return true;
 
             }
 
@@ -175,12 +178,12 @@ public class MDCommand implements CommandExecutor {
 
             if (args.length == 1) { // Means they're trying to disguise
                 String mobtype = args[0].toLowerCase();
-                if (!MobIdEnum.map.containsKey(mobtype)) {
+                if (!MobType.isMob(mobtype)) {
                     s.sendMessage(MobDisguise.pref + "Invalid mob type!");
                     return true;
                 }
                 if (MobDisguise.perm && !s.isOp()) {
-                    if (!s.hasPermission("mobdisguise." + mobtype)) {
+                    if (!s.hasPermission("mobdisguise.mob." + mobtype)) {
                         s.sendMessage(MobDisguise.pref + "You don't have permission for this mob!");
                         return true;
                     }
@@ -193,15 +196,22 @@ public class MDCommand implements CommandExecutor {
                     s.sendMessage(MobDisguise.pref + "This mob type has been restricted!");
                     return true;
                 }
+                Disguise disguise = new Disguise(MobType.getMobType(mobtype), null);
                 /* Listener notify start */
-                DisguiseAsMobEvent e = new DisguiseAsMobEvent("DisguiseAsMobEvent", s, mobtype);
+                DisguiseAsMobEvent e = new DisguiseAsMobEvent("DisguiseAsMobEvent", s, disguise);
                 Bukkit.getServer().getPluginManager().callEvent(e);
                 if (e.isCancelled()) {
                     return true;
                 }
                 /* Listener notify end */
+                if (MobDisguise.data.containsKey(s.getName())) {
+                	try {
+                		MobDisguise.data.get(s.getName()).watch(12, 0);
+                    } catch(NullPointerException npe) {
+                    }
+                }
                 MobDisguise.disList.add(s.getName());
-                MobDisguise.playerMobId.put(s.getName(), (byte) MobIdEnum.map.get(mobtype).intValue());
+                MobDisguise.playerMobDis.put(s.getName(), disguise);
                 MobDisguise.playerEntIds.add(Integer.valueOf(s.getEntityId()));
                 MobDisguise.pu.disguiseToAll(s);
                 s.sendMessage(MobDisguise.pref + "You have been disguised as a " + args[0].toLowerCase() + "!");

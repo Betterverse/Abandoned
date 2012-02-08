@@ -1,5 +1,7 @@
 package me.desmin88.mobdisguise.api.event;
 
+import me.desmin88.mobdisguise.utils.Disguise;
+
 import org.bukkit.entity.Player;
 
 /**
@@ -10,9 +12,9 @@ import org.bukkit.entity.Player;
  */
 public class DisguiseAsMobEvent extends DisguiseEvent {
     private static final long serialVersionUID = 1706630423687514665L;
-    private String mobtype;
+    private Disguise mobtype;
 
-    public DisguiseAsMobEvent(String event, Player player, String mobtype) {
+    public DisguiseAsMobEvent(String event, Player player, Disguise mobtype) {
         super(event, player);
         this.mobtype = mobtype;
     }
@@ -23,7 +25,13 @@ public class DisguiseAsMobEvent extends DisguiseEvent {
      * @return Mobtype
      */
     public String getMobType() {
-        return this.mobtype;
+        return this.mobtype.mob.name;
     }
-
+    
+    /**
+     * Gets the player's intended disguise.
+     */
+    public Disguise getDisguise() {
+    	return this.mobtype;
+    }
 }

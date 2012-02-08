@@ -4,7 +4,8 @@ import me.desmin88.mobdisguise.MobDisguise;
 import me.desmin88.mobdisguise.api.event.DisguiseAsMobEvent;
 import me.desmin88.mobdisguise.api.event.DisguiseAsPlayerEvent;
 import me.desmin88.mobdisguise.api.event.UnDisguiseEvent;
-import me.desmin88.mobdisguise.utils.MobIdEnum;
+import me.desmin88.mobdisguise.utils.Disguise;
+import me.desmin88.mobdisguise.utils.Disguise.MobType;
 import net.minecraft.server.DataWatcher;
 
 import org.bukkit.Bukkit;
@@ -91,14 +92,15 @@ public class MobDisguiseAPI {
      * @return true if successful
      */
     public static boolean disguisePlayer(Player p, String mobtype) {
-        if (!MobIdEnum.map.containsKey(mobtype)) {
+        if (!MobType.isMob(mobtype)) {
             return false;
         }
         if (isDisguised(p)) {
             return false;
         }
+        Disguise disguise = new Disguise(MobType.getMobType(mobtype), null);
         /* Listener notify start */
-        DisguiseAsMobEvent e = new DisguiseAsMobEvent("DisguiseAsMobEvent", p, mobtype);
+        DisguiseAsMobEvent e = new DisguiseAsMobEvent("DisguiseAsMobEvent", p, disguise);
         Bukkit.getServer().getPluginManager().callEvent(e);
         if (e.isCancelled()) {
             return false;
@@ -106,7 +108,7 @@ public class MobDisguiseAPI {
         /* Listener notify end */
         MobDisguise.apiList.add(p.getName());
         MobDisguise.disList.add(p.getName());
-        MobDisguise.playerMobId.put(p.getName(), (byte) MobIdEnum.map.get(mobtype).intValue());
+        MobDisguise.playerMobDis.put(p.getName(), disguise);
         MobDisguise.playerEntIds.add(Integer.valueOf(p.getEntityId()));
         MobDisguise.pu.disguiseToAll(p);
         return true;
@@ -134,7 +136,7 @@ public class MobDisguiseAPI {
         MobDisguise.pu.undisguiseToAll(p);
         MobDisguise.disList.remove(p.getName());
         MobDisguise.apiList.remove(p.getName());
-        MobDisguise.playerMobId.put(p.getName(), null);
+        MobDisguise.playerMobDis.put(p.getName(), null);
         MobDisguise.playerEntIds.remove(Integer.valueOf(p.getEntityId()));
         return true;
 
