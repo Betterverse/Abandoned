@@ -4,11 +4,14 @@ import me.desmin88.mobdisguise.MobDisguise;
 import me.desmin88.mobdisguise.utils.DisguiseTask;
 
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerAnimationEvent;
 import org.bukkit.event.player.PlayerBedEnterEvent;
+import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerPickupItemEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
@@ -30,6 +33,14 @@ public class MDPlayerListener implements Listener {
         }
     }
 
+    
+    @EventHandler
+    public void onPlayerInteract(PlayerInteractEvent event) {
+        if (MobDisguise.disList.contains(event.getPlayer().getName()) && event.getAction() == Action.RIGHT_CLICK_AIR && event.getPlayer().getItemInHand().getType() == Material.FISHING_ROD) {
+            event.setCancelled(true);
+        }
+    }
+    
     @EventHandler
     public void onPlayerQuit(final PlayerQuitEvent event) {
         if (MobDisguise.disList.contains(event.getPlayer().getName())) {
