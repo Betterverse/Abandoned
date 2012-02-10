@@ -11,6 +11,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerAnimationEvent;
 import org.bukkit.event.player.PlayerBedEnterEvent;
+import org.bukkit.event.player.PlayerFishEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerPickupItemEvent;
@@ -33,12 +34,11 @@ public class MDPlayerListener implements Listener {
         }
     }
 
-    
     @EventHandler
-    public void onPlayerInteract(PlayerInteractEvent event) {
-        if (MobDisguise.disList.contains(event.getPlayer().getName()) && event.getAction() == Action.RIGHT_CLICK_AIR && event.getPlayer().getItemInHand().getType() == Material.FISHING_ROD) {
-            event.setCancelled(true);
-        }
+    public void onPlayerFish(PlayerFishEvent event) {
+    	if (MobDisguise.disList.contains(event.getPlayer().getName())) {
+    		event.setCancelled(true);
+    	}
     }
     
     @EventHandler
