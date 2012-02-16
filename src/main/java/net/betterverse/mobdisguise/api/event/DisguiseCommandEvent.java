@@ -1,4 +1,4 @@
-package me.desmin88.mobdisguise.api.event;
+package net.betterverse.mobdisguise.api.event;
 
 import org.bukkit.command.CommandSender;
 import org.bukkit.event.Cancellable;

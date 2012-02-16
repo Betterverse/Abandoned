@@ -1,6 +1,6 @@
-package me.desmin88.mobdisguise.utils;
+package net.betterverse.mobdisguise.utils;
 
-import me.desmin88.mobdisguise.MobDisguise;
+import net.betterverse.mobdisguise.MobDisguise;
 
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
