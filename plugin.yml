@@ -1,0 +1,8 @@
+name: SimpleAlias
+main: org.maats.madcap.bukkit.SimpleAlias.SimpleAlias
+version: 1.0.2
+commands:
+  alias:
+    description: Allows you to set an alias.
+    usage: /alias <nickname> to set your name, /alias to clear it.
+    aliases: nickname
