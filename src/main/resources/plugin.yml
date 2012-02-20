@@ -1,0 +1,117 @@
+name: MobDisguise
+main: me.desmin88.mobdisguise.MobDisguise
+version: 1.7
+authors: [desmin88]
+commands:
+    md:
+        description: Allows player to disguise as mob
+        usage: /md [mobtype], stats, types, baby
+permissions:
+    mobdisguise.*:
+        description: Allows a player to disguise as any player or mob
+        default: op
+        children:
+            mobdisguise.player: true
+            mobdisguise.mob.*: true
+    mobdisguise.player:
+        description: Allows a player to disguise as any player
+        default: op
+    mobdisguise.mob.*:
+        description: Allows a player to disguise as any mob
+        children:
+            mobdisguise.mob.creeper: true
+            mobdisguise.mob.skeleton: true
+            mobdisguise.mob.spider: true
+            mobdisguise.mob.giant: true
+            mobdisguise.mob.zombie: true
+            mobdisguise.mob.slime: true
+            mobdisguise.mob.ghast: true
+            mobdisguise.mob.pigman: true
+            mobdisguise.mob.pig: true
+            mobdisguise.mob.sheep: true
+            mobdisguise.mob.cow: true
+            mobdisguise.mob.chicken: true
+            mobdisguise.mob.squid: true
+            mobdisguise.mob.wolf: true
+            mobdisguise.mob.enderman: true
+            mobdisguise.mob.cavespider: true
+            mobdisguise.mob.silverfish: true
+            mobdisguise.mob.villager: true
+            mobdisguise.mob.snowgolem: true
+            mobdisguise.mob.mooshroom: true
+            mobdisguise.mob.blaze: true
+            mobdisguise.mob.magmacube: true
+            mobdisguise.mob.enderdragon: true
+            mobdisguise.mob.baby: true
+    mobdisguise.mob.creeper:
+        description: Allows a player to disguise as a creeper
+        default: op
+    mobdisguise.mob.skeleton:
+        description: Allows a player to disguise as a skeleton
+        default: op
+    mobdisguise.mob.spider:
+        description: Allows a player to disguise as a spider
+        default: op
+    mobdisguise.mob.giant:
+        description: Allows a player to disguise as a giant
+        default: op
+    mobdisguise.mob.zombie:
+        description: Allows a player to disguise as a zombie
+        default: op
+    mobdisguise.mob.slime:
+        description: Allows a player to disguise as a slime
+        default: op
+    mobdisguise.mob.ghast:
+        description: Allows a player to disguise as a ghast
+        default: op
+    mobdisguise.mob.pigman:
+        description: Allows a player to disguise as a pigman
+        default: op       
+    mobdisguise.mob.pig:
+        description: Allows a player to disguise as a pig
+        default: op
+    mobdisguise.mob.sheep:
+        description: Allows a player to disguise as a sheep
+        default: op
+    mobdisguise.mob.cow:
+        description: Allows a player to disguise as a cow
+        default: op
+    mobdisguise.mob.chicken:
+        description: Allows a player to disguise as a chicken
+        default: op
+    mobdisguise.mob.squid:
+        description: Allows a player to disguise as a squid
+        default: op
+    mobdisguise.mob.wolf:
+        description: Allows a player to disguise as a wolf
+        default: op
+    mobdisguise.mob.enderman:
+        description: Allows a player to disguise as an enderman
+        default: op
+    mobdisguise.mob.cavespider:
+        description: Allows a player to disguise as a cavespider
+        default: op
+    mobdisguise.mob.silverfish:
+        description: Allows a player to disguise as a silverfish
+        default: op
+    mobdisguise.mob.villager: 
+        description: Allows a player to disguise as villager
+        default: op
+    mobdisguise.mob.snowgolem: 
+        description: Allows a player to disguise as a snow golem
+        default: op
+    mobdisguise.mob.mooshroom: 
+        description: Allows a player to disguise as a mooshroom
+        default: op
+    mobdisguise.mob.blaze: 
+        description: Allows a player to disguise as a blaze
+        default: op
+    mobdisguise.mob.magmacube: 
+        description: Allows a player to disguise as a magmacube
+        default: op
+    mobdisguise.mob.enderdragon: 
+        description: Allows a player to disguise as an enderdragon
+        default: op
+    mobdisguise.mob.baby:
+        description: Allows player to become a baby animal
+        default: op

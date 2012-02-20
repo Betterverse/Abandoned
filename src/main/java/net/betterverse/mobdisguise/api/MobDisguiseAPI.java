@@ -1,11 +1,11 @@
-package me.desmin88.mobdisguise.api;
+package net.betterverse.mobdisguise.api;
 
-import me.desmin88.mobdisguise.MobDisguise;
-import me.desmin88.mobdisguise.api.event.DisguiseAsMobEvent;
-import me.desmin88.mobdisguise.api.event.DisguiseAsPlayerEvent;
-import me.desmin88.mobdisguise.api.event.UnDisguiseEvent;
-import me.desmin88.mobdisguise.utils.Disguise;
-import me.desmin88.mobdisguise.utils.Disguise.MobType;
+import net.betterverse.mobdisguise.MobDisguise;
+import net.betterverse.mobdisguise.api.event.DisguiseAsMobEvent;
+import net.betterverse.mobdisguise.api.event.DisguiseAsPlayerEvent;
+import net.betterverse.mobdisguise.api.event.UnDisguiseEvent;
+import net.betterverse.mobdisguise.utils.Disguise;
+import net.betterverse.mobdisguise.utils.Disguise.MobType;
 import net.minecraft.server.DataWatcher;
 
 import org.bukkit.Bukkit;

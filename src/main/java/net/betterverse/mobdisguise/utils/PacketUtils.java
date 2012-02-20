@@ -1,8 +1,8 @@
-package me.desmin88.mobdisguise.utils;
+package net.betterverse.mobdisguise.utils;
 
 import java.lang.reflect.Field;
 
-import me.desmin88.mobdisguise.MobDisguise;
+import net.betterverse.mobdisguise.MobDisguise;
 import net.minecraft.server.DataWatcher;
 import net.minecraft.server.MathHelper;
 import net.minecraft.server.Packet20NamedEntitySpawn;

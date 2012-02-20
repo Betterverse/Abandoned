@@ -1,6 +1,6 @@
-package me.desmin88.mobdisguise.api.event;
+package net.betterverse.mobdisguise.api.event;
 
-import me.desmin88.mobdisguise.utils.Disguise;
+import net.betterverse.mobdisguise.utils.Disguise;
 
 import org.bukkit.entity.Player;
 

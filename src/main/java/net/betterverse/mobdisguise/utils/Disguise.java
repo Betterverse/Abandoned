@@ -1,4 +1,4 @@
-package me.desmin88.mobdisguise.utils;
+package net.betterverse.mobdisguise.utils;
 
 import java.util.Arrays;
 

@@ -1,8 +1,8 @@
-package me.desmin88.mobdisguise.utils;
+package net.betterverse.mobdisguise.utils;
 
 import java.util.Random;
 
-import me.desmin88.mobdisguise.MobDisguise;
+import net.betterverse.mobdisguise.MobDisguise;
 
 import org.bukkit.Material;
 import org.bukkit.entity.Player;

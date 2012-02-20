@@ -1,12 +1,12 @@
-package me.desmin88.mobdisguise.commands;
+package net.betterverse.mobdisguise.commands;
 
-import me.desmin88.mobdisguise.MobDisguise;
-import me.desmin88.mobdisguise.api.event.DisguiseAsMobEvent;
-import me.desmin88.mobdisguise.api.event.DisguiseAsPlayerEvent;
-import me.desmin88.mobdisguise.api.event.DisguiseCommandEvent;
-import me.desmin88.mobdisguise.api.event.UnDisguiseEvent;
-import me.desmin88.mobdisguise.utils.Disguise;
-import me.desmin88.mobdisguise.utils.Disguise.MobType;
+import net.betterverse.mobdisguise.MobDisguise;
+import net.betterverse.mobdisguise.api.event.DisguiseAsMobEvent;
+import net.betterverse.mobdisguise.api.event.DisguiseAsPlayerEvent;
+import net.betterverse.mobdisguise.api.event.DisguiseCommandEvent;
+import net.betterverse.mobdisguise.api.event.UnDisguiseEvent;
+import net.betterverse.mobdisguise.utils.Disguise;
+import net.betterverse.mobdisguise.utils.Disguise.MobType;
 
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;

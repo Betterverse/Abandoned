@@ -1,7 +1,7 @@
-package me.desmin88.mobdisguise.listeners;
+package net.betterverse.mobdisguise.listeners;
 
-import me.desmin88.mobdisguise.MobDisguise;
-import me.desmin88.mobdisguise.utils.DisguiseTask;
+import net.betterverse.mobdisguise.MobDisguise;
+import net.betterverse.mobdisguise.utils.DisguiseTask;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
