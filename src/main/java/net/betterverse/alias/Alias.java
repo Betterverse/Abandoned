@@ -54,7 +54,7 @@ public class Alias extends JavaPlugin {
             print("Failed to load banned aliases!");
         }
 
-        aliases = new HashMap();
+        aliases = new HashMap<String, String>();
 
         File aliasFile = new File(this.dataDir.getAbsolutePath() + File.separator + "aliases.txt");
         if (!aliasFile.exists())
@@ -99,7 +99,8 @@ public class Alias extends JavaPlugin {
         return false;
     }
 
-    protected boolean saveAliases() {
+    @SuppressWarnings("rawtypes")
+	protected boolean saveAliases() {
         try {
             FileWriter l = new FileWriter(this.dataDir.getAbsolutePath() + File.separator + "aliases.txt");
             BufferedWriter writer = new BufferedWriter(l);
