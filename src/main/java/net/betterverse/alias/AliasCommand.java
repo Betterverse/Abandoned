@@ -6,9 +6,13 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+
 public class AliasCommand
         implements CommandExecutor {
     private final Alias plugin;
+    private ArrayList<Player> dun = new ArrayList<Player>();
 
     public AliasCommand(Alias plugin) {
         this.plugin = plugin;
@@ -68,8 +72,14 @@ public class AliasCommand
                     player.sendMessage("You are not allowed to use that alias.");
                     return true;
                 }
+                
+                if (dun.contains(player)) {
+                    player.sendMessage("You have already set your alias recently!");
+                    return true;
+                }
 
                 if (alias.matches("[a-zA-Z0-9 ]*")) {
+                    dun.add(player);
                     player.setDisplayName(alias);
                     this.plugin.aliases.put(name, alias);
                     this.plugin.saveAliases();
