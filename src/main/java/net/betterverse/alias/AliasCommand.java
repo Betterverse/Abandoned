@@ -17,8 +17,7 @@ public class AliasCommand implements CommandExecutor {
     }
 
     public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
-        if (cmd.getName().equals("alias")) {
-
+        if (cmd.getName().equalsIgnoreCase("alias")) {
             if (!(sender instanceof Player)) {
                 sender.sendMessage("Only players can use this command!");
                 return true;
@@ -42,17 +41,13 @@ public class AliasCommand implements CommandExecutor {
                     player.sendMessage("No current alias to clear. Use /alias <NICKNAME> to set your alias.");
                 }
                 return true;
-            }
-
-            if (args.length == 1) {
+            } else if (args.length == 1) {
                 String alias = args[0];
 
                 if (alias.length() > 14) {
                     player.sendMessage("Aliases are limited to 12 characters.");
                     return true;
-                }
-
-                if (this.plugin.aliases.containsValue(alias)) {
+                } else if (this.plugin.aliases.containsValue(alias)) {
                     if (this.plugin.aliases.get(name).equalsIgnoreCase(alias)) {
                         player.sendMessage("You are already using " + alias + " as an alias.");
                         return true;
@@ -60,25 +55,17 @@ public class AliasCommand implements CommandExecutor {
 
                     player.sendMessage("That alias is already in use.");
                     return true;
-                }
-
-                if ((this.plugin.playerDir != null) && (this.plugin.playerDir.exists()) &&
+                } else if ((this.plugin.playerDir != null) && (this.plugin.playerDir.exists()) &&
                     (this.plugin.isPlayerName(alias))) {
                     player.sendMessage("You are not allowed to use that alias.");
                     return true;
-                }
-
-                if (this.plugin.isBanned(alias)) {
+                } else if (this.plugin.isBanned(alias)) {
                     player.sendMessage("You are not allowed to use that alias.");
                     return true;
-                }
-                
-                if (dun.contains(player)) {
+                } else if (dun.contains(player)) {
                     player.sendMessage("You have already set your alias recently!");
                     return true;
-                }
-
-                if (alias.matches("[a-zA-Z0-9 ]*")) {
+                } else if (alias.matches("[a-zA-Z0-9 ]*")) {
                     dun.add(player);
                     player.setDisplayName(alias);
                     this.plugin.aliases.put(name, alias);
@@ -91,9 +78,7 @@ public class AliasCommand implements CommandExecutor {
 
                 player.sendMessage("Aliases must be only one word and must be alphanumeric.");
                 return true;
-            }
-
-            if (args.length > 1) {
+            } else if (args.length > 1) {
                 player.sendMessage("Unrecognized /alias use. Use /alias to clear your alias");
                 player.sendMessage(" or say /alias <NICKNAME> to set your alias.");
                 player.sendMessage(" Aliases must be one word and must be alphanumeric.");
