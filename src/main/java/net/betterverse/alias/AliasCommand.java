@@ -7,10 +7,8 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
-public class AliasCommand
-        implements CommandExecutor {
+public class AliasCommand implements CommandExecutor {
     private final Alias plugin;
     private ArrayList<Player> dun = new ArrayList<Player>();
 
@@ -38,7 +36,8 @@ public class AliasCommand
                 if (this.plugin.aliases.remove(player.getName()) != null) {
                     player.setDisplayName(player.getName());
                     this.plugin.saveAliases();
-                    this.plugin.getServer().broadcastMessage("Player " + ChatColor.DARK_RED + name + ChatColor.WHITE + " is no longer using an alias.");
+                    this.plugin.getServer().broadcastMessage("Player " + ChatColor.DARK_RED + name + ChatColor.WHITE +
+                                                                " is no longer using an alias.");
                 } else {
                     player.sendMessage("No current alias to clear. Use /alias <NICKNAME> to set your alias.");
                 }
@@ -63,7 +62,8 @@ public class AliasCommand
                     return true;
                 }
 
-                if ((this.plugin.playerDir != null) && (this.plugin.playerDir.exists()) && (this.plugin.isPlayerName(alias))) {
+                if ((this.plugin.playerDir != null) && (this.plugin.playerDir.exists()) &&
+                    (this.plugin.isPlayerName(alias))) {
                     player.sendMessage("You are not allowed to use that alias.");
                     return true;
                 }
@@ -84,7 +84,8 @@ public class AliasCommand
                     this.plugin.aliases.put(name, alias);
                     this.plugin.saveAliases();
                     this.plugin.getServer().broadcastMessage("Player " + name + " is now aliased as " + alias);
-                    Alias.print(ChatColor.RED + name + ChatColor.WHITE + " has set their alias to " + ChatColor.DARK_RED + alias);
+                    Alias.print(ChatColor.RED + name + ChatColor.WHITE + " has set their alias to " +
+                                ChatColor.DARK_RED + alias);
                     return true;
                 }
 

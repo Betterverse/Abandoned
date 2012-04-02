@@ -8,7 +8,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 
 public class AliasListener implements Listener {
-
     private final Alias plugin;
 
     public AliasListener(Alias instance) {
@@ -28,7 +27,8 @@ public class AliasListener implements Listener {
                 this.plugin.aliases.remove(player.getName());
                 this.plugin.saveAliases();
                 player.sendMessage("You are no longer allowed allowed to use " + alias + " as an alias.");
-                Alias.print(player.getName() + " has had their alias " + ChatColor.DARK_RED + alias + ChatColor.WHITE + " cleared.");
+                Alias.print(player.getName() + " has had their alias " + ChatColor.DARK_RED + alias + ChatColor.WHITE +
+                            " cleared.");
                 player.setDisplayName(player.getName());
             }
             
