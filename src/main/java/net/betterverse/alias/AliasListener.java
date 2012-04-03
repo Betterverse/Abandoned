@@ -14,7 +14,7 @@ public class AliasListener implements Listener {
         this.plugin = instance;
     }
 
-    @EventHandler(priority = EventPriority.NORMAL)
+    @EventHandler(priority = EventPriority.HIGHEST)
     public void onPlayerJoin(PlayerJoinEvent event) {
         if (this.plugin.aliases == null)
             return;
