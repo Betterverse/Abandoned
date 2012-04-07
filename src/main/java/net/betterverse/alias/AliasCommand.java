@@ -45,7 +45,7 @@ public class AliasCommand implements CommandExecutor {
                 String alias = args[0];
 
                 if (alias.length() > 14) {
-                    player.sendMessage("Aliases are limited to 12 characters.");
+                    player.sendMessage("Aliases are limited to 14 characters.");
                     return true;
                 } else if (this.plugin.aliases.containsValue(alias)) {
                     if (this.plugin.aliases.get(name).equalsIgnoreCase(alias)) {

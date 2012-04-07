@@ -8,32 +8,37 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 
 public class AliasListener implements Listener {
-    private final Alias plugin;
 
-    public AliasListener(Alias instance) {
-        this.plugin = instance;
-    }
+	private final Alias plugin;
 
-    @EventHandler(priority = EventPriority.HIGHEST)
-    public void onPlayerJoin(PlayerJoinEvent event) {
-        if (this.plugin.aliases == null)
-            return;
-        
-        Player player = event.getPlayer();
-        String alias = this.plugin.aliases.get(player.getName());
+	public AliasListener(Alias instance) {
+		this.plugin = instance;
+	}
 
-        if (alias != null) {
-            if ((this.plugin.isPlayerName(alias)) || (this.plugin.isBanned(alias))) {
-                this.plugin.aliases.remove(player.getName());
-                this.plugin.saveAliases();
-                player.sendMessage("You are no longer allowed allowed to use " + alias + " as an alias.");
-                Alias.print(player.getName() + " has had their alias " + ChatColor.DARK_RED + alias + ChatColor.WHITE +
-                            " cleared.");
-                player.setDisplayName(player.getName());
-            }
-            
-            if (player.hasPermission("alias.use")) 
-                player.setDisplayName(alias);
-        }
-    }
+	@EventHandler(priority = EventPriority.HIGHEST)
+	public void onPlayerJoin(PlayerJoinEvent event) {
+		event.getPlayer().sendMessage("Debug!");
+		if (this.plugin.aliases == null) {
+			return;
+		}
+
+		Player player = event.getPlayer();
+		String alias = this.plugin.aliases.get(player.getName());
+
+		if (alias != null) {
+			if ((this.plugin.isPlayerName(alias)) || (this.plugin.isBanned(alias))) {
+				this.plugin.aliases.remove(player.getName());
+				this.plugin.saveAliases();
+				player.sendMessage("You are no longer allowed allowed to use " + alias + " as an alias.");
+				Alias.print(player.getName() + " has had their alias " + ChatColor.DARK_RED + alias + ChatColor.WHITE
+								+ " cleared.");
+				player.setDisplayName(player.getName());
+			}
+
+			if (player.hasPermission("alias.use")) {
+				player.setDisplayName(alias);
+				player.sendMessage("Setting your alias to " + alias);
+			}
+		}
+	}
 }
