@@ -21,11 +21,14 @@ public class AliasListener implements Listener {
 		if (this.plugin.aliases == null) {
 			return;
 		}
+		event.getPlayer().sendMessage("Debug 2!");
 
 		Player player = event.getPlayer();
 		String alias = this.plugin.aliases.get(player.getName());
+		event.getPlayer().sendMessage("Debug! "+alias);
 
 		if (alias != null) {
+		event.getPlayer().sendMessage("Debug! 3");
 			if ((this.plugin.isPlayerName(alias)) || (this.plugin.isBanned(alias))) {
 				this.plugin.aliases.remove(player.getName());
 				this.plugin.saveAliases();
