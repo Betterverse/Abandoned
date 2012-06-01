@@ -18,7 +18,9 @@ public class AliasListener implements Listener {
 	@EventHandler(priority = EventPriority.HIGHEST)
 	public void onPlayerJoin(PlayerJoinEvent event) {
 		event.getPlayer().sendMessage("Debug!");
-		if (this.plugin.aliases == null) {
+		//Checking if a hashmap object is null? Wouldn't a hashmap always return null unless you
+		//specify a member of said hashmap?
+		if (this.plugin.aliases.get(event.getPlayer().getName) == null) {
 			return;
 		}
 		event.getPlayer().sendMessage("Debug 2!");
