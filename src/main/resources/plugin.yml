@@ -1,11 +1,9 @@
 name: Alias
-main: net.betterverse.alias.Alias
-version: 2.0.0
+main: me.znickq.alias.Alias
+version: 0.1
+authors: [ZNickq]
 commands:
   alias:
-    description: Allows you to set an alias.
-    usage: /alias <nickname>
-    permission: alias.use
-permissions:
-  alias.use:
-    description: Allows you to set an alias.
+    usage: Invalid usage or no permissions!
+  prefix:
+    usage: Invalid usage or no permissions!
