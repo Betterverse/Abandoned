@@ -20,7 +20,7 @@ public class NameEffects extends JavaPlugin implements Listener {
     private Map<String, AliasPlayer> players = new HashMap<String, AliasPlayer>();
     private Economy economy;
     private int pprice;
-    private List<String> blocked;
+    private List<String> blocked = new ArrayList<String>();
     private Set<String> expired = new HashSet<String>();
     private List<String> ccodes = new ArrayList<String>();
 
