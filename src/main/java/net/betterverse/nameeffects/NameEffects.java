@@ -62,7 +62,7 @@ public class NameEffects extends JavaPlugin implements Listener {
         Player player = event.getPlayer();
         AliasPlayer aplr = players.get(player.getName());
         if (aplr == null) {
-            aplr = new AliasPlayer(player.getName(), "");
+            aplr = new AliasPlayer(player.getDisplayName(), "");
             players.put(player.getName(), aplr);
         }
         player.setDisplayName("[" + aplr.getPrefix() + "]" + aplr.getDisplayName());
@@ -121,7 +121,8 @@ public class NameEffects extends JavaPlugin implements Listener {
             if (args.length == 0) {
                 AliasPlayer aplr = players.get(sender.getName());
                 aplr.setPrefix("");
-                sender.sendMessage(ChatColor.GREEN + "Alias reset!");
+                ((Player) sender).setDisplayName(aplr.getDisplayName());
+                sender.sendMessage(ChatColor.GREEN + "Prefix reset!");
             } else {
                 String arg = args[0];
                 AliasPlayer aplr = players.get(sender.getName());
@@ -131,7 +132,7 @@ public class NameEffects extends JavaPlugin implements Listener {
                     prefix = "";
                 }
                 ((Player) sender).setDisplayName(prefix + aplr.getDisplayName());
-                sender.sendMessage(ChatColor.GREEN + "Alias set to " + arg + "!");
+                sender.sendMessage(ChatColor.GREEN + "Prefix set to " + arg + "!");
             }
         }
         return true;
