@@ -69,7 +69,7 @@ public class NameEffects extends JavaPlugin implements Listener {
         Player player = event.getPlayer();
         AliasPlayer aplr = players.get(player.getName());
         if (aplr == null) {
-            aplr = new AliasPlayer(chat.getPlayerPrefix(event.getPlayer())+event.getPlayer().getName()+chat.getPlayerSuffix(event.getPlayer()), "");
+            aplr = new AliasPlayer(chat.getPlayerPrefix(event.getPlayer().getWorld(), event.getPlayer().getName())+event.getPlayer().getName(), "");
             players.put(player.getName(), aplr);
         }
         player.setDisplayName("[" + aplr.getPrefix() + "]" + aplr.getDisplayName());
