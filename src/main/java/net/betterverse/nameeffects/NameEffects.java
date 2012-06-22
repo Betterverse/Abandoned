@@ -3,6 +3,7 @@ package net.betterverse.nameeffects;
 import java.util.*;
 import net.milkbowl.vault.chat.Chat;
 import net.milkbowl.vault.economy.Economy;
+import net.milkbowl.vault.permission.Permission;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -21,6 +22,7 @@ public class NameEffects extends JavaPlugin implements Listener {
     private Map<String, AliasPlayer> players = new HashMap<String, AliasPlayer>();
     private Economy economy;
     private Chat chat;
+    private Permission permission;
     private int pprice;
     private List<String> blocked = new ArrayList<String>();
     private Set<String> expired = new HashSet<String>();
@@ -55,10 +57,15 @@ public class NameEffects extends JavaPlugin implements Listener {
         if (economyProvider != null) {
             economy = economyProvider.getProvider();
         }
-        
+
         RegisteredServiceProvider<Chat> chatProvider = getServer().getServicesManager().getRegistration(net.milkbowl.vault.chat.Chat.class);
         if (chatProvider != null) {
             chat = chatProvider.getProvider();
+        }
+
+        RegisteredServiceProvider<Permission> permissionProvider = getServer().getServicesManager().getRegistration(net.milkbowl.vault.permission.Permission.class);
+        if (permissionProvider != null) {
+            permission = permissionProvider.getProvider();
         }
 
         return (economy != null);
@@ -69,10 +76,15 @@ public class NameEffects extends JavaPlugin implements Listener {
         Player player = event.getPlayer();
         AliasPlayer aplr = players.get(player.getName());
         if (aplr == null) {
-            aplr = new AliasPlayer(chat.getPlayerPrefix(event.getPlayer().getWorld(), event.getPlayer().getName())+event.getPlayer().getName(), "");
+            aplr = new AliasPlayer(chat.getGroupPrefix(event.getPlayer().getWorld(), permission.getPrimaryGroup(event.getPlayer())) + event.getPlayer().getName(), "");
             players.put(player.getName(), aplr);
         }
-        player.setDisplayName("[" + aplr.getPrefix() + "]" + aplr.getDisplayName());
+
+        String prefix = "[" + aplr.getPrefix() + "]";
+        if (aplr.getPrefix().equals("")) {
+            prefix = "";
+        }
+        player.setDisplayName(prefix + aplr.getDisplayName());
     }
 
     @Override
