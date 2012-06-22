@@ -1,6 +1,7 @@
 package net.betterverse.nameeffects;
 
 import java.util.*;
+import net.milkbowl.vault.chat.Chat;
 import net.milkbowl.vault.economy.Economy;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -19,6 +20,7 @@ public class NameEffects extends JavaPlugin implements Listener {
 
     private Map<String, AliasPlayer> players = new HashMap<String, AliasPlayer>();
     private Economy economy;
+    private Chat chat;
     private int pprice;
     private List<String> blocked = new ArrayList<String>();
     private Set<String> expired = new HashSet<String>();
@@ -38,13 +40,13 @@ public class NameEffects extends JavaPlugin implements Listener {
         ccodes.add("&1");
 
         getConfig().addDefault("PrefixPrice", 10);
-        getConfig().addDefault("BlockedStuff", blocked);
+        getConfig().addDefault("BlockedAliases", blocked);
         getConfig().addDefault("BlockedColorCodes", ccodes);
         getConfig().options().copyDefaults(true);
         saveConfig();
 
         pprice = getConfig().getInt("PrefixPrice");
-        blocked = getConfig().getStringList("BlockedStuff");
+        blocked = getConfig().getStringList("BlockedAliases");
         ccodes = getConfig().getStringList("BlockedColorCodes");
     }
 
@@ -52,6 +54,11 @@ public class NameEffects extends JavaPlugin implements Listener {
         RegisteredServiceProvider<Economy> economyProvider = getServer().getServicesManager().getRegistration(net.milkbowl.vault.economy.Economy.class);
         if (economyProvider != null) {
             economy = economyProvider.getProvider();
+        }
+        
+        RegisteredServiceProvider<Chat> chatProvider = getServer().getServicesManager().getRegistration(net.milkbowl.vault.chat.Chat.class);
+        if (chatProvider != null) {
+            chat = chatProvider.getProvider();
         }
 
         return (economy != null);
@@ -62,7 +69,7 @@ public class NameEffects extends JavaPlugin implements Listener {
         Player player = event.getPlayer();
         AliasPlayer aplr = players.get(player.getName());
         if (aplr == null) {
-            aplr = new AliasPlayer(player.getDisplayName(), "");
+            aplr = new AliasPlayer(chat.getPlayerPrefix(event.getPlayer())+event.getPlayer().getName()+chat.getPlayerSuffix(event.getPlayer()), "");
             players.put(player.getName(), aplr);
         }
         player.setDisplayName("[" + aplr.getPrefix() + "]" + aplr.getDisplayName());
@@ -96,7 +103,7 @@ public class NameEffects extends JavaPlugin implements Listener {
                 AliasPlayer aplr = players.get(sender.getName());
                 aplr.setDisplayName(arg);
                 String prefix = "[" + aplr.getPrefix() + "]";
-                if(aplr.getPrefix().equals("")) {
+                if (aplr.getPrefix().equals("")) {
                     prefix = "";
                 }
                 ((Player) sender).setDisplayName(prefix + aplr.getDisplayName());
@@ -113,22 +120,22 @@ public class NameEffects extends JavaPlugin implements Listener {
             }
         }
         if (label.equalsIgnoreCase("prefix")) {
-            if (!economy.has(sender.getName(), pprice)) {
-                sender.sendMessage(ChatColor.RED + "Not enough money!");
-                return true;
-            }
-            economy.withdrawPlayer(sender.getName(), pprice);
             if (args.length == 0) {
                 AliasPlayer aplr = players.get(sender.getName());
                 aplr.setPrefix("");
                 ((Player) sender).setDisplayName(aplr.getDisplayName());
                 sender.sendMessage(ChatColor.GREEN + "Prefix reset!");
             } else {
+                if (!economy.has(sender.getName(), pprice)) {
+                    sender.sendMessage(ChatColor.RED + "Not enough money!");
+                    return true;
+                }
+                economy.withdrawPlayer(sender.getName(), pprice);
                 String arg = args[0];
                 AliasPlayer aplr = players.get(sender.getName());
                 aplr.setPrefix(arg);
                 String prefix = "[" + aplr.getPrefix() + "]";
-                if(aplr.getPrefix().equals("")) {
+                if (aplr.getPrefix().equals("")) {
                     prefix = "";
                 }
                 ((Player) sender).setDisplayName(prefix + aplr.getDisplayName());
@@ -139,7 +146,7 @@ public class NameEffects extends JavaPlugin implements Listener {
     }
 
     private String filter(String arg) {
-        for(String color : ccodes) {
+        for (String color : ccodes) {
             arg = arg.replaceAll(color, "");
         }
         return arg;
