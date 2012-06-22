@@ -81,6 +81,8 @@ public class NameEffects extends JavaPlugin implements Listener {
                 if (aplr == null) {
                     aplr = new AliasPlayer(chat.getGroupPrefix(event.getPlayer().getWorld(), permission.getPrimaryGroup(event.getPlayer())) + event.getPlayer().getName(), "");
                     players.put(player.getName(), aplr);
+                } else {
+                    aplr.setDisplayName(chat.getGroupPrefix(event.getPlayer().getWorld(), permission.getPrimaryGroup(event.getPlayer())) + event.getPlayer().getName());
                 }
                 String prefix = "[" + aplr.getPrefix() + "]";
                 if (aplr.getPrefix().equals("")) {
