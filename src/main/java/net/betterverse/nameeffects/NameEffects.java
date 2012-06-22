@@ -72,19 +72,23 @@ public class NameEffects extends JavaPlugin implements Listener {
     }
 
     @EventHandler(priority = EventPriority.MONITOR)
-    public void onPlayerJoin(PlayerJoinEvent event) {
-        Player player = event.getPlayer();
-        AliasPlayer aplr = players.get(player.getName());
-        if (aplr == null) {
-            aplr = new AliasPlayer(chat.getGroupPrefix(event.getPlayer().getWorld(), permission.getPrimaryGroup(event.getPlayer())) + event.getPlayer().getName(), "");
-            players.put(player.getName(), aplr);
-        }
-
-        String prefix = "[" + aplr.getPrefix() + "]";
-        if (aplr.getPrefix().equals("")) {
-            prefix = "";
-        }
-        player.setDisplayName(prefix + aplr.getDisplayName());
+    public void onPlayerJoin(final PlayerJoinEvent event) {
+        Bukkit.getScheduler().scheduleSyncDelayedTask(this, new Runnable() {
+            @Override
+            public void run() {
+                Player player = event.getPlayer();
+                AliasPlayer aplr = players.get(player.getName());
+                if (aplr == null) {
+                    aplr = new AliasPlayer(chat.getGroupPrefix(event.getPlayer().getWorld(), permission.getPrimaryGroup(event.getPlayer())) + event.getPlayer().getName(), "");
+                    players.put(player.getName(), aplr);
+                }
+                String prefix = "[" + aplr.getPrefix() + "]";
+                if (aplr.getPrefix().equals("")) {
+                    prefix = "";
+                }
+                player.setDisplayName(prefix + aplr.getDisplayName());
+            }
+        }, 20L);
     }
 
     @Override
