@@ -1,4 +1,4 @@
-package me.znickq.alias;
+package net.betterverse.nameeffects;
 
 import java.io.Serializable;
 

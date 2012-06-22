@@ -1,5 +1,5 @@
-name: Alias
-main: me.znickq.alias.Alias
+name: NameEffects
+main: net.betterverse.nameeffects.NameEffects
 version: 0.1
 authors: [ZNickq]
 commands:

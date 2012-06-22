@@ -1,4 +1,4 @@
-package me.znickq.alias;
+package net.betterverse.nameeffects;
 
 import java.util.*;
 import net.milkbowl.vault.economy.Economy;
@@ -15,7 +15,7 @@ import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 
-public class Alias extends JavaPlugin implements Listener {
+public class NameEffects extends JavaPlugin implements Listener {
 
     private Map<String, AliasPlayer> players = new HashMap<String, AliasPlayer>();
     private Economy economy;
@@ -95,7 +95,11 @@ public class Alias extends JavaPlugin implements Listener {
                 arg = filter(arg);
                 AliasPlayer aplr = players.get(sender.getName());
                 aplr.setDisplayName(arg);
-                ((Player) sender).setDisplayName("[" + aplr.getPrefix() + "]" + aplr.getDisplayName());
+                String prefix = "[" + aplr.getPrefix() + "]";
+                if(aplr.getPrefix().equals("")) {
+                    prefix = "";
+                }
+                ((Player) sender).setDisplayName(prefix + aplr.getDisplayName());
                 sender.sendMessage(ChatColor.GREEN + "Alias set to " + arg + "!");
                 expired.add(sender.getName());
                 Bukkit.getScheduler().scheduleSyncDelayedTask(this, new Runnable() {
@@ -122,7 +126,11 @@ public class Alias extends JavaPlugin implements Listener {
                 String arg = args[0];
                 AliasPlayer aplr = players.get(sender.getName());
                 aplr.setPrefix(arg);
-                ((Player) sender).setDisplayName("[" + aplr.getPrefix() + "]" + aplr.getDisplayName());
+                String prefix = "[" + aplr.getPrefix() + "]";
+                if(aplr.getPrefix().equals("")) {
+                    prefix = "";
+                }
+                ((Player) sender).setDisplayName(prefix + aplr.getDisplayName());
                 sender.sendMessage(ChatColor.GREEN + "Alias set to " + arg + "!");
             }
         }
