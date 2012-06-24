@@ -1,6 +1,5 @@
 package net.betterverse.nameeffects;
 
-import java.util.*;
 import net.milkbowl.vault.chat.Chat;
 import net.milkbowl.vault.economy.Economy;
 import net.milkbowl.vault.permission.Permission;
@@ -17,6 +16,8 @@ import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.util.*;
+
 public class NameEffects extends JavaPlugin implements Listener {
 
     private Map<String, AliasPlayer> players = new HashMap<String, AliasPlayer>();
@@ -27,6 +28,7 @@ public class NameEffects extends JavaPlugin implements Listener {
     private List<String> blocked = new ArrayList<String>();
     private Set<String> expired = new HashSet<String>();
     private List<String> ccodes = new ArrayList<String>();
+    private static NameEffects instance = null;
 
     @Override
     public void onDisable() {
@@ -50,6 +52,35 @@ public class NameEffects extends JavaPlugin implements Listener {
         pprice = getConfig().getInt("PrefixPrice");
         blocked = getConfig().getStringList("BlockedAliases");
         ccodes = getConfig().getStringList("BlockedColorCodes");
+        instance = this;
+    }
+
+    public static NameEffects getInstance() {
+        return instance;
+    }
+
+    public String getPrefix(String player) {
+        if (players.containsKey(player)) {
+            return players.get(player).getPrefix();
+        } else {
+            return null;
+        }
+    }
+    
+    public String getPrefix(Player player) {
+        return getPrefix(player.getName());
+    }
+
+    public AliasPlayer getAliasPlayer(String player) {
+        if (players.containsKey(player)) {
+            return players.get(player);
+        } else {
+            return null;
+        }
+    }
+
+    public AliasPlayer getAliasPlayer(Player player) {
+        return getAliasPlayer(player.getName());
     }
 
     private Boolean setupEconomy() {
