@@ -1,44 +1,54 @@
 package net.betterverse.nameeffects;
 
+import net.betterverse.nameeffects.commands.AliasCommand;
+import net.betterverse.nameeffects.commands.PrefixCommand;
+import net.betterverse.nameeffects.listeners.PlayerListener;
+import net.betterverse.nameeffects.objects.AliasPlayer;
+import net.betterverse.nameeffects.util.PersistUtil;
 import net.milkbowl.vault.chat.Chat;
 import net.milkbowl.vault.economy.Economy;
 import net.milkbowl.vault.permission.Permission;
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.EventPriority;
-import org.bukkit.event.Listener;
-import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.*;
 
-public class NameEffects extends JavaPlugin implements Listener {
+public class NameEffects extends JavaPlugin {
+    private PluginManager pm;
 
-    private Map<String, AliasPlayer> players = new HashMap<String, AliasPlayer>();
-    private Economy economy;
-    private Chat chat;
-    private Permission permission;
-    private int pprice;
-    private List<String> blocked = new ArrayList<String>();
-    private Set<String> expired = new HashSet<String>();
-    private List<String> ccodes = new ArrayList<String>();
-    private static NameEffects instance = null;
+    public Economy economy;
+    public Chat chat;
+    public Permission permission;
+
+    public int pprice;
+
+    public Set<String> expired = new HashSet<String>();
+
+    public Map<String, AliasPlayer> players;
+
+    public List<String> blocked = new ArrayList<String>();
+    public List<String> ccodes = new ArrayList<String>();
 
     @Override
     public void onDisable() {
+        PersistUtil.saveAliasPlayers(players);
     }
 
     @Override
     public void onEnable() {
-        PluginManager pm = getServer().getPluginManager();
-        pm.registerEvents(this, this);
-        setupEconomy();
+        pm = getServer().getPluginManager();
+
+        if (!setupEconomy()) {
+            pm.disablePlugin(this);
+            return;
+        }
+
+        pm.registerEvents(new PlayerListener(this), this);
+
+        getCommand("prefix").setExecutor(new PrefixCommand(this));
+        getCommand("alias").setExecutor(new AliasCommand(this));
 
         blocked.add("notch");
         ccodes.add("&1");
@@ -52,11 +62,14 @@ public class NameEffects extends JavaPlugin implements Listener {
         pprice = getConfig().getInt("PrefixPrice");
         blocked = getConfig().getStringList("BlockedAliases");
         ccodes = getConfig().getStringList("BlockedColorCodes");
-        instance = this;
-    }
 
-    public static NameEffects getInstance() {
-        return instance;
+        PersistUtil.initialize();
+
+        players = PersistUtil.getAliasPlayers();
+
+        for (Player player : getServer().getOnlinePlayers()) {
+            PersistUtil.addPlayerToAliases(this, player);
+        }
     }
 
     public String getPrefix(String player) {
@@ -66,7 +79,7 @@ public class NameEffects extends JavaPlugin implements Listener {
             return null;
         }
     }
-    
+
     public String getPrefix(Player player) {
         return getPrefix(player.getName());
     }
@@ -84,120 +97,24 @@ public class NameEffects extends JavaPlugin implements Listener {
     }
 
     private Boolean setupEconomy() {
-        RegisteredServiceProvider<Economy> economyProvider = getServer().getServicesManager().getRegistration(net.milkbowl.vault.economy.Economy.class);
+        if (pm.getPlugin("Vault") == null)
+            return false;
+
+        RegisteredServiceProvider<Economy> economyProvider = getServer().getServicesManager().getRegistration(Economy.class);
         if (economyProvider != null) {
             economy = economyProvider.getProvider();
         }
 
-        RegisteredServiceProvider<Chat> chatProvider = getServer().getServicesManager().getRegistration(net.milkbowl.vault.chat.Chat.class);
+        RegisteredServiceProvider<Chat> chatProvider = getServer().getServicesManager().getRegistration(Chat.class);
         if (chatProvider != null) {
             chat = chatProvider.getProvider();
         }
 
-        RegisteredServiceProvider<Permission> permissionProvider = getServer().getServicesManager().getRegistration(net.milkbowl.vault.permission.Permission.class);
+        RegisteredServiceProvider<Permission> permissionProvider = getServer().getServicesManager().getRegistration(Permission.class);
         if (permissionProvider != null) {
             permission = permissionProvider.getProvider();
         }
 
         return (economy != null);
-    }
-
-    @EventHandler(priority = EventPriority.MONITOR)
-    public void onPlayerJoin(final PlayerJoinEvent event) {
-        Bukkit.getScheduler().scheduleSyncDelayedTask(this, new Runnable() {
-            @Override
-            public void run() {
-                Player player = event.getPlayer();
-                AliasPlayer aplr = players.get(player.getName());
-                if (aplr == null) {
-                    aplr = new AliasPlayer(chat.getGroupPrefix(event.getPlayer().getWorld(), permission.getPrimaryGroup(event.getPlayer())) + event.getPlayer().getName(), "");
-                    players.put(player.getName(), aplr);
-                } else {
-                    aplr.setDisplayName(chat.getGroupPrefix(event.getPlayer().getWorld(), permission.getPrimaryGroup(event.getPlayer())) + event.getPlayer().getName());
-                }
-                String prefix = "[" + aplr.getPrefix() + "]";
-                if (aplr.getPrefix().equals("")) {
-                    prefix = "";
-                }
-                player.setDisplayName(prefix + aplr.getDisplayName());
-            }
-        }, 20L);
-    }
-
-    @Override
-    public boolean onCommand(final CommandSender sender, Command command, String label, String[] args) {
-        if (label.equalsIgnoreCase("alias")) {
-            if (!(sender.hasPermission("nameeffects.alias"))) {
-                return false;
-            }
-            if (expired.contains(sender.getName())) {
-                sender.sendMessage(ChatColor.RED + "You can't do that again this soon!");
-                return true;
-            }
-            if (args.length == 0) {
-                AliasPlayer aplr = players.get(sender.getName());
-                aplr.setDisplayName(sender.getName());
-                sender.sendMessage(ChatColor.GREEN + "Alias reset!");
-            } else {
-                String arg = args[0];
-                if (blocked.contains(ChatColor.stripColor(arg).toLowerCase())) {
-                    sender.sendMessage(ChatColor.RED + "That name is blocked!");
-                    return true;
-                }
-                if (Bukkit.getOfflinePlayer(arg) != null) {
-                    sender.sendMessage(ChatColor.RED + "A player currently has that name!");
-                    return true;
-                }
-                arg = filter(arg);
-                AliasPlayer aplr = players.get(sender.getName());
-                aplr.setDisplayName(arg);
-                String prefix = "[" + aplr.getPrefix() + "]";
-                if (aplr.getPrefix().equals("")) {
-                    prefix = "";
-                }
-                ((Player) sender).setDisplayName(prefix + aplr.getDisplayName());
-                sender.sendMessage(ChatColor.GREEN + "Alias set to " + arg + "!");
-                expired.add(sender.getName());
-                Bukkit.getScheduler().scheduleSyncDelayedTask(this, new Runnable() {
-
-                    @Override
-                    public void run() {
-                        expired.remove(sender.getName());
-                    }
-                }, 20L * 60 * 24);
-
-            }
-        }
-        if (label.equalsIgnoreCase("prefix")) {
-            if (args.length == 0) {
-                AliasPlayer aplr = players.get(sender.getName());
-                aplr.setPrefix("");
-                ((Player) sender).setDisplayName(aplr.getDisplayName());
-                sender.sendMessage(ChatColor.GREEN + "Prefix reset!");
-            } else {
-                if (!economy.has(sender.getName(), pprice)) {
-                    sender.sendMessage(ChatColor.RED + "Not enough money!");
-                    return true;
-                }
-                economy.withdrawPlayer(sender.getName(), pprice);
-                String arg = args[0];
-                AliasPlayer aplr = players.get(sender.getName());
-                aplr.setPrefix(arg);
-                String prefix = "[" + aplr.getPrefix() + "]";
-                if (aplr.getPrefix().equals("")) {
-                    prefix = "";
-                }
-                ((Player) sender).setDisplayName(prefix + aplr.getDisplayName());
-                sender.sendMessage(ChatColor.GREEN + "Prefix set to " + arg + "!");
-            }
-        }
-        return true;
-    }
-
-    private String filter(String arg) {
-        for (String color : ccodes) {
-            arg = arg.replaceAll(color, "");
-        }
-        return arg;
     }
 }

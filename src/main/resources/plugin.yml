@@ -2,6 +2,7 @@ name: NameEffects
 main: net.betterverse.nameeffects.NameEffects
 version: 0.1
 authors: [ZNickq]
+softdepend: [Vault]
 commands:
   alias:
     usage: Invalid usage or no permissions!
