@@ -6,7 +6,6 @@ import net.betterverse.nameeffects.listeners.PlayerListener;
 import net.betterverse.nameeffects.objects.AliasPlayer;
 import net.betterverse.nameeffects.util.PersistUtil;
 import net.milkbowl.vault.chat.Chat;
-import net.milkbowl.vault.economy.Economy;
 import net.milkbowl.vault.permission.Permission;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginManager;
@@ -18,7 +17,6 @@ import java.util.*;
 public class NameEffects extends JavaPlugin {
     private PluginManager pm;
 
-    public Economy economy;
     public Chat chat;
     public Permission permission;
     public Boolean hasCreditsShop;
@@ -108,15 +106,10 @@ public class NameEffects extends JavaPlugin {
             if (permissionProvider != null) {
                 permission = permissionProvider.getProvider();
             }
-
-            RegisteredServiceProvider<Economy> economyProvider = getServer().getServicesManager().getRegistration(Economy.class);
-            if (economyProvider != null) {
-                economy = economyProvider.getProvider();
-            }
         }
 
         hasCreditsShop = pm.getPlugin("CreditsShop") != null;
 
-        return economy != null || hasCreditsShop;
+        return hasCreditsShop;
     }
 }
