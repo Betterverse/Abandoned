@@ -24,9 +24,10 @@ public class PrefixCommand implements CommandExecutor {
         Player player = (Player) sender;
 
         if (args.length == 0) {
-            AliasPlayer aplr = plugin.players.get(player.getName());
-            aplr.setPrefix("");
-            player.setDisplayName(aplr.getDisplayName());
+            AliasPlayer aplr = plugin.getAliasPlayer(sender.getName());
+            if (aplr.getPrefix() == null)
+                return true;
+            aplr.resetPrefix();
             player.sendMessage(ChatColor.GREEN + "Prefix reset!");
         } else {
             int oldamount = SqlConfiguration.getBalanceForUpdate(player.getName());
@@ -36,20 +37,13 @@ public class PrefixCommand implements CommandExecutor {
                     player.sendMessage("You don't have enough credit!");
                     return true;
                 }
-
                 PlayerListener.setBalance(player.getName(), newamount);
             } else {
                 player.sendMessage("You don't have enough credit!");
             }
 
             String arg = args[0];
-            AliasPlayer aplr = plugin.players.get(player.getName());
-            aplr.setPrefix(arg);
-            String prefix = "[" + aplr.getPrefix() + "]";
-            if (aplr.getPrefix().equals("")) {
-                prefix = "";
-            }
-            player.setDisplayName(prefix + aplr.getDisplayName());
+            plugin.getAliasPlayer(sender.getName()).setPrefix(arg);
             player.sendMessage(ChatColor.GREEN + "Prefix set to " + arg + "!");
         }
 

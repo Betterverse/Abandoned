@@ -7,7 +7,6 @@ import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
 
 public class AliasCommand implements CommandExecutor {
     NameEffects plugin;
@@ -25,15 +24,14 @@ public class AliasCommand implements CommandExecutor {
             return true;
         }
         if (args.length == 0) {
-            AliasPlayer aplr = plugin.players.get(sender.getName());
-
-            if (aplr == null)
+            AliasPlayer aplr = plugin.getAliasPlayer(sender.getName());
+            if (aplr.getAlias() == null)
                 return true;
-
-            aplr.setDisplayName(sender.getName());
+            aplr.resetAlias();
             sender.sendMessage(ChatColor.GREEN + "Alias reset!");
         } else {
             String arg = args[0];
+            arg = filter(arg);
             if (plugin.blocked.contains(ChatColor.stripColor(arg).toLowerCase())) {
                 sender.sendMessage(ChatColor.RED + "That name is blocked!");
                 return true;
@@ -42,14 +40,7 @@ public class AliasCommand implements CommandExecutor {
                 sender.sendMessage(ChatColor.RED + "A player currently has that name!");
                 return true;
             }
-            arg = filter(arg);
-            AliasPlayer aplr = plugin.players.get(sender.getName());
-            aplr.setDisplayName(arg);
-            String prefix = "[" + aplr.getPrefix() + "]";
-            if (aplr.getPrefix().equals("")) {
-                prefix = "";
-            }
-            ((Player) sender).setDisplayName(prefix + aplr.getDisplayName());
+            plugin.getAliasPlayer(sender.getName()).setAlias(arg);
             sender.sendMessage(ChatColor.GREEN + "Alias set to " + arg + "!");
             plugin.expired.add(sender.getName());
             Bukkit.getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {

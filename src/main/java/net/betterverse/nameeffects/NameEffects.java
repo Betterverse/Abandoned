@@ -2,7 +2,6 @@ package net.betterverse.nameeffects;
 
 import net.betterverse.nameeffects.commands.AliasCommand;
 import net.betterverse.nameeffects.commands.PrefixCommand;
-import net.betterverse.nameeffects.listeners.PlayerListener;
 import net.betterverse.nameeffects.objects.AliasPlayer;
 import net.betterverse.nameeffects.util.PersistUtil;
 import net.milkbowl.vault.chat.Chat;
@@ -16,6 +15,7 @@ import java.util.*;
 
 public class NameEffects extends JavaPlugin {
     private PluginManager pm;
+    private static NameEffects instance;
 
     public Chat chat;
     public Permission permission;
@@ -44,8 +44,6 @@ public class NameEffects extends JavaPlugin {
             return;
         }
 
-        pm.registerEvents(new PlayerListener(this), this);
-
         getCommand("prefix").setExecutor(new PrefixCommand(this));
         getCommand("alias").setExecutor(new AliasCommand(this));
 
@@ -64,35 +62,25 @@ public class NameEffects extends JavaPlugin {
 
         PersistUtil.initialize();
 
+        instance = this;
+
         players = PersistUtil.getAliasPlayers();
-
-        for (Player player : getServer().getOnlinePlayers()) {
-            PersistUtil.addPlayerToAliases(this, player);
-        }
-    }
-
-    public String getPrefix(String player) {
-        if (players.containsKey(player)) {
-            return players.get(player).getPrefix();
-        } else {
-            return null;
-        }
-    }
-
-    public String getPrefix(Player player) {
-        return getPrefix(player.getName());
     }
 
     public AliasPlayer getAliasPlayer(String player) {
         if (players.containsKey(player)) {
             return players.get(player);
         } else {
-            return null;
+            return new AliasPlayer(player, null, null);
         }
     }
 
     public AliasPlayer getAliasPlayer(Player player) {
         return getAliasPlayer(player.getName());
+    }
+
+    public static NameEffects getInstance() {
+        return instance;
     }
 
     private Boolean setupPlugins() {
