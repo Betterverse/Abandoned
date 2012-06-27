@@ -29,23 +29,17 @@ public class PrefixCommand implements CommandExecutor {
             player.setDisplayName(aplr.getDisplayName());
             player.sendMessage(ChatColor.GREEN + "Prefix reset!");
         } else {
-            if (plugin.hasCreditsShop) {
-                int oldamount = SqlConfiguration.getBalanceForUpdate(player.getName());
-                if (oldamount >= 0) {
-                    int newamount = oldamount - plugin.pprice;
-                    if (newamount <= 0) {
-                        player.sendMessage("You don't have enough credit!");
-                        return true;
-                    }
-
-                    PlayerListener.setBalance(player.getName(), newamount);
-                }
-            } else {
-                if (!plugin.economy.has(player.getName(), plugin.pprice)) {
-                    player.sendMessage(ChatColor.RED + "Not enough money!");
+            int oldamount = SqlConfiguration.getBalanceForUpdate(player.getName());
+            if (oldamount >= 0) {
+                int newamount = oldamount - plugin.pprice;
+                if (newamount <= 0) {
+                    player.sendMessage("You don't have enough credit!");
                     return true;
                 }
-                plugin.economy.withdrawPlayer(player.getName(), plugin.pprice);
+
+                PlayerListener.setBalance(player.getName(), newamount);
+            } else {
+                player.sendMessage("You don't have enough credit!");
             }
 
             String arg = args[0];
