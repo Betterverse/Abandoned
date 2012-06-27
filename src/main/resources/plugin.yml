@@ -1,8 +1,8 @@
 name: NameEffects
 main: net.betterverse.nameeffects.NameEffects
-version: 0.1
+version: 0.2
 authors: [ZNickq]
-softdepend: [Vault]
+softdepend: [Vault, CreditsShop]
 commands:
   alias:
     usage: Invalid usage or no permissions!

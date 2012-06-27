@@ -21,6 +21,7 @@ public class NameEffects extends JavaPlugin {
     public Economy economy;
     public Chat chat;
     public Permission permission;
+    public Boolean hasCreditsShop;
 
     public int pprice;
 
@@ -40,7 +41,7 @@ public class NameEffects extends JavaPlugin {
     public void onEnable() {
         pm = getServer().getPluginManager();
 
-        if (!setupEconomy()) {
+        if (!setupPlugins()) {
             pm.disablePlugin(this);
             return;
         }
@@ -96,25 +97,26 @@ public class NameEffects extends JavaPlugin {
         return getAliasPlayer(player.getName());
     }
 
-    private Boolean setupEconomy() {
-        if (pm.getPlugin("Vault") == null)
-            return false;
+    private Boolean setupPlugins() {
+        if (pm.getPlugin("Vault") != null) {
+            RegisteredServiceProvider<Chat> chatProvider = getServer().getServicesManager().getRegistration(Chat.class);
+            if (chatProvider != null) {
+                chat = chatProvider.getProvider();
+            }
 
-        RegisteredServiceProvider<Economy> economyProvider = getServer().getServicesManager().getRegistration(Economy.class);
-        if (economyProvider != null) {
-            economy = economyProvider.getProvider();
+            RegisteredServiceProvider<Permission> permissionProvider = getServer().getServicesManager().getRegistration(Permission.class);
+            if (permissionProvider != null) {
+                permission = permissionProvider.getProvider();
+            }
+
+            RegisteredServiceProvider<Economy> economyProvider = getServer().getServicesManager().getRegistration(Economy.class);
+            if (economyProvider != null) {
+                economy = economyProvider.getProvider();
+            }
         }
 
-        RegisteredServiceProvider<Chat> chatProvider = getServer().getServicesManager().getRegistration(Chat.class);
-        if (chatProvider != null) {
-            chat = chatProvider.getProvider();
-        }
+        hasCreditsShop = pm.getPlugin("CreditsShop") != null;
 
-        RegisteredServiceProvider<Permission> permissionProvider = getServer().getServicesManager().getRegistration(Permission.class);
-        if (permissionProvider != null) {
-            permission = permissionProvider.getProvider();
-        }
-
-        return (economy != null);
+        return economy != null || hasCreditsShop;
     }
 }
