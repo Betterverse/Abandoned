@@ -68,7 +68,7 @@ public class NameEffects extends JavaPlugin {
     }
 
     public AliasPlayer getAliasPlayer(String player) {
-        if (player == null) {
+        if (players == null) {
             players = new HashMap<String, AliasPlayer>();
         }
         if (players.containsKey(player)) {
