@@ -4,20 +4,22 @@ import net.betterverse.nameeffects.NameEffects;
 
 import java.io.Serializable;
 
-
 public class AliasPlayer implements Serializable {
+
 	private final String name;
-    private String alias = null, prefix = null;
-	
+	private String alias = null, prefix = null;
+
 	public AliasPlayer(String name, String alias, String prefix) {
 		this.name = name;
-        this.alias = alias;
+		this.alias = alias;
 		this.prefix = prefix;
 	}
 
-    public AliasPlayer(String name) {
-        this.name = name;
-    }
+	public AliasPlayer(String name) {
+		this.name = name;
+		prefix = "";
+		alias = name;
+	}
 
 	public String getName() {
 		return this.name;
@@ -29,29 +31,29 @@ public class AliasPlayer implements Serializable {
 
 	public void setAlias(String alias) {
 		this.alias = alias;
-        update();
+		update();
 	}
 
-    public void resetAlias() {
-        this.alias = null;
-        update();
-    }
+	public void resetAlias() {
+		this.alias = null;
+		update();
+	}
 
-    public String getPrefix() {
-        return this.prefix;
-    }
+	public String getPrefix() {
+		return this.prefix;
+	}
 
-    public void setPrefix(String prefix) {
-        this.prefix = prefix;
-        update();
-    }
+	public void setPrefix(String prefix) {
+		this.prefix = prefix;
+		update();
+	}
 
-    public void resetPrefix() {
-        this.prefix = null;
-        update();
-    }
+	public void resetPrefix() {
+		this.prefix = null;
+		update();
+	}
 
-    protected void update() {
-        NameEffects.getInstance().players.put(this.name, this);
-    }
+	protected void update() {
+		NameEffects.getInstance().players.put(this.name, this);
+	}
 }

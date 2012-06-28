@@ -45,7 +45,6 @@ public class PersistUtil {
 
         for (Map.Entry<String, AliasPlayer> values : map.entrySet()) {
             ArrayList<String> list = new ArrayList<String>();
-            list.add(values.getValue().getName());
             list.add(values.getValue().getAlias());
             list.add(values.getValue().getPrefix());
             set(values.getKey(), list);
@@ -56,11 +55,11 @@ public class PersistUtil {
 
     public static Map<String, AliasPlayer> getAliasPlayers() {
         Map<String, AliasPlayer> map = new HashMap<String, AliasPlayer>();
-        for (Map.Entry<String, Object> values : config.getValues(false).entrySet()) {
-            List<String> list = config.getStringList(values.getKey());
+        for (String values : config.getKeys(false)) {
+            List<String> list = config.getStringList(values);
             if (list.isEmpty())
                 continue;
-            map.put(values.getKey(), new AliasPlayer(list.get(0), list.get(1), list.get(2)));
+            map.put(values, new AliasPlayer(values, list.get(0), list.get(1)));
         }
         return map;
     }

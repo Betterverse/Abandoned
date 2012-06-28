@@ -11,42 +11,48 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 public class PrefixCommand implements CommandExecutor {
-    NameEffects plugin;
 
-    public PrefixCommand(NameEffects instance) {
-        plugin = instance;
-    }
+	NameEffects plugin;
 
-    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        if (!(sender instanceof Player))
-            return true;
+	public PrefixCommand(NameEffects instance) {
+		plugin = instance;
+	}
 
-        Player player = (Player) sender;
+	public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+		if (!(sender instanceof Player)) {
+			return true;
+		}
 
-        if (args.length == 0) {
-            AliasPlayer aplr = plugin.getAliasPlayer(sender.getName());
-            if (aplr.getPrefix() == null)
-                return true;
-            aplr.resetPrefix();
-            player.sendMessage(ChatColor.GREEN + "Prefix reset!");
-        } else {
-            int oldamount = SqlConfiguration.getBalanceForUpdate(player.getName());
-            if (oldamount >= 0) {
-                int newamount = oldamount - plugin.pprice;
-                if (newamount <= 0) {
-                    player.sendMessage("You don't have enough credit!");
-                    return true;
-                }
-                PlayerListener.setBalance(player.getName(), newamount);
-            } else {
-                player.sendMessage("You don't have enough credit!");
-            }
+		Player player = (Player) sender;
 
-            String arg = args[0];
-            plugin.getAliasPlayer(sender.getName()).setPrefix(arg);
-            player.sendMessage(ChatColor.GREEN + "Prefix set to " + arg + "!");
-        }
+		if (args.length == 0) {
+			AliasPlayer aplr = plugin.getAliasPlayer(sender.getName());
+			if (aplr.getPrefix() == null) {
+				return true;
+			}
+			aplr.resetPrefix();
+			player.sendMessage(ChatColor.GREEN + "Prefix reset!");
+		} else {
+			try {
+				int oldamount = SqlConfiguration.getBalanceForUpdate(player.getName());
+				if (oldamount >= 0) {
+					int newamount = oldamount - plugin.pprice;
+					if (newamount <= 0) {
+						player.sendMessage("You don't have enough credit!");
+						return true;
+					}
+					PlayerListener.setBalance(player.getName(), newamount);
+				} else {
+					player.sendMessage("You don't have enough credit!");
+				}
+			} catch (Exception ex) {
+				ex.printStackTrace();
+			}
+			String arg = args[0];
+			plugin.getAliasPlayer(sender.getName()).setPrefix(arg);
+			player.sendMessage(ChatColor.GREEN + "Prefix set to " + arg + "!");
+		}
 
-        return true;
-    }
+		return true;
+	}
 }
