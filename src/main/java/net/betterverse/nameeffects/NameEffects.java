@@ -25,7 +25,7 @@ public class NameEffects extends JavaPlugin {
 
     public Set<String> expired = new HashSet<String>();
 
-    public Map<String, AliasPlayer> players;
+    public Map<String, AliasPlayer> players = null;
 
     public List<String> blocked = new ArrayList<String>();
     public List<String> ccodes = new ArrayList<String>();
@@ -68,6 +68,9 @@ public class NameEffects extends JavaPlugin {
     }
 
     public AliasPlayer getAliasPlayer(String player) {
+        if (player == null) {
+            players = new HashMap<String, AliasPlayer>();
+        }
         if (players.containsKey(player)) {
             return players.get(player);
         } else {
