@@ -49,7 +49,7 @@ public class PrefixCommand implements CommandExecutor {
 				ex.printStackTrace();
 			}
 			String arg = args[0];
-			plugin.getAliasPlayer(sender.getName()).setPrefix(arg);
+			plugin.getAliasPlayer(sender.getName()).setPrefix(plugin.sanitizePrefix(arg));
 			player.sendMessage(ChatColor.GREEN + "Prefix set to " + arg + "!");
 		}
 

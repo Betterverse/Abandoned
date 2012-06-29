@@ -40,7 +40,7 @@ public class AliasCommand implements CommandExecutor {
                 sender.sendMessage(ChatColor.RED + "A player currently has that name!");
                 return true;
             }
-            plugin.getAliasPlayer(sender.getName()).setAlias(arg);
+            plugin.getAliasPlayer(sender.getName()).setAlias(plugin.sanitizeAlias(arg));
             sender.sendMessage(ChatColor.GREEN + "Alias set to " + arg + "!");
             plugin.expired.add(sender.getName());
             Bukkit.getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {

@@ -65,6 +65,8 @@ public class NameEffects extends JavaPlugin {
         instance = this;
 
         players = PersistUtil.getAliasPlayers();
+
+        scanForInvalid();
     }
 
     public AliasPlayer getAliasPlayer(String player) {
@@ -84,6 +86,37 @@ public class NameEffects extends JavaPlugin {
 
     public static NameEffects getInstance() {
         return instance;
+    }
+
+    /**
+     * Clean the alias to make it consist of only letters, numbers, and the underscore
+     *
+     * @param offer Offered input to be scanned
+     * @return String that should be used based upon the offer
+     */
+    public String sanitizeAlias(String offer) {
+        return offer.replaceAll("[^\\w]", "");
+    }
+
+    /**
+     * Clean the prefix to make it consist of only letters, numbers, underscores, and the & symbol
+     *
+     * @param offer Offered input to be scanned
+     * @return String that should be used based upon the offer
+     */
+    public String sanitizePrefix(String offer) {
+        return offer.replaceAll("[^\\w&]", "");
+    }
+
+    private void scanForInvalid() {
+        Iterator<String> iterator = players.keySet().iterator();
+        while(iterator.hasNext()) {
+            String playerName = iterator.next();
+            AliasPlayer aliasPlayer = players.get(playerName);
+
+            aliasPlayer.setAlias(sanitizeAlias(aliasPlayer.getAlias()));
+            aliasPlayer.setPrefix(sanitizePrefix(aliasPlayer.getPrefix()));
+        }
     }
 
     private Boolean setupPlugins() {
