@@ -95,7 +95,11 @@ public class NameEffects extends JavaPlugin {
      * @return String that should be used based upon the offer
      */
     public String sanitizeAlias(String offer) {
-        return offer.replaceAll("[^\\w]", "");
+        offer = offer.replaceAll("[^a-zA-Z0-9_]", "");
+        if(offer.length() > 9) {
+            offer = offer.substring(0, 9);
+        }
+        return offer;
     }
 
     /**
@@ -105,7 +109,11 @@ public class NameEffects extends JavaPlugin {
      * @return String that should be used based upon the offer
      */
     public String sanitizePrefix(String offer) {
-        return offer.replaceAll("[^\\w&]", "");
+        offer = offer.replaceAll("[^a-zA-Z0-9_&]", "");
+        if(offer.length() > 16) {
+            offer = offer.substring(0, 16);
+        }
+        return offer;
     }
 
     private void scanForInvalid() {
