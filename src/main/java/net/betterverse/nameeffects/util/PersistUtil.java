@@ -1,15 +1,13 @@
 package net.betterverse.nameeffects.util;
 
+import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
 import net.betterverse.nameeffects.objects.AliasPlayer;
 import org.bukkit.configuration.file.YamlConfiguration;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 public class PersistUtil {
+
     static YamlConfiguration config;
     static File file;
 
@@ -26,11 +24,7 @@ public class PersistUtil {
         config.options().header("Persistence Config");
     }
 
-    public static void set(String key, Object obj) {
-        config.set(key, obj);
-    }
-
-    public static Boolean save() {
+    public static boolean save() {
         try {
             config.save(file);
             return true;
@@ -40,14 +34,12 @@ public class PersistUtil {
     }
 
     public static void saveAliasPlayers(Map<String, AliasPlayer> map) {
-        if (map == null)
+        if (map == null) {
             return;
+        }
 
         for (Map.Entry<String, AliasPlayer> values : map.entrySet()) {
-            ArrayList<String> list = new ArrayList<String>();
-            list.add(values.getValue().getAlias());
-            list.add(values.getValue().getPrefix());
-            set(values.getKey(), list);
+            config.set(values.getKey(), values.getValue());
         }
 
         save();
@@ -56,10 +48,8 @@ public class PersistUtil {
     public static Map<String, AliasPlayer> getAliasPlayers() {
         Map<String, AliasPlayer> map = new HashMap<String, AliasPlayer>();
         for (String values : config.getKeys(false)) {
-            List<String> list = config.getStringList(values);
-            if (list.isEmpty())
-                continue;
-            map.put(values, new AliasPlayer(values, list.get(0), list.get(1)));
+            AliasPlayer player = (AliasPlayer) config.get(values);
+            player.setName(values);
         }
         return map;
     }

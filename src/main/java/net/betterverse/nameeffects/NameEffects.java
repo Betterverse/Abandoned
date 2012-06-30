@@ -1,32 +1,28 @@
 package net.betterverse.nameeffects;
 
+import java.util.*;
 import net.betterverse.nameeffects.commands.AliasCommand;
 import net.betterverse.nameeffects.commands.PrefixCommand;
 import net.betterverse.nameeffects.objects.AliasPlayer;
 import net.betterverse.nameeffects.util.PersistUtil;
 import net.milkbowl.vault.chat.Chat;
 import net.milkbowl.vault.permission.Permission;
+import org.bukkit.configuration.serialization.ConfigurationSerialization;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.util.*;
-
 public class NameEffects extends JavaPlugin {
+
     private PluginManager pm;
     private static NameEffects instance;
-
     public Chat chat;
     public Permission permission;
     public Boolean hasCreditsShop;
-
     public int pprice;
-
     public Set<String> expired = new HashSet<String>();
-
     public Map<String, AliasPlayer> players = null;
-
     public List<String> blocked = new ArrayList<String>();
     public List<String> ccodes = new ArrayList<String>();
 
@@ -37,6 +33,8 @@ public class NameEffects extends JavaPlugin {
 
     @Override
     public void onEnable() {
+        ConfigurationSerialization.registerClass(AliasPlayer.class, "Player");
+        //
         pm = getServer().getPluginManager();
 
         if (!setupPlugins()) {
@@ -89,28 +87,30 @@ public class NameEffects extends JavaPlugin {
     }
 
     /**
-     * Clean the alias to make it consist of only letters, numbers, and the underscore
+     * Clean the alias to make it consist of only letters, numbers, and the
+     * underscore
      *
      * @param offer Offered input to be scanned
      * @return String that should be used based upon the offer
      */
     public String sanitizeAlias(String offer) {
         offer = offer.replaceAll("[^a-zA-Z0-9_]", "");
-        if(offer.length() > 9) {
+        if (offer.length() > 9) {
             offer = offer.substring(0, 9);
         }
         return offer;
     }
 
     /**
-     * Clean the prefix to make it consist of only letters, numbers, underscores, and the & symbol
+     * Clean the prefix to make it consist of only letters, numbers,
+     * underscores, and the & symbol
      *
      * @param offer Offered input to be scanned
      * @return String that should be used based upon the offer
      */
     public String sanitizePrefix(String offer) {
         offer = offer.replaceAll("[^a-zA-Z0-9_&]", "");
-        if(offer.length() > 16) {
+        if (offer.length() > 16) {
             offer = offer.substring(0, 16);
         }
         return offer;
@@ -118,7 +118,7 @@ public class NameEffects extends JavaPlugin {
 
     private void scanForInvalid() {
         Iterator<String> iterator = players.keySet().iterator();
-        while(iterator.hasNext()) {
+        while (iterator.hasNext()) {
             String playerName = iterator.next();
             AliasPlayer aliasPlayer = players.get(playerName);
 
