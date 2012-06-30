@@ -50,6 +50,7 @@ public class PersistUtil {
         for (String values : config.getKeys(false)) {
             AliasPlayer player = (AliasPlayer) config.get(values);
             player.setName(values);
+            map.put(values, player);
         }
         return map;
     }
