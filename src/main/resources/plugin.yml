@@ -1,0 +1,12 @@
+name: OKSpamSecurity
+author: Kalman Olah
+main: me.kalmanolah.os.OKmain
+version: 1.1.1
+database: false
+description: >
+             A spam security plugin for Bukkit.
+commands:
+  os:
+    description: Main OKSpamSecurity command.
+    usage: |
+           Usage: /<command>
