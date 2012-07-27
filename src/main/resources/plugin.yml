@@ -1,0 +1,5 @@
+name: Traps
+authors: [ZNickq]
+main: net.bettercraft.traps.Main
+version: 0.1
+depend: [MyChunks, Spout]
