@@ -1,0 +1,8 @@
+name: Warzone
+main: couk.Adamki11s.Warzone.Warzone
+version: 1.1
+authors: [Adamki11s, MineDev]
+commands:
+  warzone:
+    aliases: wz
+    description: Warzone.
