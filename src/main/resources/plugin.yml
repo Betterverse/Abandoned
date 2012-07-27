@@ -1,0 +1,8 @@
+name: WorldMarket
+main: net.betterverse.worldmarket.WorldMarket
+version: 1.0
+author: Betterverse
+commands:
+    zone:
+        usage: /<command> args
+        description: The root command for WorldMarket
