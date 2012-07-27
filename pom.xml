@@ -1,0 +1,96 @@
+<!--
+	Maven build file for Towns
+
+	Copyright (c) 2011-2012 Betterverse <http://www.betterverse.net>
+	All Rights Reserved unless otherwise explicitly stated.
+-->
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<!-- Project information -->
+	<groupId>net.betterverse</groupId>
+	<artifactId>towns</artifactId>
+	<version>dev-SNAPSHOT</version>
+	<name>Towns</name>
+	<url>http://www.betterverse.net</url>
+	<description>Resident-town-nation heirarchy combined with a grid based protection system along with a war event. Originally based on Towny.</description>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<bukkit.version>1.1-R4-SNAPSHOT</bukkit.version>
+		<build.number>Unknown</build.number>
+	</properties>
+
+	<!-- Source code -->
+	<scm>
+		<developerConnection>scm:git:git@github.com:Betterverse/${project.name}.git</developerConnection>
+		<connection>scm:git:git://github.com/Betterverse/${project.name}.git</connection>
+		<url>https://github.com/Betterverse/${project.name}</url>
+	</scm>
+
+	<!-- Continuous integration -->
+	<ciManagement>
+		<system>jenkins</system>
+		<url>http://betterverse.net:8080</url>
+	</ciManagement>
+
+	<!-- Repository locations -->
+	<repositories>
+		<repository>
+			<id>spout-repo</id>
+			<url>http://repo.spout.org</url>
+		</repository>
+	</repositories>
+
+	<!-- Dependencies -->
+	<dependencies>
+		<dependency>
+			<groupId>org.bukkit</groupId>
+			<artifactId>bukkit</artifactId>
+			<version>LATEST</version>
+		</dependency>
+		<dependency>
+			<groupId>net.milkbowl</groupId>
+			<artifactId>vault</artifactId>
+			<version>1.2.8</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.griefcraft</groupId>
+			<artifactId>lwc</artifactId>
+			<version>4.0.7</version>
+		</dependency>
+		<dependency>
+			<groupId>com.ensifera.animosity</groupId>
+			<artifactId>craftirc</artifactId>
+			<version>3.1</version>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<defaultGoal>clean package install</defaultGoal>
+		<sourceDirectory>${basedir}/src/main/java</sourceDirectory>
+		<!-- Resources -->
+		<resources>
+			<resource>
+				<targetPath>.</targetPath>
+				<filtering>false</filtering>
+				<directory>${basedir}</directory>
+				<includes>
+					<include>LICENSE.txt</include>
+				</includes>
+			</resource>
+			<resource>
+				<targetPath>.</targetPath>
+				<filtering>true</filtering>
+				<directory>${basedir}/src/main/resources</directory>
+				<includes>
+					<include>plugin.yml</include>
+					<include>english.yml</include>
+				</includes>
+			</resource>
+		</resources>
+	</build>
+
+</project>
