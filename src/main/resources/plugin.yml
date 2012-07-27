@@ -1,0 +1,30 @@
+name: PortalLink
+main: net.betterverse.portallink.PortalLink
+version: 1.0
+author: ZNickq
+description: Portal linking
+commands:
+    pl:
+        description: Manipulate PortalLink
+        usage: |
+            /<command> link [-b] [-WhichNether] <World> <OtherWorld> - Defines a new PortalLink. "b" sets the link to work both ways. WhichNether is 0 by default - add 1 if World is a Nether world and 2 if OtherWorld is a Nether world (or 3 for both). If you do not, things may BREAK. You can use "\" to escape spaces.
+            /<command> unlink <World> <OtherWorld>                   - Removes a PortalLink. You can use "\" to escape spaces.
+            /<command> reload                                        - Reloads PortalLinks from links.properties.
+        aliases:
+        - portallink
+permissions:
+    portallink.*:
+        description: Gives access to all PortalLink commands.
+        children:
+            portallink.link: true
+            portallink.unlink: true
+            portallink.reload: true
+    portallink.link:
+        default: op
+        description: Allows a user to define new PortalLinks.
+    portallink.unlink:
+        default: op
+        description: Allows a user to remove PortalLinks.
+    portallink.reload:
+        default: op
+        description: Allows a user to reload PortalLink's links.
