@@ -1,31 +1,7 @@
-name: KiwiAdmin
-main: net.betterverse.kiwiadmin.KiwiAdmin
+name: BetterIPCheck
 version: 1.0
-author: yottabyte
-description: >
-             Admin plugin for Bukkit, adds important functions like kicking and banning.
+authors: [ZNickq]
+main: net.betterverse.betteripcheck.BetterIPCheck
 commands:
-  kick:
-    description: Kick a player
-    usage: /<command> player [reason] - Kick a player
-  tempban:
-    description: Temporarily ban a player
-    usage: /<command> player time [reason] - Temporarily ban a player
-  ban:
-    description: Ban a player
-    usage: /<command> player [reason] - Ban a player
-  unban:
-    description: Unban a player
-    usage: /<command> player - Unban a player
-  checkban:
-    description: Check if a player is banned
-    usage: /<command>
-  reloadka:
-    description: Reload the banlist
-    usage: /<command>
-  ipban:
-    description: IP-ban a player
-    usage: /<command> player [reason]
-  exportbans:
-    description: Export bans to banned-players.txt
-    usage: /<command>
+    altcheck:
+        description: Check the alternate accounts!
