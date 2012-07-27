@@ -1,0 +1,33 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>net.betterverse</groupId>
+  <artifactId>PolygonProtect</artifactId>
+  <version>dev-SNAPSHOT</version>
+  <packaging>jar</packaging>
+
+  <name>PolygonProtect</name>
+  <url>http://maven.apache.org</url>
+
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<bukkit.version>1.1-R5-SNAPSHOT</bukkit.version>
+  </properties>
+
+ <repositories>
+		<repository>
+			<id>spout-repo</id>
+			<url>http://repo.spout.org</url>
+		</repository>
+	</repositories>
+
+  <dependencies>
+		<dependency>
+			<groupId>org.bukkit</groupId>
+			<artifactId>bukkit</artifactId>
+			<version>${bukkit.version}</version>
+			<scope>compile</scope>
+		</dependency>
+  </dependencies>
+</project>

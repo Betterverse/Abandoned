@@ -1,0 +1,10 @@
+name: PolygonProtect
+version: 1.0
+author: codename_B
+website: http://tetragaming.com/codename_B/
+main: de.bananaco.protect.PolygonProtect
+commands:
+    polygon:
+        usage: /<command> arg
+    pmeta:
+        usage: /<command>
