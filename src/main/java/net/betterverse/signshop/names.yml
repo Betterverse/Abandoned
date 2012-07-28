@@ -1,0 +1,242 @@
+Air: 0
+Stone: 1
+Grass: 2
+Dirt: 3
+Cobblestone: 4
+Wooden Plank: 5
+Bedrock: 7
+Water: 8
+Water: 9
+Lava: 10
+Lava: 11
+Sand: 12
+Gravel: 13
+Gold Ore: 14
+Iron Ore: 15
+Coal Ore: 16
+Sponge: 19
+Glass: 20
+Lapis Ore: 21
+Lapis Block: 22
+Dispenser: 23
+Sandstone: 24
+Note Block: 25
+Bed: 26
+Dandelion: 37
+Red Rose: 38
+Brown Mushie: 39
+Red Mushroom: 40
+Gold Block: 41
+Iron Block: 42
+Brick Block: 45
+TNT: 46
+Bookshelf: 47
+Moss Stone: 48
+Obsidian: 49
+Torch: 50
+Fire: 51
+Mob Spawner: 52
+Wood Stairs: 53
+Chest: 54
+Redstone: 55
+Diamond Ore: 56
+DiamondBlock: 57
+Workbench: 58
+Crops: 59
+Farmland: 60
+Furnace: 61
+Furnace: 62
+Sign Post: 63
+Wooden Door: 64
+Ladder: 65
+Rails: 66
+CobbleStairs: 67
+Wall Sign: 68
+Lever: 69
+Stone Plate: 70
+Iron Door: 71
+Wooden Plate: 72
+Redstone Ore: 73
+Redstone Ore: 74
+RdstoneTorch: 75
+RdstoneTorch: 76
+Stone Button: 77
+Snow: 78
+Ice: 79
+Snow Block: 80
+Cactus: 81
+Clay Block: 82
+Sugar Cane: 83
+Jukebox: 84
+Fence: 85
+Pumpkin: 86
+Netherrack: 87
+Soul Sand: 88
+Glowstone: 89
+Portal: 90
+JackOLantern: 91
+Cake Block: 92
+Diode: 93
+Diode: 94
+Iron Shovel: 256
+Iron Pick: 257
+Iron Axe: 258
+Flint: 259
+Apple: 260
+Bow: 261
+Arrow: 262
+Coal: 263
+Diamond: 264
+Iron Ingot: 265
+Gold Ingot: 266
+Iron Sword: 267
+Wood Sword: 268
+Wood Shovel: 269
+Wood Pick: 270
+Wooden Axe: 271
+Stone Sword: 272
+Stone Shvel: 273
+Stone Pick: 274
+Stone Axe: 275
+DiamondSwrd: 276
+DiamondShvl: 277
+DiamondPick: 278
+Diamond Axe: 279
+Stick: 280
+Bowl: 281
+Soup: 282
+Gold Sword: 283
+Gold Shovel: 284
+Gold Pick: 285
+Gold Axe: 286
+String: 287
+Feather: 288
+Gunpowder: 289
+Wooden Hoe: 290
+Stone Hoe: 291
+Iron Hoe: 292
+Diamond Hoe: 293
+Gold Hoe: 294
+Seeds: 295
+Wheat: 296
+Bread: 297
+Lthr Helm: 298
+Lthr Shirt: 299
+Lthr Pants: 300
+Lthr Boots: 301
+Chain Helm: 302
+Chain Shirt: 303
+Chain Pants: 304
+Chain Boots: 305
+Iron Helm: 306
+Iron Shirt: 307
+Iron Pants: 308
+Iron Boots: 309
+DiamondHelm: 310
+DiamondShrt: 311
+DiamondPant: 312
+DiamondBoot: 313
+Gold Helmet: 314
+Gold Shirt: 315
+Gold Pants: 316
+Gold Boots: 317
+Flint: 318
+Raw Pork: 319
+Cooked Pork: 320
+Paintings: 321
+Gold Apple: 322
+Sign: 323
+Wooden door: 324
+Bucket: 325
+Waterbucket: 326
+Lava bucket: 327
+Minecart: 328
+Saddle: 329
+Iron door: 330
+Redstone: 331
+Snowball: 332
+Boat: 333
+Leather: 334
+Milk: 335
+Clay Brick: 336
+Clay Balls: 337
+Sugar Cane: 338
+Paper: 339
+Book: 340
+Slimeball: 341
+StorageCart: 342
+PoweredCart: 343
+Egg: 344
+Compass: 345
+Fishing Rod: 346
+Clock: 347
+Glow Dust: 348
+Raw Fish: 349
+Cooked Fish: 350
+Bone: 352
+Sugar: 353
+Cake: 354
+Bed: 355
+Diode: 356
+Gold CD: 2256
+Green CD: 2257
+Sapling: 6,0
+Spruce Sapling: 6,1
+Birch Sapling: 6,2
+Weird Sapling: 6,3
+Wood: 17,0
+Spruce Wood: 17,1
+Birch Wood: 17,2
+Leaves: 18,0
+Spruce Leaves: 18,1
+Birch Leaves: 18,2
+Weird Leaves: 18,3
+White Wool: 35,0
+Orange Wool: 35,1
+Magenta Wool: 35,2
+Light Blue Wool: 35,3
+Yellow Wool: 35,4
+Lime Wool: 35,5
+Pink Wool: 35,6
+Gray Wool: 35,7
+Light Gray Wool: 35,8
+Cyan Wool: 35,9
+Purple Wool: 35,10
+Blue Wool: 35,11
+Brown Wool: 35,12
+Green Wool: 35,13
+Red Wool: 35,14
+Black Wool: 35,15
+Ink Sac: 351,0
+Rose Red: 351,1
+Cactus Green: 351,2
+Cocoa Beans: 351,3
+Lapis Lazuli: 351,4
+Purple Dye: 351,5
+Cyan Dye: 351,6
+Light Gray Dye: 351,7
+Gray Dye: 351,8
+Pink Dye: 351,9
+Lime Dye: 351,10
+Dandelion Yellow: 351,11
+Light Blue Dye: 351,12
+Majenta Dye: 351,13
+Orange Dye: 351,14
+Bone Meal: 351,15
+Stone Slab: 44,0
+Sandstone Slab: 44,1
+Wooden Slab: 44,2
+Cobble Slab: 44,3
+Brick Slab: 44,4
+Stone Brick Slab: 44,5
+Stone Slab: 44,6
+Stone 2xSlab: 43,0
+Sandstone2xSlab: 43,1
+Wooden 2xSlab: 43,2
+Cobble 2xSlab: 43,3
+Brick 2xSlab: 43,4
+StoneBrick2xSlab: 43,5
+Stone 2xSlab: 43,6
+Stone Brick: 98,0
+MossyStoneBrick: 98,1
+CrackStoneBrick: 98,2

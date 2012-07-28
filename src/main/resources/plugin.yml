@@ -1,0 +1,16 @@
+name: SignShop
+authors: [BR_, Afforess]
+version: 0.11
+main: net.betterverse.signshop.SSMain
+depends: [Vault]
+commands:
+    signshop:
+        usage: /<command> [buy|sell] [amount]
+        aliases: [ss]
+permissions:
+    signshop.break:
+        description: Allows player to break other player's signs.
+        default: op
+    signshop.make:
+        description: Allows player to create shops.
+        default: true
